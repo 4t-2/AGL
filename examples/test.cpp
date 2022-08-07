@@ -12,7 +12,6 @@
 
 GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path)
 {
-
 	// Create the shaders
 	GLuint VertexShaderID	= glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -110,6 +109,7 @@ GLuint LoadShaders(const char *vertex_file_path, const char *fragment_file_path)
 
 int main(int argc, char *argv[])
 {
+
 	agl::RenderWindow window;
 	window.setup(500, 500, "winfloat", 60);
 
@@ -124,18 +124,29 @@ int main(int argc, char *argv[])
 	// GLuint			programID = LoadShaders("vert.vert",
 	// "frag.frag");
 
-	// GLuint VertexArrayID;
-	// glGenVertexArrays(1, &VertexArrayID);
-	// glBindVertexArray(VertexArrayID);
+	agl::GLPrimative triangle1;
 
-	agl::GLTriangle triangle;
+	agl::Vector3f vertex1[6];
+	vertex1[0] = {0, -0.5, 0};
+	vertex1[1] = {-1.0, -0.5, 0};
+	vertex1[2] = {-.5, 0.5, 0};
 
-	agl::Vector3f vertex[3];
-	vertex[0] = {-0.5, -1, 0};
-	vertex[1] = {1, -1, 0};
-	vertex[2] = {0, 1, 0};
+	vertex1[3] = {1, -0.5, 0};
+	vertex1[4] = {0.0, -0.5, 0};
+	vertex1[5] = {.5, 0.5, 0};
+	
+	triangle1.setMode(GL_LINES);
+	triangle1.setVertices(vertex1, sizeof(vertex1));
 
-	triangle.setVertices(vertex);
+	agl::GLPrimative triangle2;
+
+	agl::Vector3f vertex2[3];
+	vertex2[0] = {1, -0.5, 0};
+	vertex2[1] = {0.0, -0.5, 0};
+	vertex2[2] = {.5, 0.5, 0};
+
+	triangle2.setMode(GL_TRIANGLES);
+	triangle2.setVertices(vertex2, sizeof(vertex2));
 
 	float i = 0;
 
@@ -146,8 +157,8 @@ int main(int argc, char *argv[])
 		window.clear();
 
 		// glUseProgram(programID);
-
-		window.draw(triangle);
+		window.draw(triangle1);
+		// window.draw(triangle2);
 
 		window.display();
 
@@ -155,9 +166,9 @@ int main(int argc, char *argv[])
 		{
 			i += 0.001;
 
-			vertex[2].x += i;
+			vertex1[2].x += i;
 
-			triangle.setVertices(vertex);
+			triangle1.setVertices(vertex1, sizeof(vertex1));
 		}
 	}
 

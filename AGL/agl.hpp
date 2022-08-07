@@ -4,3 +4,4 @@
 #include "include/Vector2i.hpp"
 #include "include/Color.hpp"
 #include "include/GLTriangle.hpp"
+#include "include/GLPrimative.hpp"

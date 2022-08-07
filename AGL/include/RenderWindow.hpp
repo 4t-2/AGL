@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GLPrimative.hpp"
 #include "RectangleShape.hpp"
 #include "GLTriangle.hpp"
 #include <GL/glx.h>
@@ -49,6 +50,7 @@ namespace agl
 			void drawRectangle();
 			void draw(RectangleShape rectangle);
 			void draw(GLTriangle triangle);
+			void draw(GLPrimative primative);
 			void display();
 
 			bool isOpen();

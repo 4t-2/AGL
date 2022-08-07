@@ -35,8 +35,8 @@ void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
 
 	root = DefaultRootWindow(dpy); // root window -- the window that is parent to all others
 
-	vi	 = glXChooseVisual(dpy, 0,
-						   att); // tell OpenGL what it needs to do, stored in att
+	vi = glXChooseVisual(dpy, 0,
+						 att); // tell OpenGL what it needs to do, stored in att
 
 	if (vi == NULL)
 	{
@@ -48,7 +48,7 @@ void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
 		printf("\n\tvisual %p selected\n", (void *)vi->visualid); /* %p creates hexadecimal output like in glxinfo */
 	}
 
-	cmap		   = XCreateColormap(dpy, root, vi->visual, AllocNone); // create colormap
+	cmap = XCreateColormap(dpy, root, vi->visual, AllocNone); // create colormap
 
 	swa.colormap   = cmap; // set window attributes
 	swa.event_mask = ExposureMask | KeyPressMask;
@@ -197,6 +197,30 @@ void agl::RenderWindow::draw(agl::RectangleShape rectangle)
 	glVertex3f(tl.x, tl.y, 0.);
 
 	glEnd();
+
+	return;
+}
+
+void agl::RenderWindow::draw(agl::GLPrimative primative)
+{
+	// 1st attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, primative.getVertexBuffer());
+
+	glVertexAttribPointer(0,		// attribute 0. No particular reason for 0, but
+									// must match the layout in the shader.
+						  3,		// size
+						  GL_FLOAT, // type
+						  GL_FALSE, // normalized?
+						  0,		// stride
+						  (void *)0 // array buffer offset
+	);
+
+	// Draw the triangle !
+	glDrawArrays(primative.getMode(), 0,
+				 primative.getVertices()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
+	glDisableVertexAttribArray(0);
 
 	return;
 }
