@@ -1,3 +1,4 @@
+#include "include/Shader.hpp"
 #include "include/RenderWindow.hpp"
 #include "include/Vector2f.hpp"
 #include "include/Vector2i.hpp"

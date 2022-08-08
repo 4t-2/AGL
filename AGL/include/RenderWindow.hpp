@@ -1,12 +1,11 @@
 #pragma once
 
 #include "GLPrimative.hpp"
+#include "Shader.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 
 #include <iostream>
-
-#include "Macros.hpp"
 
 namespace agl
 {
@@ -45,8 +44,8 @@ namespace agl
 			void close();
 
 			void clear();
-			void drawRectangle();
-			void draw(GLPrimative primative);
+			void drawPrimative(GLPrimative primative);
+			void useShader(Shader shader);
 			void display();
 
 			bool isOpen();

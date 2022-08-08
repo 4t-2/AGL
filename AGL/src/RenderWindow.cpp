@@ -67,6 +67,8 @@ void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
 	XGetWindowAttributes(dpy, win, &gwa);
 	glViewport(0, 0, gwa.width, gwa.height);
 
+	glClearColor(0.5, 0.5, 0.5, 1.0);
+
 	glewInit();
 
 	return;
@@ -114,14 +116,29 @@ void agl::RenderWindow::close()
 
 void agl::RenderWindow::clear()
 {
-	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	return;
 }
 
-void agl::RenderWindow::draw(agl::GLPrimative primative)
+void agl::RenderWindow::useShader(agl::Shader shader)
 {
+	glUseProgram(shader.getProgramID());
+
+	return;
+}
+
+void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
+{
+	GLfloat g_color_buffer_data[] = {
+		1, 0, 0, 0, 1, 0, 0, 0, 1,
+	};
+
+	GLuint colorbuffer;
+	glGenBuffers(1, &colorbuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+
 	// 1st attribute buffer : vertices
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, primative.getVertexBuffer());
@@ -135,11 +152,25 @@ void agl::RenderWindow::draw(agl::GLPrimative primative)
 						  (void *)0 // array buffer offset
 	);
 
+	// 2nd attribute buffer : colors
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+	glVertexAttribPointer(1,		// attribute. No particular reason for 1, but must
+									// match the layout in the shader.
+						  3,		// size
+						  GL_FLOAT, // type
+						  GL_FALSE, // normalized?
+						  0,		// stride
+						  (void *)0 // array buffer offset
+	);
+
 	// Draw the triangle !
 	glDrawArrays(primative.getMode(), 0,
-				 primative.getVertices()); // Starting from vertex 0; 3 vertices total -> 1 triangle
+				 primative.getVertices()); // Starting from vertex 0; 3 vertices
+										   // total -> 1 triangle
 
 	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 
 	return;
 }
