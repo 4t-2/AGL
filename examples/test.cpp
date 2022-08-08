@@ -113,17 +113,6 @@ int main(int argc, char *argv[])
 	agl::RenderWindow window;
 	window.setup(500, 500, "winfloat", 60);
 
-	agl::RectangleShape rect1;
-	rect1.setSize(agl::Vector2f{250, 250});
-	rect1.setPosition(agl::Vector2f{0, 0});
-
-	agl::RectangleShape rect2;
-	rect2.setSize(agl::Vector2f{250, 250});
-	rect2.setPosition(agl::Vector2f{250, 0});
-
-	// GLuint			programID = LoadShaders("vert.vert",
-	// "frag.frag");
-
 	agl::GLPrimative triangle1;
 
 	agl::Vector3f vertex1[6];
@@ -134,7 +123,7 @@ int main(int argc, char *argv[])
 	vertex1[3] = {1, -0.5, 0};
 	vertex1[4] = {0.0, -0.5, 0};
 	vertex1[5] = {.5, 0.5, 0};
-	
+
 	triangle1.setMode(GL_LINES);
 	triangle1.setVertices(vertex1, sizeof(vertex1));
 
@@ -156,9 +145,7 @@ int main(int argc, char *argv[])
 
 		window.clear();
 
-		// glUseProgram(programID);
 		window.draw(triangle1);
-		// window.draw(triangle2);
 
 		window.display();
 
@@ -171,8 +158,6 @@ int main(int argc, char *argv[])
 			triangle1.setVertices(vertex1, sizeof(vertex1));
 		}
 	}
-
-	// glDeleteProgram(programID);
 
 	return 0;
 }
