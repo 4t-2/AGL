@@ -23,16 +23,18 @@ namespace agl
 			XWindowAttributes	 gwa;
 			XEvent				 xev;
 
-			int					 width;
-			int					 height;
-			bool				 open;
-			int					 fpsMilli;
-			clock_t				 lastFrame;
+			Atom wmDeleteMessage;
+
+			int		width;
+			int		height;
+			bool	open;
+			int		fpsMilli;
+			clock_t lastFrame;
 
 		public:
 			/*
 			\ Setup the RenderWindow object for drawing onto the screen
-			\ 
+			\
 			\ int width - The desired width
 			\ int height - The desired height
 			\ std::string title - The window title
@@ -48,8 +50,12 @@ namespace agl
 			void useShader(Shader shader);
 			void display();
 
-			bool isOpen();
+			bool shouldClose(XEvent event);
 
-			int	 getEvent();
+			XEvent	 getEvent(XEvent event);
+			Display *getDisplay()
+			{
+				return dpy;
+			};
 	};
 } // namespace agl

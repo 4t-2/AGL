@@ -12,7 +12,7 @@ This reason for making this is for 2 reasons
 - GLEW
 
 ## Learn
-If you want to learn how to use AGL then go to [github website] for documentation and for tutorials on how to use AGL
+If you want to learn how to use AGL then go to [my site](synteng.github.io) for documentation and for tutorials on how to use AGL
 
 ## License
 The AGL source code is distributed under the MIT License, this means that the AGL code is free to be used in any way.

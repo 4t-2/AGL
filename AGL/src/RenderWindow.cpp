@@ -71,6 +71,9 @@ void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
 
 	glewInit();
 
+	wmDeleteMessage = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
+	XSetWMProtocols(dpy, win, &wmDeleteMessage, 1);
+
 	return;
 }
 
@@ -81,11 +84,13 @@ void agl::RenderWindow::setFPS(int fps)
 	return;
 }
 
-int agl::RenderWindow::getEvent()
+XEvent agl::RenderWindow::getEvent(XEvent event)
 {
-	XNextEvent(this->dpy, &this->xev);
-
-	return xev.type;
+	if (XPending(dpy))
+	{
+		XNextEvent(this->dpy, &event);
+	}
+	return event;
 }
 
 void agl::RenderWindow::display()
@@ -108,8 +113,6 @@ void agl::RenderWindow::close()
 	glXDestroyContext(dpy, glc);	 // destroy context
 	XDestroyWindow(dpy, win);		 // kill window
 	XCloseDisplay(dpy);				 // close display
-
-	open = false;
 
 	return;
 }
@@ -175,7 +178,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-bool agl::RenderWindow::isOpen()
+bool agl::RenderWindow::shouldClose(XEvent event)
 {
-	return open;
+	return (event.xclient.data.l[0] == wmDeleteMessage);
 }

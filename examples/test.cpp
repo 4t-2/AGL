@@ -1,4 +1,6 @@
 #include <GL/glew.h>
+#include <X11/X.h>
+#include <X11/Xlib.h>
 
 #include "../AGL/agl.hpp"
 
@@ -7,10 +9,6 @@ int main(int argc, char *argv[])
 
 	agl::RenderWindow window;
 	window.setup(500, 500, "winfloat", 60);
-
-	GLuint VertexArrayID;
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
 
 	agl::GLPrimative triangle1;
 
@@ -42,26 +40,54 @@ int main(int argc, char *argv[])
 	float i = 0;
 
 	window.useShader(shader);
+	XEvent event;
 
-	while (window.isOpen())
+	while (!window.shouldClose(event))
 	{
-		int event = window.getEvent();
+		event = window.getEvent(event);
+
+		char c[32];
+		XQueryKeymap(window.getDisplay(), c);
+
+		for (int i = 0; i < 32; i++)
+		{
+			if(c[i])
+			{
+				printf("byte %d\n", i);
+			}
+			printf("%d", (c[i] & 0b10000000) ? 1 : 0);
+			printf("%d", (c[i] & 0b01000000) ? 1 : 0);
+			printf("%d", (c[i] & 0b00100000) ? 1 : 0);
+			printf("%d", (c[i] & 0b00010000) ? 1 : 0);
+			printf("%d", (c[i] & 0b00001000) ? 1 : 0);
+			printf("%d", (c[i] & 0b00000100) ? 1 : 0);
+			printf("%d", (c[i] & 0b00000010) ? 1 : 0);
+			printf("%d", (c[i] & 0b00000001) ? 1 : 0);
+		}
+
+		printf("\n\n");
+
+		if(c[3]&0b00000001)
+		{
+			printf("q");
+		}
 
 		window.clear();
 
 		window.drawPrimative(triangle1);
-
 		window.display();
 
-		if (event == KeyPress)
+		if (0)
 		{
 			i += 0.001;
-
+			printf("%d\n", event.xkey.keycode);
 			vertex1[2].x += i;
 
 			triangle1.setVertices(vertex1, sizeof(vertex1));
 		}
 	}
+
+	window.close();
 
 	shader.remove();
 

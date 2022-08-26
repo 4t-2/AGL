@@ -4,3 +4,5 @@
 #include "include/Vector2i.hpp"
 #include "include/Color.hpp"
 #include "include/GLPrimative.hpp"
+#include "include/Event.hpp"
+#include "include/Key.hpp"
