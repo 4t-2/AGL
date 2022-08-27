@@ -1,16 +1,37 @@
 #pragma once
 
+#include "RenderWindow.hpp"
+#include "Vector2i.hpp"
+#include <X11/X.h>
+#include <X11/Xlib.h>
+
 namespace agl
 {
 	class Event
 	{
 		private:
-			int type;
-			int close;
+			Display *display;
+			Window	 window;
+			Atom wmDeleteMessage;
+
+			XEvent		 xev;
+			char		 keymap[32];
+			int			 rootx, rooty;
+			int			 winx, winy;
+			unsigned int maskReturn;
+
 		public:
-			const static int WindowClose;
+			void setWindow(RenderWindow window);
 
-			void setType(int type);
+			bool windowClose();
 
+			void pollWindow();
+			void pollKeyboard();
+			void pollPointer();
+
+			bool	 isKeyPressed(int keysym);
+			Vector2i getPointerWindowPosition();
+			Vector2i getPointerRootPosition();
+			bool	 isPointerButtonPressed(int buttonMask);
 	};
 } // namespace agl

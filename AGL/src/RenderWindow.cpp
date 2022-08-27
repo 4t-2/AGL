@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 
 #include <GL/gl.h>
+#include <X11/X.h>
 #include <X11/Xlib.h>
 
 #include <GL/glx.h>
@@ -71,9 +72,6 @@ void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
 
 	glewInit();
 
-	wmDeleteMessage = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
-	XSetWMProtocols(dpy, win, &wmDeleteMessage, 1);
-
 	return;
 }
 
@@ -82,15 +80,6 @@ void agl::RenderWindow::setFPS(int fps)
 	fpsMilli = 1000 / fps;
 
 	return;
-}
-
-XEvent agl::RenderWindow::getEvent(XEvent event)
-{
-	if (XPending(dpy))
-	{
-		XNextEvent(this->dpy, &event);
-	}
-	return event;
 }
 
 void agl::RenderWindow::display()
@@ -178,7 +167,29 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-bool agl::RenderWindow::shouldClose(XEvent event)
+bool agl::RenderWindow::isKeyPressed(int keysym)
 {
-	return (event.xclient.data.l[0] == wmDeleteMessage);
+	char keymap[32];
+	XQueryKeymap(dpy, keymap);
+
+	int keycode = XKeysymToKeycode(dpy, keysym);
+
+	if (keymap[keycode / 8] & (0x1 << (keycode % 8)))
+	{
+
+		return true;
+	}
+
+	return false;
+}
+
+agl::Vector2i agl::RenderWindow::getPointerPosition()
+{
+	Window		 rootReturn, childReturn;
+	int			 rootx, rooty;
+	int			 winx, winy;
+	unsigned int maskReturn;
+	XQueryPointer(dpy, win, &rootReturn, &childReturn, &rootx, &rooty, &winx, &winy, &maskReturn);
+	printf("%d\n", maskReturn);
+	return {winx, winy};
 }

@@ -6,9 +6,11 @@
 
 int main(int argc, char *argv[])
 {
-
 	agl::RenderWindow window;
 	window.setup(500, 500, "winfloat", 60);
+
+	agl::Event event;
+	event.setWindow(window);
 
 	agl::GLPrimative triangle1;
 
@@ -40,50 +42,24 @@ int main(int argc, char *argv[])
 	float i = 0;
 
 	window.useShader(shader);
-	XEvent event;
+	XEvent xev;
 
-	while (!window.shouldClose(event))
+	while (!event.windowClose())
 	{
-		event = window.getEvent(event);
-
-		char c[32];
-		XQueryKeymap(window.getDisplay(), c);
-
-		for (int i = 0; i < 32; i++)
-		{
-			if(c[i])
-			{
-				printf("byte %d\n", i);
-			}
-			printf("%d", (c[i] & 0b10000000) ? 1 : 0);
-			printf("%d", (c[i] & 0b01000000) ? 1 : 0);
-			printf("%d", (c[i] & 0b00100000) ? 1 : 0);
-			printf("%d", (c[i] & 0b00010000) ? 1 : 0);
-			printf("%d", (c[i] & 0b00001000) ? 1 : 0);
-			printf("%d", (c[i] & 0b00000100) ? 1 : 0);
-			printf("%d", (c[i] & 0b00000010) ? 1 : 0);
-			printf("%d", (c[i] & 0b00000001) ? 1 : 0);
-		}
-
-		printf("\n\n");
-
-		if(c[3]&0b00000001)
-		{
-			printf("q");
-		}
+		event.pollWindow();
+		event.pollKeyboard();
+		event.pollPointer();
 
 		window.clear();
 
 		window.drawPrimative(triangle1);
+		
 		window.display();
 
-		if (0)
+		if(event.isPointerButtonPressed(Button1Mask))
 		{
-			i += 0.001;
-			printf("%d\n", event.xkey.keycode);
-			vertex1[2].x += i;
-
-			triangle1.setVertices(vertex1, sizeof(vertex1));
+			agl::Vector2i pos = event.getPointerWindowPosition();
+			printf("%d\n%d\n\n", pos.x, pos.y);
 		}
 	}
 
