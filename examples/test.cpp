@@ -1,7 +1,3 @@
-#include <GL/glew.h>
-#include <X11/X.h>
-#include <X11/Xlib.h>
-
 #include "../AGL/agl.hpp"
 
 int main(int argc, char *argv[])
@@ -14,27 +10,12 @@ int main(int argc, char *argv[])
 
 	agl::GLPrimative triangle1;
 
-	agl::Vector3f vertex1[6];
-	vertex1[0] = {0, -0.5, 0};
-	vertex1[1] = {-1.0, -0.5, 0};
-	vertex1[2] = {-.5, 0.5, 0};
-
-	vertex1[3] = {1, -0.5, 0};
-	vertex1[4] = {0.0, -0.5, 0};
-	vertex1[5] = {.5, 0.5, 0};
+	float vertexBufferData[9] = {0, -0.5, 0, -1.0, -0.5, 0, -0.5, 0.5, 0};
+	float colorBufferData[9]  = {1, 0, 0, 0, 1, 0, 0, 0, 1};
 
 	triangle1.setMode(GL_TRIANGLES);
-	triangle1.setVertices(vertex1, sizeof(vertex1));
-
-	agl::GLPrimative triangle2;
-
-	agl::Vector3f vertex2[3];
-	vertex2[0] = {1, -0.5, 0};
-	vertex2[1] = {0.0, -0.5, 0};
-	vertex2[2] = {.5, 0.5, 0};
-
-	triangle2.setMode(GL_TRIANGLES);
-	triangle2.setVertices(vertex2, sizeof(vertex2));
+	triangle1.setVertexData(vertexBufferData, sizeof(vertexBufferData));
+	triangle1.setColorData(colorBufferData, sizeof(colorBufferData));
 
 	agl::Shader shader;
 	shader.loadShaders("./vert.vert", "./frag.frag");
@@ -53,14 +34,25 @@ int main(int argc, char *argv[])
 		window.clear();
 
 		window.drawPrimative(triangle1);
-		
+
 		window.display();
 
-		if(event.isPointerButtonPressed(Button1Mask))
+		if(event.isKeyPressed(XK_Left))
 		{
-			agl::Vector2i pos = event.getPointerWindowPosition();
-			printf("%d\n%d\n\n", pos.x, pos.y);
+			i += 0.001;
 		}
+
+		if(event.isKeyPressed(XK_Right))
+		{
+			i -= 0.001;
+		}
+
+		for(int x = 0; x < 9; x++)
+		{
+			colorBufferData[x] += i;
+		}
+		printf("%lu\n", sizeof(vertexBufferData));
+		triangle1.setColorData(colorBufferData, sizeof(vertexBufferData));
 	}
 
 	window.close();

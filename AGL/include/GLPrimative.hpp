@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Color.hpp"
 #include "Vector3f.hpp"
 
 namespace agl
@@ -7,9 +8,11 @@ namespace agl
 	class GLPrimative
 	{
 		private:
-			unsigned int vertexBuffer;
 			int			 mode;
-			int			 vertices;
+			unsigned int vertexBuffer;
+			unsigned int colorBuffer;
+			int			 vertexDataSize;
+			int			 colorDataSize;
 
 		public:
 			/*
@@ -30,12 +33,16 @@ namespace agl
 			*/
 			void setMode(int mode);
 
-			void setVertices(Vector3f *vertex, int size);
+			void setVertexData(float vertexBufferData[], int size);
+			void setColorData(float colorBufferData[], int size);
 
 			void destroy();
 
-			int			 getMode();
+			int getMode();
+
 			unsigned int getVertexBuffer();
-			int			 getVertices();
+			int			 getVertexDataSize();
+			unsigned int getColorBuffer();
+			int			 getColorDataSize();
 	};
 } // namespace agl

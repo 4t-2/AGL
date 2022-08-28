@@ -3,17 +3,6 @@
 #include <GL/glew.h>
 #include <stdio.h>
 
-void g1enVertexBuffer(GLuint *vertexBuffer, GLfloat *vertexBufferData, int size)
-{
-	// Generate 1 buffer, put the resulting identifier in vertexbuffer
-	glGenBuffers(1, vertexBuffer);
-	// The following commands will talk about our 'vertexbuffer' buffer
-	glBindBuffer(GL_ARRAY_BUFFER, *vertexBuffer);
-	// Give our vertices to OpenGL.
-	glBufferData(GL_ARRAY_BUFFER, size, vertexBufferData, GL_STATIC_DRAW);
-	return;
-}
-
 void agl::GLPrimative::setMode(int mode)
 {
 	this->mode = mode;
@@ -21,24 +10,26 @@ void agl::GLPrimative::setMode(int mode)
 	return;
 }
 
-void agl::GLPrimative::setVertices(agl::Vector3f *vertex, int size)
+void agl::GLPrimative::setVertexData(float vertexBufferData[], int size)
 {
-	float *vertexBufferData = (float *)malloc(size);
-
-	int x = (size / sizeof(*vertex));
-
-	for (int i = 0; i < x; i++)
-	{
-		vertexBufferData[(i * 3)]	  = vertex[i].x;
-		vertexBufferData[(i * 3) + 1] = vertex[i].y;
-		vertexBufferData[(i * 3) + 2] = vertex[i].z;
-	}
+	this->vertexDataSize = size;
 	
-	vertices = x;
+	glGenBuffers(1, &vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, size, vertexBufferData, GL_STATIC_DRAW);
+	
+	return;
+}
 
-	g1enVertexBuffer(&vertexBuffer, vertexBufferData, size);
+void agl::GLPrimative::setColorData(float colorBufferData[], int size)
+{
+	this->colorDataSize = size;
 
-	free(vertexBufferData);
+	glGenBuffers(1, &colorBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+	glBufferData(GL_ARRAY_BUFFER, size, colorBufferData, GL_STATIC_DRAW);
+
+	return;
 }
 
 int agl::GLPrimative::getMode()
@@ -51,7 +42,17 @@ unsigned int agl::GLPrimative::getVertexBuffer()
 	return vertexBuffer;
 }
 
-int agl::GLPrimative::getVertices()
+unsigned int agl::GLPrimative::getColorBuffer()
 {
-	return vertices;
+	return colorBuffer;
+}
+
+int agl::GLPrimative::getVertexDataSize()
+{
+	return vertexDataSize;
+}
+
+int agl::GLPrimative::getColorDataSize()
+{
+	return colorDataSize;
 }

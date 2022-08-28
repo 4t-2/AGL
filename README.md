@@ -18,7 +18,7 @@ If you want to learn how to use AGL then go to [my site](https://synteng.github.
 The AGL source code is distributed under the MIT License, this means that the AGL code is free to be used in any way.
 
 ## TODO
-- Custom colors (rgba)
+- 2D shapes (rectangle and circle)
 - Textures (as many filetypes as can be easily done)
 - Text (.ttf)
 - Add comments to code
