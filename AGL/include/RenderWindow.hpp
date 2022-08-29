@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Float2.hpp"
 #include "GLPrimative.hpp"
 #include "Shader.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
+#include "Rectangle.hpp"
 
 #include <iostream>
 
@@ -45,9 +47,14 @@ namespace agl
 			void close();
 
 			void clear();
-			void drawPrimative(GLPrimative primative);
+			
 			void useShader(Shader shader);
+			void drawPrimative(GLPrimative primative);
+			void drawShape(Rectangle rectangle);
+
 			void display();
+
+			agl::Float2 pixelToNormalized(agl::Float2 normalized);
 
 			Display *getDisplay()
 			{

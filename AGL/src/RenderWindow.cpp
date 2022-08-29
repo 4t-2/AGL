@@ -15,8 +15,6 @@
 
 #include <iostream>
 
-#include "../include/Macros.hpp"
-
 #include "../include/RenderWindow.hpp"
 
 void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
@@ -66,7 +64,7 @@ void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
 	glEnable(GL_DEPTH_TEST);
 
 	XGetWindowAttributes(dpy, win, &gwa);
-	glViewport(0, 0, gwa.width, gwa.height);
+	glViewport(-(gwa.width / 2), -(gwa.width / 2), gwa.width, gwa.height);
 
 	glClearColor(0.5, 0.5, 0.5, 1.0);
 
@@ -150,7 +148,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	// Draw the triangle !
 	glDrawArrays(primative.getMode(), 0,
 				 primative.getVertexDataSize() / 12); // Starting from vertex 0; 3 vertices
-										   // total -> 1 triangle
+													  // total -> 1 triangle
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
@@ -158,29 +156,41 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-bool agl::RenderWindow::isKeyPressed(int keysym)
+agl::Float2 agl::RenderWindow::pixelToNormalized(agl::Float2 pixel)
 {
-	char keymap[32];
-	XQueryKeymap(dpy, keymap);
-
-	int keycode = XKeysymToKeycode(dpy, keysym);
-
-	if (keymap[keycode / 8] & (0x1 << (keycode % 8)))
-	{
-
-		return true;
-	}
-
-	return false;
+	return {pixel.x / gwa.width, pixel.y / gwa.height};
 }
 
-agl::Vector2i agl::RenderWindow::getPointerPosition()
+void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 {
-	Window		 rootReturn, childReturn;
-	int			 rootx, rooty;
-	int			 winx, winy;
-	unsigned int maskReturn;
-	XQueryPointer(dpy, win, &rootReturn, &childReturn, &rootx, &rooty, &winx, &winy, &maskReturn);
-	printf("%d\n", maskReturn);
-	return {winx, winy};
+	agl::Float2 size	 = pixelToNormalized(rectangle.getSize());
+	agl::Float2 position = pixelToNormalized(rectangle.getPosition());
+	// agl::Color	colorNormalized	   = pixelToNormalized(rectangle.getColor());
+
+	float vertexData[12] = {
+		position.x,			 position.y,		  0, // 1
+		position.x + size.x, position.y,		  0, // 2
+		position.x,			 position.y + size.y, 0, // 3
+		position.x + size.x, position.y + size.y, 0, // 4
+	};
+
+	printf("%d %d\n", gwa.width, gwa.height);
+	printf("%f %f\n%f %f\n\n", size.x, size.y, position.x, position.y);
+
+	float colorData[12] = {
+		0, 0, 0, // 1
+		0, 0, 0, // 2
+		0, 0, 0, // 3
+		0, 0, 0, // 4
+	};
+
+	agl::GLPrimative shape;
+
+	shape.setMode(GL_TRIANGLE_STRIP);
+	shape.setVertexData(vertexData, sizeof(vertexData));
+	shape.setColorData(colorData, sizeof(colorData));
+
+	this->drawPrimative(shape);
+
+	return;
 }

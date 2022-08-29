@@ -10,3 +10,4 @@
 #include "include/Int2.hpp"
 #include "include/RenderWindow.hpp"
 #include "include/Shader.hpp"
+#include "include/Rectangle.hpp"

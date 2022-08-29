@@ -25,6 +25,10 @@ int main(int argc, char *argv[])
 	window.useShader(shader);
 	XEvent xev;
 	
+	agl::Rectangle rectangle;
+	rectangle.setSize({100, 100});
+	rectangle.setPosition({100, 100});
+
 	while (!event.windowClose())
 	{
 		event.pollWindow();
@@ -33,7 +37,8 @@ int main(int argc, char *argv[])
 
 		window.clear();
 
-		window.drawPrimative(triangle1);
+		// window.drawPrimative(triangle1);
+		window.drawShape(rectangle);
 
 		window.display();
 
