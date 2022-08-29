@@ -2,7 +2,6 @@
 
 #include "GLPrimative.hpp"
 #include "Shader.hpp"
-#include "Vector2i.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 
@@ -50,10 +49,6 @@ namespace agl
 			void useShader(Shader shader);
 			void display();
 
-			bool isKeyPressed(int keysym);
-			Vector2i getPointerPosition();
-
-			// void	 getEvent(Event event);
 			Display *getDisplay()
 			{
 				return dpy;

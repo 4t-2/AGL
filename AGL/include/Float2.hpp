@@ -2,11 +2,10 @@
 
 namespace agl
 {
-	class Vector3f
+	class Float2
 	{
 		public:
 			float x;
 			float y;
-			float z;
 	};
 } // namespace agl

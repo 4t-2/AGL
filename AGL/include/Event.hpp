@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RenderWindow.hpp"
-#include "Vector2i.hpp"
+#include "Int2.hpp"
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
@@ -30,8 +30,8 @@ namespace agl
 			void pollPointer();
 
 			bool	 isKeyPressed(int keysym);
-			Vector2i getPointerWindowPosition();
-			Vector2i getPointerRootPosition();
+			Int2 getPointerWindowPosition();
+			Int2 getPointerRootPosition();
 			bool	 isPointerButtonPressed(int buttonMask);
 	};
 } // namespace agl

@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
 	window.useShader(shader);
 	XEvent xev;
-
+	
 	while (!event.windowClose())
 	{
 		event.pollWindow();

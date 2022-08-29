@@ -2,10 +2,11 @@
 
 namespace agl
 {
-	class Vector2i
+	class Float3
 	{
 		public:
-			int x;
-			int y;
+			float x;
+			float y;
+			float z;
 	};
 } // namespace agl
