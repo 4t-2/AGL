@@ -161,11 +161,16 @@ agl::Float2 agl::RenderWindow::pixelToNormalized(agl::Float2 pixel)
 	return {pixel.x / gwa.width, pixel.y / gwa.height};
 }
 
+agl::Float3 agl::RenderWindow::colorToNormalized(agl::Color color)
+{
+	return {float(color.r) / 255, float(color.g) / 255, float(color.b) / 255};
+}
+
 void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 {
 	agl::Float2 size	 = pixelToNormalized(rectangle.getSize());
 	agl::Float2 position = pixelToNormalized(rectangle.getPosition());
-	// agl::Color	colorNormalized	   = pixelToNormalized(rectangle.getColor());
+	agl::Float3 color	 = colorToNormalized(rectangle.getColor());
 
 	float vertexData[12] = {
 		position.x,			 position.y,		  0, // 1
@@ -174,14 +179,11 @@ void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 		position.x + size.x, position.y + size.y, 0, // 4
 	};
 
-	printf("%d %d\n", gwa.width, gwa.height);
-	printf("%f %f\n%f %f\n\n", size.x, size.y, position.x, position.y);
-
 	float colorData[12] = {
-		0, 0, 0, // 1
-		0, 0, 0, // 2
-		0, 0, 0, // 3
-		0, 0, 0, // 4
+		color.x, color.y, color.z, // 1
+		color.x, color.y, color.z, // 2
+		color.x, color.y, color.z, // 3
+		color.x, color.y, color.z, // 4
 	};
 
 	agl::GLPrimative shape;

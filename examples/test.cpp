@@ -24,10 +24,11 @@ int main(int argc, char *argv[])
 
 	window.useShader(shader);
 	XEvent xev;
-	
+
 	agl::Rectangle rectangle;
 	rectangle.setSize({100, 100});
 	rectangle.setPosition({100, 100});
+	rectangle.setColor(agl::Color::Red);
 
 	while (!event.windowClose())
 	{
@@ -42,22 +43,14 @@ int main(int argc, char *argv[])
 
 		window.display();
 
-		if(event.isKeyPressed(XK_Left))
+		if (event.isKeyPressed(XK_space))
 		{
-			i += 0.001;
+			rectangle.setColor(agl::Color::Blue);
 		}
-
-		if(event.isKeyPressed(XK_Right))
+		else
 		{
-			i -= 0.001;
+			rectangle.setColor(agl::Color::Red);
 		}
-
-		for(int x = 0; x < 9; x++)
-		{
-			colorBufferData[x] += i;
-		}
-		printf("%lu\n", sizeof(vertexBufferData));
-		triangle1.setColorData(colorBufferData, sizeof(vertexBufferData));
 	}
 
 	window.close();
