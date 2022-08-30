@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Float2.hpp"
-#include "Float3.hpp"
+#include "Vec2f.hpp"
+#include "Vec3f.hpp"
 #include "GLPrimative.hpp"
 #include "Shader.hpp"
 #include <GL/glx.h>
@@ -55,8 +55,8 @@ namespace agl
 
 			void display();
 
-			agl::Float2 pixelToNormalized(agl::Float2 pixel);
-			agl::Float3 colorToNormalized(agl::Color color);
+			agl::Vec2f pixelToNormalized(agl::Vec2f pixel);
+			agl::Vec3f colorToNormalized(agl::Color color);
 
 			Display *getDisplay()
 			{

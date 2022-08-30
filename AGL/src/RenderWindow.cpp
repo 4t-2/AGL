@@ -156,21 +156,21 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-agl::Float2 agl::RenderWindow::pixelToNormalized(agl::Float2 pixel)
+agl::Vec2f agl::RenderWindow::pixelToNormalized(agl::Vec2f pixel)
 {
 	return {pixel.x / gwa.width, pixel.y / gwa.height};
 }
 
-agl::Float3 agl::RenderWindow::colorToNormalized(agl::Color color)
+agl::Vec3f agl::RenderWindow::colorToNormalized(agl::Color color)
 {
 	return {float(color.r) / 255, float(color.g) / 255, float(color.b) / 255};
 }
 
 void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 {
-	agl::Float2 size	 = pixelToNormalized(rectangle.getSize());
-	agl::Float2 position = pixelToNormalized(rectangle.getPosition());
-	agl::Float3 color	 = colorToNormalized(rectangle.getColor());
+	agl::Vec2f size	 = pixelToNormalized(rectangle.getSize());
+	agl::Vec2f position = pixelToNormalized(rectangle.getPosition());
+	agl::Vec3f color	 = colorToNormalized(rectangle.getColor());
 
 	float vertexData[12] = {
 		position.x,			 position.y,		  0, // 1

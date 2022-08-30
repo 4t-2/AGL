@@ -1,24 +1,24 @@
 #pragma once
 
 #include "Color.hpp"
-#include "Float2.hpp"
+#include "Vec2f.hpp"
 
 namespace agl
 {
 	class Rectangle
 	{
 		private:
-			Float2 size;
-			Float2 position;
+			Vec2f size;
+			Vec2f position;
 			Color  color;
 
 		public:
-			void setSize(Float2 size);
-			void setPosition(Float2 position);
+			void setSize(Vec2f size);
+			void setPosition(Vec2f position);
 			void setColor(Color color);
 
-			Float2 getSize();
-			Float2 getPosition();
+			Vec2f getSize();
+			Vec2f getPosition();
 			Color getColor();
 	};
 } // namespace agl
