@@ -51,12 +51,12 @@ bool agl::Event::isKeyPressed(int keysym)
 	return false;
 }
 
-agl::Int2 agl::Event::getPointerWindowPosition()
+agl::Vec2i agl::Event::getPointerWindowPosition()
 {
 	return {winx, winy};
 }
 
-agl::Int2 agl::Event::getPointerRootPosition()
+agl::Vec2i agl::Event::getPointerRootPosition()
 {
 	return {rootx, rooty};
 }

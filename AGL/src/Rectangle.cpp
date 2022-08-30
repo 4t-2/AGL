@@ -1,13 +1,13 @@
 #include "../include/Rectangle.hpp"
 
-void agl::Rectangle::setSize(agl::Float2 size)
+void agl::Rectangle::setSize(agl::Vec2f size)
 {
 	this->size = size;
 
 	return;
 }
 
-void agl::Rectangle::setPosition(agl::Float2 position)
+void agl::Rectangle::setPosition(agl::Vec2f position)
 {
 	this->position = position;
 
@@ -21,12 +21,12 @@ void agl::Rectangle::setColor(agl::Color color)
 	return;
 }
 
-agl::Float2 agl::Rectangle::getSize()
+agl::Vec2f agl::Rectangle::getSize()
 {
 	return size;
 }
 
-agl::Float2 agl::Rectangle::getPosition()
+agl::Vec2f agl::Rectangle::getPosition()
 {
 	return position;
 }
