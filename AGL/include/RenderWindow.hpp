@@ -1,12 +1,14 @@
 #pragma once
 
-#include "Vec2f.hpp"
-#include "Vec3f.hpp"
+#include "Color.hpp"
 #include "GLPrimative.hpp"
+#include "Rectangle.hpp"
 #include "Shader.hpp"
+#include "Vec2f.hpp"
+#include "Vec2i.hpp"
+#include "Vec3f.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
-#include "Rectangle.hpp"
 
 #include <iostream>
 
@@ -15,21 +17,16 @@ namespace agl
 	class RenderWindow
 	{
 		private:
-			Display				*dpy;
-			Window				 root;
-			GLint				 att[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
-			XVisualInfo			*vi;
-			Colormap			 cmap;
-			XSetWindowAttributes swa;
-			Window				 win;
-			GLXContext			 glc;
-			XWindowAttributes	 gwa;
+			Display		*dpy;
+			Window		 root;
+			XVisualInfo *vi;
+			Colormap	 cmap;
+			long		 eventMask;
+			Window		 win;
+			GLXContext	 glc;
 
 			Atom wmDeleteMessage;
 
-			int		width;
-			int		height;
-			bool	open;
 			int		fpsMilli;
 			clock_t lastFrame;
 
@@ -43,12 +40,27 @@ namespace agl
 			\ int fps - The target fps for the window
 			*/
 			void setup(int width, int height, std::string title, int fps);
+
+			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor);
+
+			int	 openDisplay();
+			void createRootWindow();
+			int	 createColormap(GLint attribute[5], int alloc);
+			void setEventMask(long eventMask);
+			void createWindow(int x, int y, unsigned int width, unsigned int height, unsigned long valueMask);
+			void setTitle(std::string title);
+			void setTitle(char title[]);
+			void mapWindow();
+			void initGL();
+			void GLEnable(GLenum capability);
+			void setViewport(int x, int y, int width, int height);
+			void setClearColor(agl::Color color);
 			void setFPS(int fps);
 
 			void close();
 
 			void clear();
-			
+
 			void useShader(Shader shader);
 			void drawPrimative(GLPrimative primative);
 			void drawShape(Rectangle rectangle);
@@ -57,6 +69,8 @@ namespace agl
 
 			agl::Vec2f pixelToNormalized(agl::Vec2f pixel);
 			agl::Vec3f colorToNormalized(agl::Color color);
+
+			XWindowAttributes getWindowAttributes();
 
 			Display *getDisplay()
 			{

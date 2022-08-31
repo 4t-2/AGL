@@ -1,9 +1,11 @@
 #include "../AGL/agl.hpp"
 
+#define SPEED 10
+
 int main(int argc, char *argv[])
 {
 	agl::RenderWindow window;
-	window.setup(500, 500, "winfloat", 60);
+	window.setup2D(500, 500, "winfloat", 60, {127, 127, 127});
 
 	agl::Event event;
 	event.setWindow(window);
@@ -26,9 +28,14 @@ int main(int argc, char *argv[])
 	XEvent xev;
 
 	agl::Rectangle rectangle;
-	rectangle.setSize({100, 100});
-	rectangle.setPosition({100, 100});
+	rectangle.setSize({499, 499});
+	rectangle.setPosition({0, 0});
 	rectangle.setColor(agl::Color::Red);
+
+	agl::Rectangle box;
+	box.setSize({200, 200});
+	box.setPosition({200, 200});
+	box.setColor(agl::Color::Blue);
 
 	while (!event.windowClose())
 	{
@@ -39,6 +46,7 @@ int main(int argc, char *argv[])
 		window.clear();
 
 		// window.drawPrimative(triangle1);
+		window.drawShape(box);
 		window.drawShape(rectangle);
 
 		window.display();
@@ -51,6 +59,29 @@ int main(int argc, char *argv[])
 		{
 			rectangle.setColor(agl::Color::Red);
 		}
+
+		agl::Vec2f pos = rectangle.getPosition();
+
+		if(event.isKeyPressed(XK_Up))
+		{
+			pos.y+=SPEED;
+		} if(event.isKeyPressed(XK_Down))
+		{
+			pos.y-=SPEED;
+		} if(event.isKeyPressed(XK_Left))
+		{
+			pos.x-=SPEED;
+		} if(event.isKeyPressed(XK_Right))
+		{
+			pos.x+=SPEED;
+		}
+
+		if(event.isKeyPressed(XK_space))
+		{
+			printf("cringe\n");
+		}
+
+		rectangle.setPosition(pos);
 	}
 
 	window.close();

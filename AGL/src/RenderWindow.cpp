@@ -1,9 +1,9 @@
 #include <GL/glew.h>
 
-#include <GL/gl.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
+#include <GL/gl.h>
 #include <GL/glx.h>
 
 #include <bits/types/struct_timespec.h>
@@ -17,64 +17,133 @@
 
 #include "../include/RenderWindow.hpp"
 
-void agl::RenderWindow::setup(int width, int height, std::string title, int fps)
+void agl::RenderWindow::setup2D(int width, int height, std::string title, int fps, agl::Color clearColor)
 {
-	this->width	 = width;
-	this->height = height;
-	open		 = true;
-	this->setFPS(fps);
+	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
 
-	dpy = XOpenDisplay(NULL); // tell X to output graphics on computer it was executed
+	this->openDisplay();
+	this->createRootWindow();
+	this->createColormap(attribute, AllocNone);
+	this->setEventMask(ExposureMask | KeyPressMask);
+	this->createWindow(0, 0, width, height, CWColormap | CWEventMask);
+	this->setTitle(title);
+	
+	XWindowAttributes gwa = this->getWindowAttributes();
+
+	this->initGL();
+	this->setViewport(0, 0, gwa.width, gwa.height);
+	this->setClearColor(clearColor);
+	this->setFPS(fps);
+	this->mapWindow();
+
+	return;
+}
+
+int agl::RenderWindow::openDisplay()
+{
+	dpy = XOpenDisplay(NULL);
 
 	if (dpy == NULL)
 	{
-		printf("\n\tcannot connect to X server\n\n");
-		exit(0);
+		return 1;
 	}
 
-	root = DefaultRootWindow(dpy); // root window -- the window that is parent to all others
+	return 0;
+}
 
-	vi = glXChooseVisual(dpy, 0,
-						 att); // tell OpenGL what it needs to do, stored in att
+void agl::RenderWindow::createRootWindow()
+{
+	root = DefaultRootWindow(dpy);
+
+	return;
+}
+
+int agl::RenderWindow::createColormap(GLint attribute[5], int alloc)
+{
+	vi = glXChooseVisual(dpy, 0, attribute);
 
 	if (vi == NULL)
 	{
-		printf("\n\tno appropriate visual found\n\n");
-		exit(0);
-	}
-	else
-	{
-		printf("\n\tvisual %p selected\n", (void *)vi->visualid); /* %p creates hexadecimal output like in glxinfo */
+		return 1;
 	}
 
-	cmap = XCreateColormap(dpy, root, vi->visual, AllocNone); // create colormap
+	cmap = XCreateColormap(dpy, root, vi->visual, alloc);
 
-	swa.colormap   = cmap; // set window attributes
-	swa.event_mask = ExposureMask | KeyPressMask;
+	return 0;
+}
 
-	win = XCreateWindow(dpy, root, 0, 0, width, height, 0, vi->depth, InputOutput, vi->visual, CWColormap | CWEventMask,
+void agl::RenderWindow::setEventMask(long eventMask)
+{
+	this->eventMask = eventMask;
+
+	return;
+}
+
+void agl::RenderWindow::createWindow(int x, int y, unsigned int width, unsigned int height, unsigned long valueMask)
+{
+	XSetWindowAttributes swa;
+	swa.colormap = cmap;
+	swa.event_mask = eventMask;
+
+	win = XCreateWindow(dpy, root, x, y, width, height, 0, vi->depth, InputOutput, vi->visual, valueMask,
 						&swa); // window is created and the function returns an id
 
-	XMapWindow(dpy, win);				 // make window appear
-	XStoreName(dpy, win, title.c_str()); // change the title
+	return;
+}
+void agl::RenderWindow::setTitle(std::string title)
+{
+	XStoreName(dpy, win, title.c_str());
 
-	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE); // create gl context
-	glXMakeCurrent(dpy, win, glc);					// bind it to the window
+	return;
+}
+void agl::RenderWindow::setTitle(char title[])
+{
+	XStoreName(dpy, win, title);
 
-	glEnable(GL_DEPTH_TEST);
+	return;
+}
+void agl::RenderWindow::mapWindow()
+{
+	XMapWindow(dpy, win);
 
-	XGetWindowAttributes(dpy, win, &gwa);
-	glViewport(-(gwa.width / 2), -(gwa.width / 2), gwa.width, gwa.height);
-
-	glClearColor(0.5, 0.5, 0.5, 1.0);
-
+	return;
+}
+void agl::RenderWindow::initGL()
+{
+	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
+	glXMakeCurrent(dpy, win, glc); // bind it to the window
 	glewInit();
+
+	return;
+}
+void agl::RenderWindow::GLEnable(GLenum capability)
+{
+	glEnable(capability);
+
+	return;
+}
+void agl::RenderWindow::setViewport(int x, int y, int width, int height)
+{
+	glViewport(x, y, width, height);
+
+	return;
+}
+void agl::RenderWindow::setClearColor(agl::Color color)
+{
+	Vec3f colorNormalized = colorToNormalized(color);
+
+	glClearColor(colorNormalized.x, colorNormalized.y, colorNormalized.z, 0);
 
 	return;
 }
 
 void agl::RenderWindow::setFPS(int fps)
 {
+	if (!fps)
+	{
+		fpsMilli = 0;
+		return;
+	}
 	fpsMilli = 1000 / fps;
 
 	return;
@@ -158,6 +227,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 
 agl::Vec2f agl::RenderWindow::pixelToNormalized(agl::Vec2f pixel)
 {
+	XWindowAttributes gwa = this->getWindowAttributes();
 	return {pixel.x / gwa.width, pixel.y / gwa.height};
 }
 
@@ -168,9 +238,9 @@ agl::Vec3f agl::RenderWindow::colorToNormalized(agl::Color color)
 
 void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 {
-	agl::Vec2f size	 = pixelToNormalized(rectangle.getSize());
+	agl::Vec2f size		= pixelToNormalized(rectangle.getSize());
 	agl::Vec2f position = pixelToNormalized(rectangle.getPosition());
-	agl::Vec3f color	 = colorToNormalized(rectangle.getColor());
+	agl::Vec3f color	= colorToNormalized(rectangle.getColor());
 
 	float vertexData[12] = {
 		position.x,			 position.y,		  0, // 1
@@ -195,4 +265,12 @@ void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 	this->drawPrimative(shape);
 
 	return;
+}
+
+XWindowAttributes agl::RenderWindow::getWindowAttributes()
+{
+	XWindowAttributes gwa;
+	XGetWindowAttributes(dpy, win, &gwa);
+
+	return gwa;
 }
