@@ -56,3 +56,10 @@ int agl::GLPrimative::getColorDataSize()
 {
 	return colorDataSize;
 }
+
+void agl::GLPrimative::remove()
+{
+	glDeleteBuffers(1, &vertexBuffer);
+
+	return;
+}

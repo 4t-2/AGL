@@ -60,13 +60,13 @@ void agl::RenderWindow::createRootWindow()
 
 int agl::RenderWindow::createColormap(GLint attribute[5], int alloc)
 {
-	vi = glXChooseVisual(dpy, 0, attribute);
+	vi = glXChooseVisual(dpy, 0, attribute); //mem leak
 
 	if (vi == NULL)
 	{
 		return 1;
 	}
-
+	
 	cmap = XCreateColormap(dpy, root, vi->visual, alloc);
 
 	return 0;
@@ -263,6 +263,8 @@ void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 	shape.setColorData(colorData, sizeof(colorData));
 
 	this->drawPrimative(shape);
+
+	shape.remove();
 
 	return;
 }

@@ -24,7 +24,7 @@ namespace agl
 			long		 eventMask;
 			Window		 win;
 			GLXContext	 glc;
-
+			
 			Atom wmDeleteMessage;
 
 			int		fpsMilli;
