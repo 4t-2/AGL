@@ -60,7 +60,7 @@ void agl::RenderWindow::createRootWindow()
 
 int agl::RenderWindow::createColormap(GLint attribute[5], int alloc)
 {
-	vi = glXChooseVisual(dpy, 0, attribute); //mem leak
+	vi = glXChooseVisual(dpy, 0, attribute);
 
 	if (vi == NULL)
 	{

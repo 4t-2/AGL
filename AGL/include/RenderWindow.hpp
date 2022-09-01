@@ -31,16 +31,6 @@ namespace agl
 			clock_t lastFrame;
 
 		public:
-			/*
-			\ Setup the RenderWindow object for drawing onto the screen
-			\
-			\ int width - The desired width
-			\ int height - The desired height
-			\ std::string title - The window title
-			\ int fps - The target fps for the window
-			*/
-			void setup(int width, int height, std::string title, int fps);
-
 			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor);
 
 			int	 openDisplay();

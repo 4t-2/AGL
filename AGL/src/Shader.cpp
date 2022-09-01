@@ -121,6 +121,7 @@ int agl::Shader::loadShaders(const char *vertex_file_path, const char *fragment_
 	this->programID = ProgramID;
 
 	free(FragmentShaderCode);
+	free(VertexShaderCode);
 
 	return exitCode;
 }

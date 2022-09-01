@@ -10,32 +10,15 @@ int main(int argc, char *argv[])
 	agl::Event event;
 	event.setWindow(window);
 
-	agl::GLPrimative triangle1;
-
-	float vertexBufferData[9] = {0, -0.5, 0, -1.0, -0.5, 0, -0.5, 0.5, 0};
-	float colorBufferData[9]  = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-
-	triangle1.setMode(GL_TRIANGLES);
-	triangle1.setVertexData(vertexBufferData, sizeof(vertexBufferData));
-	triangle1.setColorData(colorBufferData, sizeof(colorBufferData));
-
 	agl::Shader shader;
 	shader.loadShaders("./vert.vert", "./frag.frag");
 
-	float i = 0;
-
 	window.useShader(shader);
-	XEvent xev;
 
 	agl::Rectangle rectangle;
-	rectangle.setSize({499, 499});
+	rectangle.setSize({500, 500});
 	rectangle.setPosition({0, 0});
 	rectangle.setColor(agl::Color::Red);
-
-	agl::Rectangle box;
-	box.setSize({200, 200});
-	box.setPosition({200, 200});
-	box.setColor(agl::Color::Blue);
 
 	while (!event.windowClose())
 	{
@@ -45,8 +28,6 @@ int main(int argc, char *argv[])
 
 		window.clear();
 
-		// window.drawPrimative(triangle1);
-		window.drawShape(box);
 		window.drawShape(rectangle);
 
 		window.display();
