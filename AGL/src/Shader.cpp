@@ -3,7 +3,7 @@
 
 #include "../include/Shader.hpp"
 
-int agl::Shader::loadShaders(const char *vertex_file_path, const char *fragment_file_path)
+int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment_file_path)
 {
 	// Create the shaders
 	GLuint VertexShaderID	= glCreateShader(GL_VERTEX_SHADER);
@@ -136,4 +136,11 @@ void agl::Shader::remove()
 GLuint agl::Shader::getProgramID()
 {
 	return programID;
+}
+
+void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV)
+{
+	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, MPV);
+
+	return;
 }

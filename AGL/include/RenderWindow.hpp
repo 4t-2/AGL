@@ -9,6 +9,7 @@
 #include "Vec3f.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 
@@ -24,14 +25,14 @@ namespace agl
 			long		 eventMask;
 			Window		 win;
 			GLXContext	 glc;
-			
+
 			Atom wmDeleteMessage;
 
 			int		fpsMilli;
 			clock_t lastFrame;
 
 		public:
-			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor);
+			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, glm::mat4 *MPV);
 
 			int	 openDisplay();
 			void createRootWindow();
@@ -56,9 +57,6 @@ namespace agl
 			void drawShape(Rectangle rectangle);
 
 			void display();
-
-			agl::Vec2f pixelToNormalized(agl::Vec2f pixel);
-			agl::Vec3f colorToNormalized(agl::Color color);
 
 			XWindowAttributes getWindowAttributes();
 

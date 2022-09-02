@@ -17,7 +17,7 @@
 
 #include "../include/RenderWindow.hpp"
 
-void agl::RenderWindow::setup2D(int width, int height, std::string title, int fps, agl::Color clearColor)
+void agl::RenderWindow::setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, glm::mat4 *MPV)
 {
 	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
 
@@ -35,6 +35,8 @@ void agl::RenderWindow::setup2D(int width, int height, std::string title, int fp
 	this->setClearColor(clearColor);
 	this->setFPS(fps);
 	this->mapWindow();
+
+	*MPV = glm::ortho(float(0), float(width), float(height), float(0));
 
 	return;
 }
@@ -130,7 +132,7 @@ void agl::RenderWindow::setViewport(int x, int y, int width, int height)
 }
 void agl::RenderWindow::setClearColor(agl::Color color)
 {
-	Vec3f colorNormalized = colorToNormalized(color);
+	Vec3f colorNormalized = color.normalized();
 
 	glClearColor(colorNormalized.x, colorNormalized.y, colorNormalized.z, 0);
 
@@ -225,22 +227,11 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-agl::Vec2f agl::RenderWindow::pixelToNormalized(agl::Vec2f pixel)
-{
-	XWindowAttributes gwa = this->getWindowAttributes();
-	return {pixel.x / gwa.width, pixel.y / gwa.height};
-}
-
-agl::Vec3f agl::RenderWindow::colorToNormalized(agl::Color color)
-{
-	return {float(color.r) / 255, float(color.g) / 255, float(color.b) / 255};
-}
-
 void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 {
-	agl::Vec2f size		= pixelToNormalized(rectangle.getSize());
-	agl::Vec2f position = pixelToNormalized(rectangle.getPosition());
-	agl::Vec3f color	= colorToNormalized(rectangle.getColor());
+	agl::Vec2f size		= rectangle.getSize();
+	agl::Vec2f position = rectangle.getPosition();
+	agl::Vec3f color	= rectangle.getColor().normalized();
 
 	float vertexData[12] = {
 		position.x,			 position.y,		  0, // 1
