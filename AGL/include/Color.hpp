@@ -18,10 +18,10 @@ namespace agl
 			static const Color Black;
 			static const Color Gray;
 
-			unsigned char	   r;
-			unsigned char	   g;
-			unsigned char	   b;
-			unsigned char	   a;
+			unsigned char r = 0;
+			unsigned char g = 0;
+			unsigned char b = 0;
+			unsigned char a = 0;
 
 			agl::Vec3f normalized();
 	};

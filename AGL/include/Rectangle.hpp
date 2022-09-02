@@ -8,9 +8,9 @@ namespace agl
 	class Rectangle
 	{
 		private:
-			Vec2f size;
-			Vec2f position;
-			Color  color;
+			Vec2f size	   = {0, 0};
+			Vec2f position = {0, 0};
+			Color color	   = {0, 0, 0, 0};
 
 		public:
 			void setSize(Vec2f size);

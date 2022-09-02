@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 	agl::RenderWindow window;
 	glm::mat4		  MPV;
 	window.setup2D(500, 500, "winfloat", 60, {127, 127, 127}, &MPV);
-
+	
 	agl::Event event;
 	event.setWindow(window);
 
@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
 	window.useShader(shader);
 	shader.setUniformMatrix4fv(MatrixID, &MPV[0][0]);
 
+	agl::Vec2i offset;
+
 	while (!event.windowClose())
 	{
 		event.pollWindow();
@@ -36,6 +38,29 @@ int main(int argc, char *argv[])
 		window.drawShape(rect);
 
 		window.display();
+
+		if(event.isKeyPressed(XK_Up))
+		{
+			offset.y--;
+		}
+		if(event.isKeyPressed(XK_Down))
+		{
+			offset.y++;
+		}
+		if(event.isKeyPressed(XK_Left))
+		{
+			offset.x--;
+		}
+		if(event.isKeyPressed(XK_Right))
+		{
+			offset.x++;
+		}
+
+		printf("%d %d\n", offset.x, offset.y);
+
+		MPV = glm::ortho(float(0 + offset.x), float(500 + offset.x), float(500 + offset.y), float(0 + offset.y));
+
+		shader.setUniformMatrix4fv(MatrixID, &MPV[0][0]);
 	}
 
 	window.close();
