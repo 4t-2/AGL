@@ -52,7 +52,6 @@ namespace agl
 
 			void clear();
 
-			void useShader(Shader shader);
 			void drawPrimative(GLPrimative primative);
 			void drawShape(Rectangle rectangle);
 

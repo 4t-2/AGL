@@ -15,7 +15,7 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 	char *VertexShaderCode;
 	FILE *VertexShaderCodeStream = fopen(vertex_file_path, "r");
 
-	if(VertexShaderCodeStream == NULL)
+	if (VertexShaderCodeStream == NULL)
 	{
 		return 1;
 	}
@@ -36,11 +36,11 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 	char *FragmentShaderCode;
 	FILE *FragmentShaderCodeStream = fopen(fragment_file_path, "r");
 
-	if(FragmentShaderCodeStream == NULL)
+	if (FragmentShaderCodeStream == NULL)
 	{
 		return 1;
 	}
-	
+
 	fseek(FragmentShaderCodeStream, 0L, SEEK_END);
 	size = ftell(FragmentShaderCodeStream);
 	fseek(FragmentShaderCodeStream, 0L, SEEK_SET);
@@ -141,6 +141,30 @@ GLuint agl::Shader::getProgramID()
 void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV)
 {
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, MPV);
+
+	return;
+}
+
+void agl::Shader::use()
+{
+	glUseProgram(programID);
+
+	return;
+}
+
+void agl::Shader::setCamera(agl::Camera &camera)
+{
+	camera.setMatrixID(glGetUniformLocation(programID, "MVP"));
+
+	return;
+}
+
+void agl::Shader::updateCamera(agl::Camera camera)
+{
+	glm::mat4 MVP	   = camera.getMVP();
+	GLuint	  matrixID = camera.getMatrixID();
+
+	this->setUniformMatrix4fv(matrixID, &MVP[0][0]);
 
 	return;
 }

@@ -2,6 +2,7 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
+#include "include/Camera.hpp"
 #include "include/Color.hpp"
 #include "include/Event.hpp"
 #include "include/GLPrimative.hpp"

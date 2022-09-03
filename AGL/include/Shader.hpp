@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL/glew.h>
+#include "Camera.hpp"
 
 #include <GL/gl.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -19,6 +19,9 @@ namespace agl
 			\ 2 - Other error
 			*/
 			int	 loadFromFile(const char *vertex_file_path, const char *fragment_file_path);
+			void use();
+			void setCamera(Camera &camera);
+			void updateCamera(Camera camera);
 			void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV);
 			void remove();
 

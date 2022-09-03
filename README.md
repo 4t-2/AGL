@@ -16,6 +16,7 @@ If you want to learn how to use AGL then go to [my site](https://synteng.github.
 The AGL source code is distributed under the MIT License.
 
 ## TODO
+- Create own matrix type
 - Circle object
 - Textures (as many filetypes as can be easily done)
 - Text (.ttf)

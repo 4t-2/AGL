@@ -182,13 +182,6 @@ void agl::RenderWindow::clear()
 	return;
 }
 
-void agl::RenderWindow::useShader(agl::Shader shader)
-{
-	glUseProgram(shader.getProgramID());
-
-	return;
-}
-
 void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 {
 	// 1st attribute buffer : vertices
