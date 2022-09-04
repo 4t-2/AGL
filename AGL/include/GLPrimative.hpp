@@ -33,7 +33,7 @@ namespace agl
 			void setVertexData(float vertexBufferData[], int size);
 			void setColorData(float colorBufferData[], int size);
 
-			void remove();
+			void deleteData();
 
 			int getMode();
 

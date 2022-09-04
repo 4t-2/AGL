@@ -126,7 +126,7 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 	return exitCode;
 }
 
-void agl::Shader::remove()
+void agl::Shader::deleteProgram()
 {
 	glDeleteProgram(programID);
 

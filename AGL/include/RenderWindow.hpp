@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Color.hpp"
+#include "Cuboid.hpp"
 #include "GLPrimative.hpp"
 #include "Rectangle.hpp"
 #include "Shader.hpp"
@@ -54,6 +55,7 @@ namespace agl
 
 			void drawPrimative(GLPrimative primative);
 			void drawShape(Rectangle rectangle);
+			void drawShape(Cuboid cuboid);
 
 			void display();
 

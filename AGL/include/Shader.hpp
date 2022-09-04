@@ -23,7 +23,7 @@ namespace agl
 			void setCamera(Camera &camera);
 			void updateCamera(Camera camera);
 			void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV);
-			void remove();
+			void deleteProgram();
 
 			GLuint getProgramID();
 	};

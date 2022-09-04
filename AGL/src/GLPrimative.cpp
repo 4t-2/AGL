@@ -57,7 +57,7 @@ int agl::GLPrimative::getColorDataSize()
 	return colorDataSize;
 }
 
-void agl::GLPrimative::remove()
+void agl::GLPrimative::deleteData()
 {
 	glDeleteBuffers(1, &vertexBuffer);
 

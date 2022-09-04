@@ -1,37 +1,43 @@
 #include "../include/Rectangle.hpp"
+#include <GL/gl.h>
 
-void agl::Rectangle::setSize(agl::Vec2f size)
+void agl::Rectangle::setSizePosition(agl::Vec2f size, Vec2f position)
 {
-	this->size = size;
-
-	return;
-}
-
-void agl::Rectangle::setPosition(agl::Vec2f position)
-{
-	this->position = position;
-
+	float vertexData[12] = {
+		position.x,			 position.y,		  0, // 1
+		position.x + size.x, position.y,		  0, // 2
+		position.x,			 position.y + size.y, 0, // 3
+		position.x + size.x, position.y + size.y, 0, // 4
+	};
+	
+	shape.setMode(GL_TRIANGLE_STRIP);
+	shape.setVertexData(vertexData, sizeof(vertexData));
+	
 	return;
 }
 
 void agl::Rectangle::setColor(agl::Color color)
 {
-	this->color = color;
+	Vec3f colorNormalized = color.normalized();
 
+	float colorData[12] = {
+		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 1
+		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 2
+		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 3
+		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 4
+	};
+
+	shape.setColorData(colorData, sizeof(colorData));
+	
 	return;
 }
 
-agl::Vec2f agl::Rectangle::getSize()
+void agl::Rectangle::deleteData()
 {
-	return size;
+	shape.deleteData();
 }
 
-agl::Vec2f agl::Rectangle::getPosition()
+agl::GLPrimative agl::Rectangle::getShape()
 {
-	return position;
-}
-
-agl::Color agl::Rectangle::getColor()
-{
-	return color;
+	return shape;
 }

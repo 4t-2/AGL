@@ -222,33 +222,14 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 
 void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
 {
-	agl::Vec2f size		= rectangle.getSize();
-	agl::Vec2f position = rectangle.getPosition();
-	agl::Vec3f color	= rectangle.getColor().normalized();
+	this->drawPrimative(rectangle.getShape());
 
-	float vertexData[12] = {
-		position.x,			 position.y,		  0, // 1
-		position.x + size.x, position.y,		  0, // 2
-		position.x,			 position.y + size.y, 0, // 3
-		position.x + size.x, position.y + size.y, 0, // 4
-	};
+	return;
+}
 
-	float colorData[12] = {
-		color.x, color.y, color.z, // 1
-		color.x, color.y, color.z, // 2
-		color.x, color.y, color.z, // 3
-		color.x, color.y, color.z, // 4
-	};
-
-	agl::GLPrimative shape;
-
-	shape.setMode(GL_TRIANGLE_STRIP);
-	shape.setVertexData(vertexData, sizeof(vertexData));
-	shape.setColorData(colorData, sizeof(colorData));
-
-	this->drawPrimative(shape);
-
-	shape.remove();
+void agl::RenderWindow::drawShape(agl::Cuboid cuboid)
+{
+	this->drawPrimative(cuboid.getShape());
 
 	return;
 }

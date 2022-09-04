@@ -12,3 +12,4 @@
 #include "include/Vec2f.hpp"
 #include "include/Vec2i.hpp"
 #include "include/Vec3f.hpp"
+#include "include/Cuboid.hpp"
