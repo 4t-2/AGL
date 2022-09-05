@@ -10,12 +10,19 @@ namespace agl
 	{
 		private:
 			agl::GLPrimative shape;
+
+			Vec3f size	   = {0, 0, 0};
+			Vec3f position = {0, 0, 0};
+			Color color	   = {0, 0, 0};
+
 		public:
-			void setSizePosition(Vec3f size, Vec3f position);
+			void setSize(Vec3f size);
+			void setPosition(Vec3f position);
 			void setColor(Color color);
 
+			void setData();
 			void deleteData();
 
 			GLPrimative getShape();
 	};
-}
+} // namespace agl

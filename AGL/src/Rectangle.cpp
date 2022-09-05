@@ -1,7 +1,28 @@
 #include "../include/Rectangle.hpp"
 #include <GL/gl.h>
 
-void agl::Rectangle::setSizePosition(agl::Vec2f size, Vec2f position)
+void agl::Rectangle::setSize(agl::Vec2f size)
+{
+	this->size = size;
+
+	return;
+}
+
+void agl::Rectangle::setPosition(agl::Vec2f position)
+{
+	this->position = position;
+
+	return;
+}
+
+void agl::Rectangle::setColor(agl::Color color)
+{
+	this->color = color;
+	
+	return;
+}
+
+void agl::Rectangle::setData()
 {
 	float vertexData[12] = {
 		position.x,			 position.y,		  0, // 1
@@ -10,14 +31,6 @@ void agl::Rectangle::setSizePosition(agl::Vec2f size, Vec2f position)
 		position.x + size.x, position.y + size.y, 0, // 4
 	};
 	
-	shape.setMode(GL_TRIANGLE_STRIP);
-	shape.setVertexData(vertexData, sizeof(vertexData));
-	
-	return;
-}
-
-void agl::Rectangle::setColor(agl::Color color)
-{
 	Vec3f colorNormalized = color.normalized();
 
 	float colorData[12] = {
@@ -27,8 +40,10 @@ void agl::Rectangle::setColor(agl::Color color)
 		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 4
 	};
 
+	shape.setMode(GL_TRIANGLE_STRIP);
+	shape.setVertexData(vertexData, sizeof(vertexData));
 	shape.setColorData(colorData, sizeof(colorData));
-	
+
 	return;
 }
 

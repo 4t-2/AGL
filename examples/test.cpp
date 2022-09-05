@@ -41,11 +41,13 @@ int main(int argc, char *argv[])
 	agl::Vec3f pos = {0, 0, 0};
 
 	agl::Cuboid cuboid;
-	cuboid.setSizePosition({1, 1, 1}, pos);
+	cuboid.setSize({1, 1, 1});
+	cuboid.setPosition(pos);
 	cuboid.setColor(agl::Color::Blue);
 
 	agl::Rectangle rectangle;
-	rectangle.setSizePosition({1, 1}, {pos.x, pos.y});
+	rectangle.setSize({1, 1});
+	rectangle.setPosition({0, 0});
 	rectangle.setColor(agl::Color::Red);
 
 	agl::Camera camera;
@@ -63,6 +65,9 @@ int main(int argc, char *argv[])
 		event.pollWindow();
 		event.pollKeyboard();
 		event.pollPointer();
+
+		rectangle.setData();
+		cuboid.setData();
 
 		window.clear();
 
@@ -94,16 +99,19 @@ int main(int argc, char *argv[])
 			pos.x += 0.01;
 		}
 
-		cuboid.setSizePosition({1, 1, 1}, pos);
-		rectangle.setSizePosition({1, 1}, {pos.x, pos.y});
-	}
+		cuboid.setSize({1, 1, 1});
+		cuboid.setPosition(pos);
 
-	window.close();
+		rectangle.setSize({1, 1});
+		rectangle.setPosition({pos.x, pos.y});
+	}
 
 	shader.deleteProgram();
 
 	cuboid.deleteData();
 	rectangle.deleteData();
+	
+	window.close();
 
 	return 0;
 }

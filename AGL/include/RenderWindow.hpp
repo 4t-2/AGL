@@ -32,6 +32,8 @@ namespace agl
 			int		fpsMilli;
 			clock_t lastFrame;
 
+			GLuint VertexArrayID;
+
 		public:
 			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, glm::mat4 *MPV);
 

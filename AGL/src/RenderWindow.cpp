@@ -17,7 +17,8 @@
 
 #include "../include/RenderWindow.hpp"
 
-void agl::RenderWindow::setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, glm::mat4 *MPV)
+void agl::RenderWindow::setup2D(int width, int height, std::string title, int fps, agl::Color clearColor,
+								glm::mat4 *MPV)
 {
 	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
 
@@ -27,7 +28,7 @@ void agl::RenderWindow::setup2D(int width, int height, std::string title, int fp
 	this->setEventMask(ExposureMask | KeyPressMask);
 	this->createWindow(0, 0, width, height, CWColormap | CWEventMask);
 	this->setTitle(title);
-	
+
 	XWindowAttributes gwa = this->getWindowAttributes();
 
 	this->initGL();
@@ -68,7 +69,7 @@ int agl::RenderWindow::createColormap(GLint attribute[5], int alloc)
 	{
 		return 1;
 	}
-	
+
 	cmap = XCreateColormap(dpy, root, vi->visual, alloc);
 
 	return 0;
@@ -84,7 +85,7 @@ void agl::RenderWindow::setEventMask(long eventMask)
 void agl::RenderWindow::createWindow(int x, int y, unsigned int width, unsigned int height, unsigned long valueMask)
 {
 	XSetWindowAttributes swa;
-	swa.colormap = cmap;
+	swa.colormap   = cmap;
 	swa.event_mask = eventMask;
 
 	win = XCreateWindow(dpy, root, x, y, width, height, 0, vi->depth, InputOutput, vi->visual, valueMask,
@@ -114,7 +115,10 @@ void agl::RenderWindow::initGL()
 {
 	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
 	glXMakeCurrent(dpy, win, glc); // bind it to the window
+
 	glewInit();
+
+	glGenVertexArrays(1, &VertexArrayID);
 
 	return;
 }
