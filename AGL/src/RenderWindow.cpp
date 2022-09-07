@@ -238,6 +238,13 @@ void agl::RenderWindow::drawShape(agl::Cuboid cuboid)
 	return;
 }
 
+void agl::RenderWindow::drawShape(agl::Circle circle)
+{
+	this->drawPrimative(circle.getShape());
+
+	return;
+}
+
 XWindowAttributes agl::RenderWindow::getWindowAttributes()
 {
 	XWindowAttributes gwa;

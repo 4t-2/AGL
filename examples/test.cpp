@@ -50,6 +50,8 @@ int main(int argc, char *argv[])
 	rectangle.setPosition({0, 0});
 	rectangle.setColor(agl::Color::Red);
 
+	agl::Circle circle(4);
+
 	agl::Camera camera;
 	camera.setPerspectiveProjection(45, (float)WIDTH / (float)HEIGHT, 0.1, 100);
 	camera.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
@@ -71,14 +73,7 @@ int main(int argc, char *argv[])
 
 		window.clear();
 
-		if (!event.isKeyPressed(XK_space))
-		{
-			window.drawShape(cuboid);
-		}
-		else
-		{
-			window.drawShape(rectangle);
-		}
+		window.drawShape(circle);
 
 		window.display();
 

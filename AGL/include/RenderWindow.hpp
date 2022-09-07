@@ -5,6 +5,7 @@
 #include "GLPrimative.hpp"
 #include "Rectangle.hpp"
 #include "Shader.hpp"
+#include "Circle.hpp"
 #include "Vec2f.hpp"
 #include "Vec2i.hpp"
 #include "Vec3f.hpp"
@@ -56,8 +57,10 @@ namespace agl
 			void clear();
 
 			void drawPrimative(GLPrimative primative);
+
 			void drawShape(Rectangle rectangle);
 			void drawShape(Cuboid cuboid);
+			void drawShape(Circle circle);
 
 			void display();
 
