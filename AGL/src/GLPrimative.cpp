@@ -1,7 +1,7 @@
 #include "../include/GLPrimative.hpp"
-#include <stdlib.h>
 #include <GL/glew.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void agl::GLPrimative::setMode(int mode)
 {
@@ -13,11 +13,11 @@ void agl::GLPrimative::setMode(int mode)
 void agl::GLPrimative::setVertexData(float vertexBufferData[], int size)
 {
 	this->vertexDataSize = size;
-	
+
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, size, vertexBufferData, GL_STATIC_DRAW);
-	
+	glBufferData(GL_ARRAY_BUFFER, vertexDataSize, vertexBufferData, GL_STATIC_DRAW);
+
 	return;
 }
 

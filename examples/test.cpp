@@ -50,11 +50,13 @@ int main(int argc, char *argv[])
 	rectangle.setPosition({0, 0});
 	rectangle.setColor(agl::Color::Red);
 
-	agl::Circle circle(4);
+	agl::Circle circle(66);
 
 	agl::Camera camera;
 	camera.setPerspectiveProjection(45, (float)WIDTH / (float)HEIGHT, 0.1, 100);
 	camera.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
+
+	// camera.setOrthographicProjection(-1, 1, -1, 1, 0, 100);
 
 	shader.setCamera(camera);
 	shader.use();
@@ -67,9 +69,6 @@ int main(int argc, char *argv[])
 		event.pollWindow();
 		event.pollKeyboard();
 		event.pollPointer();
-
-		rectangle.setData();
-		cuboid.setData();
 
 		window.clear();
 
