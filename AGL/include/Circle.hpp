@@ -17,7 +17,7 @@ namespace agl
 
 		public:
 			Circle(unsigned int faces);
-			// ~Circle();
+			~Circle();
 
 			void setRadius(float radius);
 			void setPosition(Vec2f position);

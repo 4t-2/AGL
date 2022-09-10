@@ -238,7 +238,7 @@ void agl::RenderWindow::drawShape(agl::Cuboid cuboid)
 	return;
 }
 
-void agl::RenderWindow::drawShape(agl::Circle circle)
+void agl::RenderWindow::drawShape(agl::Circle &circle)
 {
 	this->drawPrimative(circle.getShape());
 

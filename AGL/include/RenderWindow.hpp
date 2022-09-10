@@ -60,7 +60,7 @@ namespace agl
 
 			void drawShape(Rectangle rectangle);
 			void drawShape(Cuboid cuboid);
-			void drawShape(Circle circle);
+			void drawShape(Circle &circle);
 
 			void display();
 

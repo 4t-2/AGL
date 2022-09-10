@@ -53,6 +53,11 @@ agl::Circle::Circle(unsigned int faces)
 	return;
 }
 
+agl::Circle::~Circle()
+{
+	free(vertexData);
+}
+
 agl::GLPrimative agl::Circle::getShape()
 {
 	return shape;
