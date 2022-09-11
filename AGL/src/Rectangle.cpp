@@ -1,58 +1,43 @@
 #include "../include/Rectangle.hpp"
 #include <GL/gl.h>
+#include <cstdlib>
 
-void agl::Rectangle::setSize(agl::Vec2f size)
+agl::Rectangle::Rectangle()
 {
-	this->size = size;
+	int dataSize = sizeof(float) * 12;
 
-	return;
-}
+	vertexData = (float *)malloc(dataSize);
+	colorData  = (float *)malloc(dataSize);
 
-void agl::Rectangle::setPosition(agl::Vec2f position)
-{
-	this->position = position;
+	vertexData[0]  = 0;
+	vertexData[1]  = 0;
+	vertexData[2]  = 0;
+	vertexData[3]  = 0 + 1;
+	vertexData[4]  = 0;
+	vertexData[5]  = 0;
+	vertexData[6]  = 0;
+	vertexData[7]  = 0 + 1;
+	vertexData[8]  = 0;
+	vertexData[9]  = 0 + 1;
+	vertexData[10] = 0 + 1;
+	vertexData[11] = 0;
 
-	return;
-}
-
-void agl::Rectangle::setColor(agl::Color color)
-{
-	this->color = color;
-	
-	return;
-}
-
-void agl::Rectangle::setData()
-{
-	float vertexData[12] = {
-		position.x,			 position.y,		  0, // 1
-		position.x + size.x, position.y,		  0, // 2
-		position.x,			 position.y + size.y, 0, // 3
-		position.x + size.x, position.y + size.y, 0, // 4
-	};
-	
 	Vec3f colorNormalized = color.normalized();
 
-	float colorData[12] = {
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // 4
-	};
+	colorData[0]  = colorNormalized.x;
+	colorData[1]  = colorNormalized.y;
+	colorData[2]  = colorNormalized.z;
+	colorData[3]  = colorNormalized.x;
+	colorData[4]  = colorNormalized.y;
+	colorData[5]  = colorNormalized.z;
+	colorData[6]  = colorNormalized.x;
+	colorData[7]  = colorNormalized.y;
+	colorData[8]  = colorNormalized.z;
+	colorData[9]  = colorNormalized.x;
+	colorData[10] = colorNormalized.y;
+	colorData[11] = colorNormalized.z;
 
-	shape.setMode(GL_TRIANGLE_STRIP);
-	shape.setVertexData(vertexData, sizeof(vertexData));
-	shape.setColorData(colorData, sizeof(colorData));
-
-	return;
-}
-
-void agl::Rectangle::deleteData()
-{
-	shape.deleteData();
-}
-
-agl::GLPrimative agl::Rectangle::getShape()
-{
-	return shape;
+	shapeData.setMode(GL_TRIANGLE_STRIP);
+	shapeData.setVertexData(vertexData, dataSize);
+	shapeData.setColorData(colorData, dataSize);
 }

@@ -13,3 +13,5 @@
 #include "include/Vec2i.hpp"
 #include "include/Vec3f.hpp"
 #include "include/Cuboid.hpp"
+#include "include/Shape.hpp"
+#include "include/Circle.hpp"

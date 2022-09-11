@@ -8,6 +8,7 @@ agl::Circle::Circle(unsigned int faces)
 	int size = sizeof(float) * 3 * (faces + 2);
 
 	vertexData = (float *)malloc(size);
+	colorData  = (float *)malloc(size);
 
 	vertexData[0] = 0;
 	vertexData[1] = 0;
@@ -25,9 +26,9 @@ agl::Circle::Circle(unsigned int faces)
 		vertexData[(i * 3) + 2] = 0;
 	}
 
-	vertexData[((faces+1) * 3) + 0] = vertexData[((1) * 3) + 0];
-	vertexData[((faces+1) * 3) + 1] = vertexData[((1) * 3) + 1];
-	vertexData[((faces+1) * 3) + 2] = vertexData[((1) * 3) + 2];
+	vertexData[((faces + 1) * 3) + 0] = vertexData[((1) * 3) + 0];
+	vertexData[((faces + 1) * 3) + 1] = vertexData[((1) * 3) + 1];
+	vertexData[((faces + 1) * 3) + 2] = vertexData[((1) * 3) + 2];
 
 	for (int i = 0; i < (faces + 2); i++)
 	{
@@ -38,27 +39,25 @@ agl::Circle::Circle(unsigned int faces)
 		printf("\n");
 	}
 
-	float colorData[] = {
-		1, 0, 0, // 1
-		0, 1, 0, // 1
-		0, 0, 1, // 1
-		1, 0, 0, // 1
-		0, 1, 0, // 1
-	};
+	colorData[0] = 1;
+	colorData[1] = 0;
+	colorData[2] = 0;
+	colorData[3] = 0;
+	colorData[4] = 1;
+	colorData[5] = 0;
+	colorData[6] = 0;
+	colorData[7] = 0;
+	colorData[8] = 1;
+	colorData[9] = 1;
+	colorData[10] = 0;
+	colorData[11] = 0;
+	colorData[12] = 0;
+	colorData[13] = 1;
+	colorData[14] = 0;
 
-	shape.setMode(GL_TRIANGLE_FAN);
-	shape.setVertexData(vertexData, size);
-	shape.setColorData(colorData, sizeof(colorData));
+	shapeData.setMode(GL_TRIANGLE_FAN);
+	shapeData.setVertexData(vertexData, size);
+	shapeData.setColorData(colorData, size);
 
 	return;
-}
-
-agl::Circle::~Circle()
-{
-	free(vertexData);
-}
-
-agl::GLPrimative agl::Circle::getShape()
-{
-	return shape;
 }

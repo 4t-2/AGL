@@ -224,23 +224,16 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-void agl::RenderWindow::drawShape(agl::Rectangle rectangle)
+void agl::RenderWindow::drawShape(agl::Shape &shape)
 {
-	this->drawPrimative(rectangle.getShape());
+	this->drawPrimative(shape.getShapeData());
 
 	return;
 }
 
-void agl::RenderWindow::drawShape(agl::Cuboid cuboid)
+void agl::RenderWindow::drawShape(agl::Cuboid &cuboid)
 {
 	this->drawPrimative(cuboid.getShape());
-
-	return;
-}
-
-void agl::RenderWindow::drawShape(agl::Circle &circle)
-{
-	this->drawPrimative(circle.getShape());
 
 	return;
 }

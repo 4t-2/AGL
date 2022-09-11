@@ -38,23 +38,22 @@ int main(int argc, char *argv[])
 	agl::Shader shader;
 	shader.loadFromFile("./vert.vert", "./frag.frag");
 
-	agl::Vec3f pos = {0, 0, 0};
+	agl::Vec3f pos = {0, 0, 5};
 
 	agl::Cuboid cuboid;
 	cuboid.setSize({1, 1, 1});
 	cuboid.setPosition(pos);
 	cuboid.setColor(agl::Color::Blue);
+	cuboid.setData();
 
 	agl::Rectangle rectangle;
-	rectangle.setSize({1, 1});
-	rectangle.setPosition({0, 0});
 	rectangle.setColor(agl::Color::Red);
 
 	agl::Circle circle(88);
 
 	agl::Camera camera;
-	// camera.setPerspectiveProjection(45, (float)WIDTH / (float)HEIGHT, 0., 100);
-	camera.setView({0, 0, 0.9}, {0, 0, 0}, {0, 1, 0});
+	// camera.setPerspectiveProjection(45, (float)WIDTH / (float)HEIGHT, 0, 100);
+	camera.setView(pos, {0, 0, 0}, {0, 1, 0});
 
 	camera.setOrthographicProjection(-1, 1, -1, 1, 0, 100);
 
@@ -63,7 +62,7 @@ int main(int argc, char *argv[])
 	shader.updateCamera(camera);
 
 	agl::Vec2i offset;
-	
+
 	while (!event.windowClose())
 	{
 		event.pollWindow();
@@ -72,39 +71,43 @@ int main(int argc, char *argv[])
 
 		window.clear();
 
-		window.drawShape(circle);
+		window.drawShape(cuboid);
 
 		window.display();
 
 		if (event.isKeyPressed(XK_Up))
 		{
-			pos.y += 0.01;
+			pos.z -= 0.01;
 		}
 		if (event.isKeyPressed(XK_Down))
 		{
-			pos.y -= 0.01;
+			pos.z += 0.01;
 		}
 		if (event.isKeyPressed(XK_Left))
 		{
-			pos.x -= 0.01;
+			pos.x += 0.01;
 		}
 		if (event.isKeyPressed(XK_Right))
 		{
-			pos.x += 0.01;
+			pos.x -= 0.01;
 		}
 
-		cuboid.setSize({1, 1, 1});
-		cuboid.setPosition(pos);
+		if(event.isKeyPressed(XK_q))
+		{
+			pos.y -= 0.01;
+		} if(event.isKeyPressed(XK_e))
+		{
+			pos.y += 0.01;
+		}
 
-		rectangle.setSize({1, 1});
-		rectangle.setPosition({pos.x, pos.y});
+		printf("%f %f %f\n", pos.x, pos.y, pos.z);
+
+		camera.setView(pos, {0, 0, 0}, {0, 1, 0});
+		shader.updateCamera(camera);
 	}
 
 	shader.deleteProgram();
 
-	cuboid.deleteData();
-	rectangle.deleteData();
-	
 	window.close();
 
 	return 0;
