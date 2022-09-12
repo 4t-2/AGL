@@ -59,7 +59,6 @@ namespace agl
 			void drawPrimative(GLPrimative primative);
 
 			void drawShape(Shape &shape);
-			void drawShape(Cuboid &cuboid);
 
 			void display();
 

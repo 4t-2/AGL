@@ -26,15 +26,3 @@ glm::mat4 agl::Camera::getMVP()
 {
 	return projection * view * model;
 }
-
-GLuint agl::Camera::getMatrixID()
-{
-	return matrixID;
-}
-
-void agl::Camera::setMatrixID(GLuint matrixID)
-{
-	this->matrixID = matrixID;
-
-	return;
-}

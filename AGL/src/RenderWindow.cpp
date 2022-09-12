@@ -231,13 +231,6 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 	return;
 }
 
-void agl::RenderWindow::drawShape(agl::Cuboid &cuboid)
-{
-	this->drawPrimative(cuboid.getShape());
-
-	return;
-}
-
 XWindowAttributes agl::RenderWindow::getWindowAttributes()
 {
 	XWindowAttributes gwa;

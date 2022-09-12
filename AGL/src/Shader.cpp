@@ -154,15 +154,15 @@ void agl::Shader::use()
 
 void agl::Shader::setCamera(agl::Camera &camera)
 {
-	camera.setMatrixID(glGetUniformLocation(programID, "MVP"));
+	matrixID = glGetUniformLocation(programID, "MVP");
+	this->camera = &camera;
 
 	return;
 }
 
-void agl::Shader::updateCamera(agl::Camera camera)
+void agl::Shader::updateCamera()
 {
-	glm::mat4 MVP	   = camera.getMVP();
-	GLuint	  matrixID = camera.getMatrixID();
+	glm::mat4 MVP	   = camera->getMVP();
 
 	this->setUniformMatrix4fv(matrixID, &MVP[0][0]);
 

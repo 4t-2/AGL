@@ -30,15 +30,6 @@ agl::Circle::Circle(unsigned int faces)
 	vertexData[((faces + 1) * 3) + 1] = vertexData[((1) * 3) + 1];
 	vertexData[((faces + 1) * 3) + 2] = vertexData[((1) * 3) + 2];
 
-	for (int i = 0; i < (faces + 2); i++)
-	{
-		printf("%d\n", i);
-		printf("%f\n", vertexData[i * 3 + 0]);
-		printf("%f\n", vertexData[i * 3 + 1]);
-		printf("%f\n", vertexData[i * 3 + 2]);
-		printf("\n");
-	}
-
 	colorData[0] = 1;
 	colorData[1] = 0;
 	colorData[2] = 0;

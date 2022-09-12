@@ -12,7 +12,7 @@ namespace agl
 		protected:
 			Vec3f position = {0, 0, 0};
 			Vec3f size	   = {1, 1, 1};
-			Color color	   = {1, 0, 0, 0};
+			Color color	   = {255, 0, 0, 0};
 
 			GLPrimative shapeData;
 			float	   *vertexData;

@@ -1,29 +1,10 @@
 #include "../include/Cuboid.hpp"
 
 #include "GL/gl.h"
+#include <cstdio>
+#include <cstdlib>
 
-void agl::Cuboid::setSize(agl::Vec3f size)
-{
-	this->size = size;
-
-	return;
-}
-
-void agl::Cuboid::setPosition(agl::Vec3f position)
-{
-	this->position = position;
-
-	return;
-}
-
-void agl::Cuboid::setColor(agl::Color color)
-{
-	this->color = color;
-
-	return;
-}
-
-void agl::Cuboid::setData()
+agl::Cuboid::Cuboid()
 {
 	GLfloat vertexBufferData[] = {
 		position.x,			 position.y,		  position.z,		   // t1 v1
@@ -105,21 +86,20 @@ void agl::Cuboid::setData()
 		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t12 v3
 	};
 
-	shape.setMode(GL_TRIANGLES);
-	shape.setVertexData(vertexBufferData, sizeof(vertexBufferData));
-	shape.setColorData(colorBufferData, sizeof(colorBufferData));
+	int dataSize = sizeof(float) * 108;
+
+	vertexData = (float *)malloc(dataSize);
+	colorData  = (float *)malloc(dataSize);
+
+	for (int i = 0; i < 108; i++)
+	{
+		vertexData[i] = vertexBufferData[i];
+		colorData[i]  = colorBufferData[i];
+	}
+
+	shapeData.setMode(GL_TRIANGLES);
+	shapeData.setVertexData(vertexData, dataSize);
+	shapeData.setColorData(colorData, dataSize);
 
 	return;
-}
-
-void agl::Cuboid::deleteData()
-{
-	shape.deleteData();
-
-	return;
-}
-
-agl::GLPrimative agl::Cuboid::getShape()
-{
-	return shape;
 }

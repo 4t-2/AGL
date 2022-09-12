@@ -1,8 +1,10 @@
 #include "../AGL/agl.hpp"
+#include <glm/ext/matrix_clip_space.hpp>
+#include <glm/trigonometric.hpp>
 
 #define TITLE  "winfloat"
-#define WIDTH  500
-#define HEIGHT 500
+#define WIDTH  500.
+#define HEIGHT 500.
 #define FPS	   60
 #define CLEARCOLOR         \
 	{                      \
@@ -38,13 +40,12 @@ int main(int argc, char *argv[])
 	agl::Shader shader;
 	shader.loadFromFile("./vert.vert", "./frag.frag");
 
-	agl::Vec3f pos = {0, 0, 5};
+	agl::Vec3f pos = {4, 3, 3};
 
 	agl::Cuboid cuboid;
 	cuboid.setSize({1, 1, 1});
 	cuboid.setPosition(pos);
 	cuboid.setColor(agl::Color::Blue);
-	cuboid.setData();
 
 	agl::Rectangle rectangle;
 	rectangle.setColor(agl::Color::Red);
@@ -52,14 +53,12 @@ int main(int argc, char *argv[])
 	agl::Circle circle(88);
 
 	agl::Camera camera;
-	// camera.setPerspectiveProjection(45, (float)WIDTH / (float)HEIGHT, 0, 100);
+	camera.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
 	camera.setView(pos, {0, 0, 0}, {0, 1, 0});
-
-	camera.setOrthographicProjection(-1, 1, -1, 1, 0, 100);
 
 	shader.setCamera(camera);
 	shader.use();
-	shader.updateCamera(camera);
+	shader.updateCamera();
 
 	agl::Vec2i offset;
 
@@ -92,18 +91,17 @@ int main(int argc, char *argv[])
 			pos.x -= 0.01;
 		}
 
-		if(event.isKeyPressed(XK_q))
+		if (event.isKeyPressed(XK_q))
 		{
 			pos.y -= 0.01;
-		} if(event.isKeyPressed(XK_e))
+		}
+		if (event.isKeyPressed(XK_e))
 		{
 			pos.y += 0.01;
 		}
 
-		printf("%f %f %f\n", pos.x, pos.y, pos.z);
-
 		camera.setView(pos, {0, 0, 0}, {0, 1, 0});
-		shader.updateCamera(camera);
+		shader.updateCamera();
 	}
 
 	shader.deleteProgram();
