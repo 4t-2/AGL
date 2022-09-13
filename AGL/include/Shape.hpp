@@ -27,8 +27,7 @@ namespace agl
 			void setSize(Vec2f size);
 			void setColor(Color color);
 
-			void setShapeData();
+			void		setShapeData();
 			GLPrimative getShapeData();
-
 	};
 } // namespace agl

@@ -226,6 +226,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 
 void agl::RenderWindow::drawShape(agl::Shape &shape)
 {
+	shape.setShapeData();
 	this->drawPrimative(shape.getShapeData());
 
 	return;
