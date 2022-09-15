@@ -119,6 +119,7 @@ void agl::RenderWindow::initGL()
 	glewInit();
 
 	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
 
 	return;
 }
@@ -171,6 +172,8 @@ void agl::RenderWindow::display()
 
 void agl::RenderWindow::close()
 {
+	glDeleteVertexArrays(1, &VertexArrayID);
+
 	glXMakeCurrent(dpy, None, NULL); // release gl binding to window
 	glXDestroyContext(dpy, glc);	 // destroy context
 	XDestroyWindow(dpy, win);		 // kill window
