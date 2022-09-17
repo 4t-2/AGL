@@ -42,11 +42,22 @@ int main(int argc, char *argv[])
 
 	agl::Vec3f size		= {1, 1, 1};
 	agl::Vec3f position = {0, 0, 0};
+	agl::Vec3f rotation = {0, 0, 0};
 
 	agl::Cuboid cuboid;
 	cuboid.setSize({1, 1, 1});
-	cuboid.setPosition(size);
+	cuboid.setPosition(position);
 	cuboid.setColor(agl::Color::Blue);
+
+	agl::Circle circle(100);
+	circle.setSize(size);
+	circle.setPosition(position);
+	circle.setColor(agl::Color::Red);
+
+	agl::Rectangle rectangle;
+	rectangle.setSize({1, 1, 1});
+	rectangle.setPosition(position);
+	rectangle.setColor(agl::Color::Blue);
 
 	agl::Camera camera;
 	camera.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
@@ -66,69 +77,37 @@ int main(int argc, char *argv[])
 
 		window.clear();
 		
-		window.drawShape(cuboid);
+		window.drawShape(rectangle);
 
 		window.display();
 
-		if (event.isKeyPressed(XK_Shift_L))
+		if(event.isKeyPressed(XK_q))
 		{
-			if (event.isKeyPressed(XK_Up))
-			{
-				size.z -= 0.01;
-			}
-			if (event.isKeyPressed(XK_Down))
-			{
-				size.z += 0.01;
-			}
-			if (event.isKeyPressed(XK_Left))
-			{
-				size.x += 0.01;
-			}
-			if (event.isKeyPressed(XK_Right))
-			{
-				size.x -= 0.01;
-			}
-
-			if (event.isKeyPressed(XK_q))
-			{
-				size.y -= 0.01;
-			}
-			if (event.isKeyPressed(XK_e))
-			{
-				size.y += 0.01;
-			}
-		}
-		else
+			rotation.x++;
+		} else if(event.isKeyPressed(XK_w))
 		{
-			if (event.isKeyPressed(XK_Up))
-			{
-				position.z -= 0.01;
-			}
-			if (event.isKeyPressed(XK_Down))
-			{
-				position.z += 0.01;
-			}
-			if (event.isKeyPressed(XK_Left))
-			{
-				position.x += 0.01;
-			}
-			if (event.isKeyPressed(XK_Right))
-			{
-				position.x -= 0.01;
-			}
-
-			if (event.isKeyPressed(XK_q))
-			{
-				position.y -= 0.01;
-			}
-			if (event.isKeyPressed(XK_e))
-			{
-				position.y += 0.01;
-			}
+			rotation.x--;
 		}
 
-		cuboid.setSize(size);
-		cuboid.setPosition(position);
+		if(event.isKeyPressed(XK_a))
+		{
+			rotation.y++;
+		} else if(event.isKeyPressed(XK_s))
+		{
+			rotation.y--;
+		}
+
+		if(event.isKeyPressed(XK_z))
+		{
+			rotation.z++;
+		} else if(event.isKeyPressed(XK_x))
+		{
+			rotation.z--;
+		}
+
+		rectangle.setSize(size);
+		rectangle.setPosition(position);
+		rectangle.setRotation(rotation);
 	}
 	
 	shader.deleteProgram();

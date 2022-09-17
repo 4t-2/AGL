@@ -47,8 +47,11 @@ agl::Circle::Circle(unsigned int faces)
 	colorData[14] = 0;
 
 	shapeData.setMode(GL_TRIANGLE_FAN);
-	shapeData.setVertexData(vertexData, size);
-	shapeData.setColorData(colorData, size);
+	shapeData.setBufferSize(size);
+	shapeData.genVertexBuffer();
+	shapeData.setVertexData(vertexData);
+	shapeData.genColorBuffer();
+	shapeData.setColorData(colorData);
 
 	return;
 }

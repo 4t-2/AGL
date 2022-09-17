@@ -12,6 +12,7 @@ namespace agl
 		protected:
 			Vec3f position = {0, 0, 0};
 			Vec3f size	   = {1, 1, 1};
+			Vec3f rotation = {0, 0, 0};
 			Color color	   = {255, 0, 0, 0};
 
 			GLPrimative shapeData;
@@ -25,6 +26,8 @@ namespace agl
 			void setPosition(Vec2f position);
 			void setSize(Vec3f size);
 			void setSize(Vec2f size);
+			void setRotation(Vec3f rotation);
+			void setRotation(Vec2f rotation);
 			void setColor(Color color);
 
 			void		setShapeData();

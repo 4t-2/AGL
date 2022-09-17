@@ -8,8 +8,7 @@ namespace agl
 			int			 mode;
 			unsigned int vertexBuffer;
 			unsigned int colorBuffer;
-			int			 vertexDataSize;
-			int			 colorDataSize;
+			int			 bufferSize;
 
 		public:
 			/*
@@ -30,16 +29,21 @@ namespace agl
 			*/
 			void setMode(int mode);
 
-			void setVertexData(float vertexBufferData[], int size);
-			void setColorData(float colorBufferData[], int size);
+			void genVertexBuffer();
+			void genColorBuffer();
+
+			// size - Number of bytes
+			void setBufferSize(int size);
+
+			void setVertexData(float vertexBufferData[]);
+			void setColorData(float colorBufferData[]);
 
 			void deleteData();
 
 			int getMode();
 
 			unsigned int getVertexBuffer();
-			int			 getVertexDataSize();
+			int			 getBufferSize();
 			unsigned int getColorBuffer();
-			int			 getColorDataSize();
 	};
 } // namespace agl

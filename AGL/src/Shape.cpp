@@ -1,4 +1,5 @@
 #include "../include/Shape.hpp"
+#include "../include/Mat4f.hpp"
 #include <cstdio>
 #include <cstdlib>
 #include <glm/ext/matrix_float4x4.hpp>
@@ -46,6 +47,21 @@ void agl::Shape::setSize(agl::Vec2f size)
 	return;
 }
 
+void agl::Shape::setRotation(agl::Vec3f rotation)
+{
+	this->rotation = rotation;
+
+	return;
+}
+
+void agl::Shape::setRotation(agl::Vec2f rotation)
+{
+	this->rotation.x = rotation.x;
+	this->rotation.y = rotation.y;
+
+	return;
+}
+
 void agl::Shape::setColor(agl::Color color)
 {
 	this->color = color;
@@ -68,31 +84,71 @@ void transform(glm::mat4 &mat, agl::Vec3f size, agl::Vec3f position)
 	return;
 }
 
-void rotate(glm::mat4 &mat, float xRot)
+void rotateX(glm::mat4 &mat, float x)
 {
+	mat[3][3] = 1.0f;
 	mat[0][0] = 1.0f;
+
+	float xSin = sin(x * 3.14 / 180);
+	float xCos = cos(x * 3.14 / 180);
+
+	mat[1][1] = xCos;
+	mat[2][2] = xCos;
+	mat[1][2] = xSin;
+	mat[2][1] = -xSin;
+
+	return;
+}
+
+void rotateY(glm::mat4 &mat, float y)
+{
+	mat[1][1] = 1.0f;
 	mat[3][3] = 1.0f;
 
-	mat[1][1] = cos(xRot * 3.14/180);
-	mat[2][2] = cos(xRot * 3.14/180);
-	
-	mat[2][1] = -sin(xRot * 3.14/180);
-	mat[1][2] = sin(xRot * 3.14/180);
+	float ySin = sin(y * 3.14 / 180);
+	float yCos = cos(y * 3.14 / 180);
+
+	mat[0][0] = yCos;
+	mat[2][2] = yCos;
+	mat[0][2] = ySin;
+	mat[2][0] = -ySin;
+
+	return;
+}
+
+void rotateZ(glm::mat4 &mat, float z)
+{
+	mat[2][2] = 1.0f;
+	mat[3][3] = 1.0f;
+
+	float zSin = sin(z * 3.14 / 180);
+	float zCos = cos(z * 3.14 / 180);
+
+	mat[0][0] = zCos;
+	mat[1][1] = zCos;
+	mat[1][0] = zSin;
+	mat[0][1] = -zSin;
 
 	return;
 }
 
 void agl::Shape::setShapeData()
 {
-	int vertices = (shapeData.getVertexDataSize() / sizeof(float)) / 3;
+	int vertices = (shapeData.getBufferSize() / sizeof(float)) / 3;
 
 	glm::mat4 transformMatrix = glm::mat4();
 	transform(transformMatrix, size, position);
 
-	glm::mat4 rotationMatrix = glm::mat4();
-	rotate(rotationMatrix, 45);
+	glm::mat4 xRotationMatrix = glm::mat4();
+	rotateX(xRotationMatrix, rotation.x);
+	glm::mat4 yRotationMatrix = glm::mat4();
+	rotateY(yRotationMatrix, rotation.y);
+	glm::mat4 zRotationMatrix = glm::mat4();
+	rotateZ(zRotationMatrix, rotation.z);
 
-	float *newVertexData = (float *)malloc(shapeData.getVertexDataSize());
+	glm::mat4 rotationMatrix = xRotationMatrix * yRotationMatrix * zRotationMatrix;
+
+	float *newVertexData = (float *)malloc(shapeData.getBufferSize());
 
 	for (int i = 0; i < vertices; i++)
 	{
@@ -109,7 +165,7 @@ void agl::Shape::setShapeData()
 		newVertexData[(i * 3) + 2] = newPos.z;
 	}
 
-	shapeData.setVertexData(newVertexData, shapeData.getVertexDataSize());
+	shapeData.setVertexData(newVertexData);
 
 	free(newVertexData);
 

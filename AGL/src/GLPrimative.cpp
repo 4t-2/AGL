@@ -10,24 +10,39 @@ void agl::GLPrimative::setMode(int mode)
 	return;
 }
 
-void agl::GLPrimative::setVertexData(float vertexBufferData[], int size)
+void agl::GLPrimative::genVertexBuffer()
 {
-	this->vertexDataSize = size;
-
 	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexDataSize, vertexBufferData, GL_STATIC_DRAW);
 
 	return;
 }
 
-void agl::GLPrimative::setColorData(float colorBufferData[], int size)
+void agl::GLPrimative::genColorBuffer()
 {
-	this->colorDataSize = size;
-
 	glGenBuffers(1, &colorBuffer);
+
+	return;
+}
+
+void agl::GLPrimative::setBufferSize(int size)
+{
+	bufferSize = size;
+
+	return;
+}
+
+void agl::GLPrimative::setVertexData(float vertexBufferData[])
+{
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, bufferSize, vertexBufferData, GL_STATIC_DRAW);
+
+	return;
+}
+
+void agl::GLPrimative::setColorData(float colorBufferData[])
+{
 	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, size, colorBufferData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, bufferSize, colorBufferData, GL_STATIC_DRAW);
 
 	return;
 }
@@ -47,14 +62,9 @@ unsigned int agl::GLPrimative::getColorBuffer()
 	return colorBuffer;
 }
 
-int agl::GLPrimative::getVertexDataSize()
+int agl::GLPrimative::getBufferSize()
 {
-	return vertexDataSize;
-}
-
-int agl::GLPrimative::getColorDataSize()
-{
-	return colorDataSize;
+	return bufferSize;
 }
 
 void agl::GLPrimative::deleteData()

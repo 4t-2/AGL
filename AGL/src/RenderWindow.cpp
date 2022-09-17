@@ -218,7 +218,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 
 	// Draw the triangle !
 	glDrawArrays(primative.getMode(), 0,
-				 primative.getVertexDataSize() / 12); // Starting from vertex 0; 3 vertices
+				 primative.getBufferSize() / 12); // Starting from vertex 0; 3 vertices
 													  // total -> 1 triangle
 
 	glDisableVertexAttribArray(0);

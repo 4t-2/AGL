@@ -98,8 +98,11 @@ agl::Cuboid::Cuboid()
 	}
 
 	shapeData.setMode(GL_TRIANGLES);
-	shapeData.setVertexData(vertexData, dataSize);
-	shapeData.setColorData(colorData, dataSize);
+	shapeData.setBufferSize(dataSize);
+	shapeData.genVertexBuffer();
+	shapeData.setVertexData(vertexData);
+	shapeData.genColorBuffer();
+	shapeData.setColorData(colorData);
 
 	return;
 }
