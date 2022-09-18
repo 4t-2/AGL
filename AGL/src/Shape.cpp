@@ -146,20 +146,25 @@ void agl::Shape::setShapeData()
 	glm::mat4 zRotationMatrix = glm::mat4();
 	rotateZ(zRotationMatrix, rotation.z);
 
-	glm::mat4 rotationMatrix = xRotationMatrix * yRotationMatrix * zRotationMatrix;
+	glm::mat4 rotationMatrix = glm::mat4(1.0f);
+	// glm::mat4 rotationMatrix = xRotationMatrix * yRotationMatrix * zRotationMatrix;
+
+	agl::Mat4f translate;
+	translate.translate(position);
 
 	float *newVertexData = (float *)malloc(shapeData.getBufferSize());
 
 	for (int i = 0; i < vertices; i++)
 	{
-		glm::vec4 oldPos;
+		agl::Vec4f oldPos;
 		oldPos.x = vertexData[(i * 3) + 0];
 		oldPos.y = vertexData[(i * 3) + 1];
 		oldPos.z = vertexData[(i * 3) + 2];
 		oldPos.w = 1.0f;
 
-		glm::vec4 newPos = rotationMatrix * transformMatrix * oldPos;
-
+		// glm::vec4 newPos = rotationMatrix * transformMatrix * oldPos;
+		Vec4f newPos = translate.multiply(oldPos);
+	
 		newVertexData[(i * 3) + 0] = newPos.x;
 		newVertexData[(i * 3) + 1] = newPos.y;
 		newVertexData[(i * 3) + 2] = newPos.z;

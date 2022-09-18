@@ -76,40 +76,35 @@ int main(int argc, char *argv[])
 		event.pollPointer();
 
 		window.clear();
-		
-		window.drawShape(rectangle);
+
+		window.drawShape(cuboid);
 
 		window.display();
 
-		if(event.isKeyPressed(XK_q))
+		float speed = 0.01;
+
+		if (event.isKeyPressed(XK_Left))
 		{
-			rotation.x++;
-		} else if(event.isKeyPressed(XK_w))
+			position.x -= speed;
+		}
+		if (event.isKeyPressed(XK_Right))
 		{
-			rotation.x--;
+			position.x += speed;
+		}
+		if (event.isKeyPressed(XK_Up))
+		{
+			position.y += speed;
+		}
+		if (event.isKeyPressed(XK_Down))
+		{
+			position.y -= speed;
 		}
 
-		if(event.isKeyPressed(XK_a))
-		{
-			rotation.y++;
-		} else if(event.isKeyPressed(XK_s))
-		{
-			rotation.y--;
-		}
-
-		if(event.isKeyPressed(XK_z))
-		{
-			rotation.z++;
-		} else if(event.isKeyPressed(XK_x))
-		{
-			rotation.z--;
-		}
-
-		rectangle.setSize(size);
-		rectangle.setPosition(position);
-		rectangle.setRotation(rotation);
+		cuboid.setSize(size);
+		cuboid.setPosition(position);
+		cuboid.setRotation(rotation);
 	}
-	
+
 	shader.deleteProgram();
 
 	window.close();
