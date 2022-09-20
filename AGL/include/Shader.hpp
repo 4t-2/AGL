@@ -22,8 +22,10 @@ namespace agl
 			*/
 			int	 loadFromFile(const char *vertex_file_path, const char *fragment_file_path);
 			void use();
-			void setCamera(Camera &camera);
-			void updateCamera();
+			// void setCamera(Camera &camera);
+			// void updateCamera();
+
+			int getUniformLocation(const char *name);
 			void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV);
 			void deleteProgram();
 

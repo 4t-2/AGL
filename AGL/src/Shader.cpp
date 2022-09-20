@@ -138,6 +138,11 @@ GLuint agl::Shader::getProgramID()
 	return programID;
 }
 
+int agl::Shader::getUniformLocation(const char *name)
+{
+	return glGetUniformLocation(programID, name);
+}
+
 void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV)
 {
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, MPV);
@@ -152,19 +157,17 @@ void agl::Shader::use()
 	return;
 }
 
-void agl::Shader::setCamera(agl::Camera &camera)
-{
-	matrixID = glGetUniformLocation(programID, "MVP");
-	this->camera = &camera;
-
-	return;
-}
-
-void agl::Shader::updateCamera()
-{
-	glm::mat4 MVP	   = camera->getMVP();
-
-	this->setUniformMatrix4fv(matrixID, &MVP[0][0]);
-
-	return;
-}
+// void agl::Shader::setCamera(agl::Camera &camera)
+// {
+// 	matrixID = this->getUniformLocation("MVP");
+// 	this->camera = &camera;
+//
+// 	return;
+// }
+//
+// void agl::Shader::updateCamera()
+// {
+// 	this->setUniformMatrix4fv(matrixID, &camera->getMVP()[0][0]);
+//
+// 	return;
+// }

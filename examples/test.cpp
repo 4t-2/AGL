@@ -63,9 +63,9 @@ int main(int argc, char *argv[])
 	camera.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
 	camera.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
 
-	shader.setCamera(camera);
 	shader.use();
-	shader.updateCamera();
+	int mvpID = shader.getUniformLocation("MVP");
+	shader.setUniformMatrix4fv(mvpID, &camera.getMVP()[0][0]);
 
 	agl::Vec2i offset;
 
