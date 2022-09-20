@@ -218,11 +218,48 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 
 	// Draw the triangle !
 	glDrawArrays(primative.getMode(), 0,
-				 primative.getBufferSize() / 12); // Starting from vertex 0; 3 vertices
-													  // total -> 1 triangle
+				 primative.getBufferSize() / 12); // Starting from vertex 0; 3
+												  // vertices total -> 1 triangle
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+
+	return;
+}
+
+void agl::RenderWindow::useShader(Shader &shader)
+{
+	this->shader = &shader;
+
+	glUseProgram(this->shader->getProgramID());
+
+	return;
+}
+
+void agl::RenderWindow::setCamera(Camera &camera)
+{
+	mvpID		 = shader->getUniformLocation("MVP");
+	this->camera = &camera;
+
+	return;
+}
+
+void agl::RenderWindow::updateCamera()
+{
+	glm::mat4 MVP = camera->getMVP();
+
+	printf("%d\n", shader->getProgramID());
+	for (int x = 0; x < 4; x++)
+	{
+		for (int y = 0; y < 4; y++)
+		{
+			printf("%f ", MVP[x][y]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+
+	shader->setUniformMatrix4fv(mvpID, &MVP[0][0]);
 
 	return;
 }

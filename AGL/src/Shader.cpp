@@ -138,9 +138,14 @@ GLuint agl::Shader::getProgramID()
 	return programID;
 }
 
-void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV)
+int agl::Shader::getUniformLocation(const char *name)
 {
-	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, MPV);
+	return glGetUniformLocation(programID, name);
+}
+
+void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix)
+{
+	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, matrix);
 
 	return;
 }

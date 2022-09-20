@@ -35,6 +35,12 @@ namespace agl
 
 			GLuint VertexArrayID;
 
+			Camera *camera;
+			Shader *shader;
+
+			GLuint mvpID;
+			GLuint transformationID;
+
 		public:
 			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, glm::mat4 *MPV);
 
@@ -51,6 +57,10 @@ namespace agl
 			void setViewport(int x, int y, int width, int height);
 			void setClearColor(agl::Color color);
 			void setFPS(int fps);
+
+			void useShader(Shader &shader);
+			void setCamera(Camera &camera);
+			void updateCamera();
 
 			void close();
 
