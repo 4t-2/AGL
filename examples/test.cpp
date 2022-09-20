@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
 	agl::Vec3f size		= {1, 1, 1};
 	agl::Vec3f position = {0, 0, 0};
 	agl::Vec3f rotation = {0, 0, 0};
-	agl::Vec3f cameraPosition = {4, 3, 3};
 
 	agl::Cuboid cuboid;
 	cuboid.setSize({1, 1, 1});
@@ -62,11 +61,11 @@ int main(int argc, char *argv[])
 
 	agl::Camera camera;
 	camera.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
-	camera.setView(cameraPosition, {0, 0, 0}, {0, 1, 0});
+	camera.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
 
-	window.useShader(shader);
-	window.setCamera(camera);
-	window.updateCamera();
+	shader.setCamera(camera);
+	shader.use();
+	shader.updateCamera();
 
 	agl::Vec2i offset;
 
@@ -86,30 +85,24 @@ int main(int argc, char *argv[])
 
 		if (event.isKeyPressed(XK_Left))
 		{
-			cameraPosition.x -= speed;
+			position.x -= speed;
 		}
 		if (event.isKeyPressed(XK_Right))
 		{
-			cameraPosition.x += speed;
+			position.x += speed;
 		}
 		if (event.isKeyPressed(XK_Up))
 		{
-			cameraPosition.y += speed;
+			position.y += speed;
 		}
 		if (event.isKeyPressed(XK_Down))
 		{
-			cameraPosition.y -= speed;
+			position.y -= speed;
 		}
 
-		// cuboid.setSize(size);
-		// cuboid.setPosition(position);
-		// cuboid.setRotation(rotation);
-		camera.setView(cameraPosition, {0, 0, 0}, {0, 1, 0});
-
-		if (event.isKeyPressed(XK_space))
-		{
-			window.updateCamera();
-		}
+		cuboid.setSize(size);
+		cuboid.setPosition(position);
+		cuboid.setRotation(rotation);
 	}
 
 	shader.deleteProgram();
