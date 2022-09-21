@@ -26,7 +26,7 @@ namespace agl
 			// void updateCamera();
 
 			int getUniformLocation(const char *name);
-			void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *MPV);
+			void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix);
 			void deleteProgram();
 
 			GLuint getProgramID();

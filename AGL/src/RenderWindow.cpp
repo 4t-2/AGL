@@ -9,6 +9,7 @@
 #include <bits/types/struct_timespec.h>
 #include <cstdlib>
 #include <ctime>
+#include <glm/ext/matrix_float4x4.hpp>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -218,8 +219,8 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 
 	// Draw the triangle !
 	glDrawArrays(primative.getMode(), 0,
-				 primative.getBufferSize() / 12); // Starting from vertex 0; 3 vertices
-													  // total -> 1 triangle
+				 primative.getBufferSize() / 12); // Starting from vertex 0; 3
+												  // vertices total -> 1 triangle
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
@@ -227,9 +228,108 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-void agl::RenderWindow::drawShape(agl::Shape &shape)
+namespace matFuncs
 {
-	shape.setShapeData();
+
+	void translate(glm::mat4 &mat, agl::Vec3f position)
+	{
+		mat[3][3] = 1.0f;
+
+		mat[0][0] = 1.0f;
+		mat[1][1] = 1.0f;
+		mat[2][2] = 1.0f;
+
+		mat[3][0] = position.x;
+		mat[3][1] = position.y;
+		mat[3][2] = position.z;
+
+		return;
+	}
+
+	void scale(glm::mat4 &mat, agl::Vec3f size)
+	{
+		mat[3][3] = 1.0f;
+
+		mat[0][0] = size.x;
+		mat[1][1] = size.y;
+		mat[2][2] = size.z;
+
+		return;
+	}
+
+	void rotateX(glm::mat4 &mat, float x)
+	{
+		mat[3][3] = 1.0f;
+		mat[0][0] = 1.0f;
+
+		float xSin = sin(x * 3.14 / 180);
+		float xCos = cos(x * 3.14 / 180);
+
+		mat[1][1] = xCos;
+		mat[2][2] = xCos;
+		mat[1][2] = xSin;
+		mat[2][1] = -xSin;
+
+		return;
+	}
+
+	void rotateY(glm::mat4 &mat, float y)
+	{
+		mat[1][1] = 1.0f;
+		mat[3][3] = 1.0f;
+
+		float ySin = sin(y * 3.14 / 180);
+		float yCos = cos(y * 3.14 / 180);
+
+		mat[0][0] = yCos;
+		mat[2][2] = yCos;
+		mat[0][2] = ySin;
+		mat[2][0] = -ySin;
+
+		return;
+	}
+
+	void rotateZ(glm::mat4 &mat, float z)
+	{
+		mat[2][2] = 1.0f;
+		mat[3][3] = 1.0f;
+
+		float zSin = sin(z * 3.14 / 180);
+		float zCos = cos(z * 3.14 / 180);
+
+		mat[0][0] = zCos;
+		mat[1][1] = zCos;
+		mat[1][0] = zSin;
+		mat[0][1] = -zSin;
+
+		return;
+	}
+
+} // namespace matFuncs
+
+void agl::RenderWindow::drawShape(agl::Shape &shape, Shader shader, int transformID)
+{
+	// shape.setShapeData();
+	
+	glm::mat4 transform;
+	glm::mat4 translate = glm::mat4();
+	glm::mat4 scale		= glm::mat4();
+	glm::mat4 rotation	= glm::mat4();
+	glm::mat4 rotationX = glm::mat4();
+	glm::mat4 rotationY = glm::mat4();
+	glm::mat4 rotationZ = glm::mat4();
+
+	matFuncs::translate(translate, shape.getPosition());
+	matFuncs::scale(scale, shape.getSize());
+	matFuncs::rotateX(rotationX, shape.getRotation().x);
+	matFuncs::rotateY(rotationY, shape.getRotation().y);
+	matFuncs::rotateZ(rotationZ, shape.getRotation().z);
+
+	rotation  = rotationX * rotationY * rotationZ;
+	transform = translate * rotation * scale;
+
+	shader.setUniformMatrix4fv(transformID, &transform[0][0]);
+
 	this->drawPrimative(shape.getShapeData());
 
 	return;

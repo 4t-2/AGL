@@ -58,7 +58,7 @@ namespace agl
 
 			void drawPrimative(GLPrimative primative);
 
-			void drawShape(Shape &shape);
+			void drawShape(Shape &shape, Shader shader, int transformID);
 
 			void display();
 

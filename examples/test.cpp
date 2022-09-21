@@ -64,7 +64,8 @@ int main(int argc, char *argv[])
 	camera.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
 
 	shader.use();
-	int mvpID = shader.getUniformLocation("MVP");
+	int mvpID		= shader.getUniformLocation("MVP");
+	int transformID = shader.getUniformLocation("Transform");
 	shader.setUniformMatrix4fv(mvpID, &camera.getMVP()[0][0]);
 
 	agl::Vec2i offset;
@@ -77,11 +78,14 @@ int main(int argc, char *argv[])
 
 		window.clear();
 
-		window.drawShape(cuboid);
+		for (int i = 0; i < 9999; i++)
+		{
+			window.drawShape(cuboid, shader, transformID);
+		}
 
 		window.display();
 
-		float speed = 0.01;
+		float speed = 0.04;
 
 		if (event.isKeyPressed(XK_Left))
 		{
@@ -98,6 +102,40 @@ int main(int argc, char *argv[])
 		if (event.isKeyPressed(XK_Down))
 		{
 			position.y -= speed;
+		}
+
+		if (event.isKeyPressed(XK_a))
+		{
+			size.x -= speed;
+		}
+		if (event.isKeyPressed(XK_d))
+		{
+			size.x += speed;
+		}
+		if (event.isKeyPressed(XK_w))
+		{
+			size.y += speed;
+		}
+		if (event.isKeyPressed(XK_s))
+		{
+			size.y -= speed;
+		}
+
+		if (event.isKeyPressed(XK_f))
+		{
+			rotation.x -= speed * 10;
+		}
+		if (event.isKeyPressed(XK_h))
+		{
+			rotation.x += speed * 10;
+		}
+		if (event.isKeyPressed(XK_t))
+		{
+			rotation.y += speed * 10;
+		}
+		if (event.isKeyPressed(XK_g))
+		{
+			rotation.y -= speed * 10;
 		}
 
 		cuboid.setSize(size);

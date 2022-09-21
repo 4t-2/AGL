@@ -69,6 +69,26 @@ void agl::Shape::setColor(agl::Color color)
 	return;
 }
 
+agl::Vec3f agl::Shape::getPosition()
+{
+	return position;
+}
+
+agl::Vec3f agl::Shape::getSize()
+{
+	return size;
+}
+
+agl::Vec3f agl::Shape::getRotation()
+{
+	return rotation;
+}
+
+agl::Color agl::Shape::getColor()
+{
+	return color;
+}
+
 void transform(glm::mat4 &mat, agl::Vec3f size, agl::Vec3f position)
 {
 	mat[3][3] = 1.0f;
@@ -146,8 +166,8 @@ void agl::Shape::setShapeData()
 	glm::mat4 zRotationMatrix = glm::mat4();
 	rotateZ(zRotationMatrix, rotation.z);
 
-	glm::mat4 rotationMatrix = glm::mat4(1.0f);
-	// glm::mat4 rotationMatrix = xRotationMatrix * yRotationMatrix * zRotationMatrix;
+	glm::mat4 rotationMatrix = glm::mat4();
+	rotationMatrix = xRotationMatrix * yRotationMatrix * zRotationMatrix;
 
 	agl::Mat4f translate;
 	translate.translate(position);
@@ -156,14 +176,13 @@ void agl::Shape::setShapeData()
 
 	for (int i = 0; i < vertices; i++)
 	{
-		agl::Vec4f oldPos;
+		glm::vec4 oldPos;
 		oldPos.x = vertexData[(i * 3) + 0];
 		oldPos.y = vertexData[(i * 3) + 1];
 		oldPos.z = vertexData[(i * 3) + 2];
 		oldPos.w = 1.0f;
 
-		// glm::vec4 newPos = rotationMatrix * transformMatrix * oldPos;
-		Vec4f newPos = translate.multiply(oldPos);
+		glm::vec4 newPos = rotationMatrix * transformMatrix * oldPos;
 	
 		newVertexData[(i * 3) + 0] = newPos.x;
 		newVertexData[(i * 3) + 1] = newPos.y;

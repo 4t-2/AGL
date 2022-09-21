@@ -30,6 +30,11 @@ namespace agl
 			void setRotation(Vec2f rotation);
 			void setColor(Color color);
 
+			Vec3f getPosition();
+			Vec3f getSize();
+			Vec3f getRotation();
+			Color getColor();
+
 			void		setShapeData();
 			GLPrimative getShapeData();
 	};
