@@ -17,11 +17,9 @@ If you want to learn how to use AGL then go to [my site](https://synteng.github.
 The AGL source code is distributed under the MIT License.
 
 ## TODO
-- Transform vertices on GPU instead of CPU
 - Create own matrix type (drop GLM dependency)
 - Textures (as many filetypes as can be easily done)
 - Text (.ttf)
-- 3D support
 - Add comments to code
 - Tutorials on website
 - Create a few basic examples
