@@ -35,22 +35,25 @@ void agl::Mat4f::scale(agl::Vec3f vector)
 	return;
 }
 
-agl::Mat4f agl::Mat4f::multiply(agl::Mat4f matrix)
+agl::Mat4f agl::Mat4f::operator*(agl::Mat4f matrix)
 {
-	Mat4f newMatrix;
+	agl::Mat4f newMatrix;
 
-	for (int y = 0; y < 4; y++)
+	for (int i = 0; i < 4; ++i)
 	{
-		for (int x = 0; x < 4; x++)
+		for (int j = 0; j < 4; ++j)
 		{
-			newMatrix.data[x][y] = data[x][y] * matrix.data[y][x];
+			for (int k = 0; k < 4; ++k)
+			{
+				newMatrix.data[i][j] += matrix.data[i][k] * data[k][j];
+			}
 		}
 	}
 
 	return newMatrix;
 }
 
-agl::Vec4f agl::Mat4f::multiply(agl::Vec4f vector)
+agl::Vec4f agl::Mat4f::operator*(agl::Vec4f vector)
 {
 	Vec4f newVector;
 

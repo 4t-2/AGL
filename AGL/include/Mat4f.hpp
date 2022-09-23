@@ -2,6 +2,7 @@
 
 #include "Vec3f.hpp"
 #include "Vec4f.hpp"
+#include <cstddef>
 
 namespace agl
 {
@@ -15,12 +16,14 @@ namespace agl
 				{0, 0, 0, 0},
 			};
 
+			Mat4f operator*(Mat4f matrix);
+			Vec4f operator*(Vec4f vector);
+			
+			void clear();
+
 			void identity();
 			void translate(Vec3f vector);
 			void scale(Vec3f vector);
 			void rotate(Vec3f vector);
-
-			Mat4f multiply(Mat4f matrix);
-			Vec4f multiply(Vec4f vector);
 	};
 } // namespace agl
