@@ -20,10 +20,13 @@ namespace agl
 			Vec4f operator*(Vec4f vector);
 			
 			void clear();
-
+			
 			void identity();
-			void translate(Vec3f vector);
-			void scale(Vec3f vector);
-			void rotate(Vec3f vector);
+			void translate(Vec3f translation);
+			void scale(Vec3f scale);
+			void rotate(Vec3f rotation);
+			void rotateX(float x);
+			void rotateY(float y);
+			void rotateZ(float z);
 	};
 } // namespace agl

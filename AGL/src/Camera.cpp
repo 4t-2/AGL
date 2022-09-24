@@ -1,7 +1,5 @@
 #include "../include/Camera.hpp"
 #include <cstdio>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/vector_float3.hpp>
 
 void agl::Camera::setPerspectiveProjection(float fov, float aspectRatio, float near, float far)
 {

@@ -3,7 +3,6 @@
 #include "Camera.hpp"
 
 #include <GL/gl.h>
-#include <glm/gtc/matrix_transform.hpp>
 
 namespace agl
 {

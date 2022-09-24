@@ -1,39 +1,5 @@
 #include "../include/Mat4f.hpp"
-#include <cstdio>
-
-void agl::Mat4f::identity()
-{
-	data[0][0] = 1;
-	data[1][1] = 1;
-	data[2][2] = 1;
-	data[3][3] = 1;
-
-	return;
-}
-
-void agl::Mat4f::translate(agl::Vec3f vector)
-{
-	data[0][0] = 1;
-	data[1][1] = 1;
-	data[2][2] = 1;
-	data[3][3] = 1;
-
-	data[3][0] = vector.x;
-	data[3][1] = vector.y;
-	data[3][2] = vector.z;
-
-	return;
-}
-
-void agl::Mat4f::scale(agl::Vec3f vector)
-{
-	data[0][0] = vector.x;
-	data[1][1] = vector.y;
-	data[2][2] = vector.z;
-	data[3][3] = 1;
-
-	return;
-}
+#include <math.h>
 
 agl::Mat4f agl::Mat4f::operator*(agl::Mat4f matrix)
 {
@@ -63,4 +29,109 @@ agl::Vec4f agl::Mat4f::operator*(agl::Vec4f vector)
 	newVector.w = (data[0][3] * vector.x) + (data[1][3] * vector.y) + (data[2][3] * vector.z) + (data[3][3] * vector.w);
 
 	return newVector;
+}
+void agl::Mat4f::identity()
+{
+	data[0][0] = 1;
+	data[1][1] = 1;
+	data[2][2] = 1;
+	data[3][3] = 1;
+
+	return;
+}
+
+void agl::Mat4f::translate(agl::Vec3f translation)
+{
+	data[0][0] = 1;
+	data[1][1] = 1;
+	data[2][2] = 1;
+	data[3][3] = 1;
+
+	data[3][0] = translation.x;
+	data[3][1] = translation.y;
+	data[3][2] = translation.z;
+
+	return;
+}
+
+void agl::Mat4f::scale(agl::Vec3f scale)
+{
+	data[0][0] = scale.x;
+	data[1][1] = scale.y;
+	data[2][2] = scale.z;
+	data[3][3] = 1;
+
+	return;
+}
+
+void agl::Mat4f::rotateX(float x)
+{
+	data[3][3] = 1.0f;
+	data[0][0] = 1.0f;
+
+	float xSin = sin(x * 3.14 / 180);
+	float xCos = cos(x * 3.14 / 180);
+
+	data[1][1] = xCos;
+	data[2][2] = xCos;
+	data[1][2] = xSin;
+	data[2][1] = -xSin;
+
+	return;
+}
+
+void agl::Mat4f::rotateY(float y)
+{
+	data[1][1] = 1.0f;
+	data[3][3] = 1.0f;
+
+	float ySin = sin(y * 3.14 / 180);
+	float yCos = cos(y * 3.14 / 180);
+
+	data[0][0] = yCos;
+	data[2][2] = yCos;
+	data[0][2] = ySin;
+	data[2][0] = -ySin;
+
+	return;
+}
+
+void agl::Mat4f::rotateZ(float z)
+{
+	data[2][2] = 1.0f;
+	data[3][3] = 1.0f;
+
+	float zSin = sin(z * 3.14 / 180);
+	float zCos = cos(z * 3.14 / 180);
+
+	data[0][0] = zCos;
+	data[1][1] = zCos;
+	data[1][0] = zSin;
+	data[0][1] = -zSin;
+
+	return;
+}
+
+void agl::Mat4f::rotate(agl::Vec3f rotation) // HACK lazy and can definately be optimized
+{
+	Mat4f rotationX;
+	Mat4f rotationY;
+	Mat4f rotationZ;
+	Mat4f rotationTotal;
+
+	rotationX.rotateX(rotation.x);
+	rotationY.rotateY(rotation.y);
+	rotationZ.rotateZ(rotation.z);
+
+	rotationTotal = rotationX * rotationY * rotationZ;
+
+	for(int x = 0; x < 4; x++)
+	{
+		for(int y = 0; y < 4; y++)
+		{
+			data[x][y] = rotationTotal.data[x][y];
+		}
+	}
+
+	return;
 }

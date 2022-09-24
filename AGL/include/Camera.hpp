@@ -3,7 +3,6 @@
 #include "GL/glew.h"
 
 #include "Vec3f.hpp"
-#include <glm/ext/matrix_float4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "GL/gl.h"

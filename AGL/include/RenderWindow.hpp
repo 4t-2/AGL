@@ -9,9 +9,9 @@
 #include "Vec2f.hpp"
 #include "Vec2i.hpp"
 #include "Vec3f.hpp"
+#include "Mat4f.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include <iostream>
 
