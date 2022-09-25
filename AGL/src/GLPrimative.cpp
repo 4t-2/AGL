@@ -10,41 +10,55 @@ void agl::GLPrimative::setMode(int mode)
 	return;
 }
 
-void agl::GLPrimative::genVertexBuffer()
-{
-	glGenBuffers(1, &vertexBuffer);
+void agl::GLPrimative::genBuffers(int amount)
+{	
+	bufferAmount = amount;
+	buffer = (unsigned int *)malloc(bufferAmount * sizeof(unsigned int *));
+	vertexSize = (int *)malloc(bufferAmount * sizeof(int *));
+
+	for(int i = 0; i < bufferAmount; i++)
+	{
+		glGenBuffers(1, &buffer[i]);
+	}
 
 	return;
 }
 
-void agl::GLPrimative::genColorBuffer()
+void agl::GLPrimative::setVertexAmount(int amount)
 {
-	glGenBuffers(1, &colorBuffer);
+	vertexAmount = amount;
 
 	return;
 }
 
-void agl::GLPrimative::setBufferSize(int size)
+void agl::GLPrimative::setBufferData(int index, float bufferData[], int vertexSize)
 {
-	bufferSize = size;
+	this->vertexSize[index] = vertexSize;
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffer[index]);
+	glBufferData(GL_ARRAY_BUFFER, vertexAmount * this->vertexSize[index] * 4, bufferData, GL_STATIC_DRAW);
 
 	return;
 }
 
-void agl::GLPrimative::setVertexData(float vertexBufferData[])
+int agl::GLPrimative::getBufferAmount()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, bufferSize, vertexBufferData, GL_STATIC_DRAW);
-
-	return;
+	return bufferAmount;
 }
 
-void agl::GLPrimative::setColorData(float colorBufferData[])
+int agl::GLPrimative::getVertexAmount()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, bufferSize, colorBufferData, GL_STATIC_DRAW);
+	return vertexAmount;
+}
 
-	return;
+int agl::GLPrimative::getVertexSize(int index)
+{
+	return vertexSize[index];
+}
+
+unsigned int agl::GLPrimative::getBuffer(int index)
+{
+	return buffer[index];
 }
 
 int agl::GLPrimative::getMode()
@@ -52,25 +66,15 @@ int agl::GLPrimative::getMode()
 	return mode;
 }
 
-unsigned int agl::GLPrimative::getVertexBuffer()
-{
-	return vertexBuffer;
-}
-
-unsigned int agl::GLPrimative::getColorBuffer()
-{
-	return colorBuffer;
-}
-
-int agl::GLPrimative::getBufferSize()
-{
-	return bufferSize;
-}
-
 void agl::GLPrimative::deleteData()
 {
-	glDeleteBuffers(1, &vertexBuffer);
-	glDeleteBuffers(1, &colorBuffer);
+	for(int i = 0; i < bufferAmount; i++)
+	{
+		glDeleteBuffers(1, &buffer[i]);
+	}
+
+	free(buffer);
+	free(vertexSize);
 
 	return;
 }

@@ -38,9 +38,8 @@ agl::Rectangle::Rectangle()
 	colorData[11] = colorNormalized.z;
 
 	shapeData.setMode(GL_TRIANGLE_STRIP);
-	shapeData.setBufferSize(dataSize);
-	shapeData.genVertexBuffer();
-	shapeData.setVertexData(vertexData);
-	shapeData.genColorBuffer();
-	shapeData.setColorData(colorData);
+	shapeData.genBuffers(2);
+	shapeData.setVertexAmount(4);
+	shapeData.setBufferData(0, vertexData, 3);
+	shapeData.setBufferData(1, colorData, 3);
 }

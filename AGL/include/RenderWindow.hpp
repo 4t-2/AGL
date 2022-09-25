@@ -3,13 +3,13 @@
 #include "Color.hpp"
 #include "Cuboid.hpp"
 #include "GLPrimative.hpp"
+#include "Mat4f.hpp"
 #include "Rectangle.hpp"
 #include "Shader.hpp"
 #include "Shape.hpp"
 #include "Vec2f.hpp"
 #include "Vec2i.hpp"
 #include "Vec3f.hpp"
-#include "Mat4f.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 

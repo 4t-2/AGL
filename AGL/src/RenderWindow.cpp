@@ -191,38 +191,19 @@ void agl::RenderWindow::clear()
 
 void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 {
-	// 1st attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, primative.getVertexBuffer());
+	for(int i = 0; i < primative.getBufferAmount(); i++)
+	{
+		glEnableVertexAttribArray(i);
+		glBindBuffer(GL_ARRAY_BUFFER, primative.getBuffer(i));
+		glVertexAttribPointer(i, primative.getVertexSize(i), GL_FLOAT, GL_FALSE, 0, (void *)0);
+	}
 
-	glVertexAttribPointer(0,		// attribute 0. No particular reason for 0, but
-									// must match the layout in the shader.
-						  3,		// size
-						  GL_FLOAT, // type
-						  GL_FALSE, // normalized?
-						  0,		// stride
-						  (void *)0 // array buffer offset
-	);
+	glDrawArrays(primative.getMode(), 0, primative.getVertexAmount());
 
-	// 2nd attribute buffer : colors
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, primative.getColorBuffer());
-	glVertexAttribPointer(1,		// attribute. No particular reason for 1, but must
-									// match the layout in the shader.
-						  3,		// size
-						  GL_FLOAT, // type
-						  GL_FALSE, // normalized?
-						  0,		// stride
-						  (void *)0 // array buffer offset
-	);
-
-	// Draw the triangle !
-	glDrawArrays(primative.getMode(), 0,
-				 primative.getBufferSize() / 12); // Starting from vertex 0; 3
-												  // vertices total -> 1 triangle
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
+	for(int i = 0; i < primative.getBufferAmount(); i++)
+	{
+		glDisableVertexAttribArray(i);
+	}
 
 	return;
 }

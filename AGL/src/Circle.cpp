@@ -30,16 +30,16 @@ agl::Circle::Circle(unsigned int faces)
 	vertexData[((faces + 1) * 3) + 1] = vertexData[((1) * 3) + 1];
 	vertexData[((faces + 1) * 3) + 2] = vertexData[((1) * 3) + 2];
 
-	colorData[0] = 1;
-	colorData[1] = 0;
-	colorData[2] = 0;
-	colorData[3] = 0;
-	colorData[4] = 1;
-	colorData[5] = 0;
-	colorData[6] = 0;
-	colorData[7] = 0;
-	colorData[8] = 1;
-	colorData[9] = 1;
+	colorData[0]  = 1;
+	colorData[1]  = 0;
+	colorData[2]  = 0;
+	colorData[3]  = 0;
+	colorData[4]  = 1;
+	colorData[5]  = 0;
+	colorData[6]  = 0;
+	colorData[7]  = 0;
+	colorData[8]  = 1;
+	colorData[9]  = 1;
 	colorData[10] = 0;
 	colorData[11] = 0;
 	colorData[12] = 0;
@@ -47,11 +47,17 @@ agl::Circle::Circle(unsigned int faces)
 	colorData[14] = 0;
 
 	shapeData.setMode(GL_TRIANGLE_FAN);
-	shapeData.setBufferSize(size);
-	shapeData.genVertexBuffer();
-	shapeData.setVertexData(vertexData);
-	shapeData.genColorBuffer();
-	shapeData.setColorData(colorData);
+
+	shapeData.genBuffers(2);
+	shapeData.setVertexAmount(faces + 2);
+	shapeData.setBufferData(0, vertexData, 3);
+	shapeData.setBufferData(1, colorData, 3);
+
+	// shapeData.setBufferSize(size);
+	// shapeData.genVertexBuffer();
+	// shapeData.setVertexData(vertexData);
+	// shapeData.genColorBuffer();
+	// shapeData.setColorData(colorData);
 
 	return;
 }

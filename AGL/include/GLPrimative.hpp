@@ -5,10 +5,12 @@ namespace agl
 	class GLPrimative
 	{
 		private:
-			int			 mode;
-			unsigned int vertexBuffer;
-			unsigned int colorBuffer;
-			int			 bufferSize;
+			int mode;
+
+			int			  bufferAmount;
+			int			  vertexAmount;
+			int			 *vertexSize;
+			unsigned int *buffer;
 
 		public:
 			/*
@@ -29,21 +31,16 @@ namespace agl
 			*/
 			void setMode(int mode);
 
-			void genVertexBuffer();
-			void genColorBuffer();
-
-			// size - Number of bytes
-			void setBufferSize(int size);
-
-			void setVertexData(float vertexBufferData[]);
-			void setColorData(float colorBufferData[]);
+			void genBuffers(int amount);
+			void setVertexAmount(int amount);
+			void setBufferData(int index, float bufferData[], int vertexSize);
 
 			void deleteData();
 
-			int getMode();
-
-			unsigned int getVertexBuffer();
-			int			 getBufferSize();
-			unsigned int getColorBuffer();
+			int			 getMode();
+			int			 getBufferAmount();
+			int			 getVertexAmount();
+			int			 getVertexSize(int index);
+			unsigned int getBuffer(int index);
 	};
 } // namespace agl
