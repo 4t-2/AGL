@@ -1,6 +1,6 @@
-#include <GL/glew.h>
-#include <X11/X.h>
-#include <X11/Xlib.h>
+#pragma once
+
+#include "include/external.hpp"
 
 #include "include/Camera.hpp"
 #include "include/Color.hpp"
@@ -15,3 +15,4 @@
 #include "include/Cuboid.hpp"
 #include "include/Shape.hpp"
 #include "include/Circle.hpp"
+#include "include/Texture.hpp"
