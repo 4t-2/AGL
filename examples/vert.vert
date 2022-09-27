@@ -10,5 +10,6 @@ out vec2 UV;
 void main()
 {
     UV = vertexUV;
+
     gl_Position = MVP * vec4(position, 1);
 }

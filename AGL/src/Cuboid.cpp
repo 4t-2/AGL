@@ -88,20 +88,11 @@ agl::Cuboid::Cuboid()
 
 	int dataSize = sizeof(float) * 108;
 
-	vertexData = (float *)malloc(dataSize);
-	colorData  = (float *)malloc(dataSize);
-
-	for (int i = 0; i < 108; i++)
-	{
-		vertexData[i] = vertexBufferData[i];
-		colorData[i]  = colorBufferData[i];
-	}
-
 	shapeData.setMode(GL_TRIANGLES);
 	shapeData.genBuffers(2);
 	shapeData.setVertexAmount(36);
-	shapeData.setBufferData(0, vertexData, 3);
-	shapeData.setBufferData(1, colorData, 3);
+	shapeData.setBufferData(0, vertexBufferData, 3);
+	shapeData.setBufferData(1, colorBufferData, 3);
 
 	return;
 }

@@ -4,6 +4,7 @@
 #include "GLPrimative.hpp"
 #include "Vec2f.hpp"
 #include "Vec3f.hpp"
+#include "Texture.hpp"
 
 namespace agl
 {
@@ -16,8 +17,7 @@ namespace agl
 			Color color	   = {255, 0, 0, 0};
 
 			GLPrimative shapeData;
-			float	   *vertexData;
-			float	   *colorData;
+			unsigned int textureID;
 
 		public:
 			~Shape();
@@ -29,6 +29,8 @@ namespace agl
 			void setRotation(Vec3f rotation);
 			void setRotation(Vec2f rotation);
 			void setColor(Color color);
+
+			void setTexture(Texture texture);
 
 			Vec3f getPosition();
 			Vec3f getSize();

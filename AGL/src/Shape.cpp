@@ -6,8 +6,6 @@
 
 agl::Shape::~Shape()
 {
-	free(vertexData);
-	free(colorData);
 	shapeData.deleteData();
 
 	return;

@@ -6,40 +6,40 @@ agl::Rectangle::Rectangle()
 {
 	int dataSize = sizeof(float) * 12;
 
-	vertexData = (float *)malloc(dataSize);
-	colorData  = (float *)malloc(dataSize);
+	float vertexBufferData[12];
+	float colorBufferData[12];
 
-	vertexData[0]  = 0;
-	vertexData[1]  = 0;
-	vertexData[2]  = 0;
-	vertexData[3]  = 0 + 1;
-	vertexData[4]  = 0;
-	vertexData[5]  = 0;
-	vertexData[6]  = 0;
-	vertexData[7]  = 0 + 1;
-	vertexData[8]  = 0;
-	vertexData[9]  = 0 + 1;
-	vertexData[10] = 0 + 1;
-	vertexData[11] = 0;
+	vertexBufferData[0]  = 0;
+	vertexBufferData[1]  = 0;
+	vertexBufferData[2]  = 0;
+	vertexBufferData[3]  = 0 + 1;
+	vertexBufferData[4]  = 0;
+	vertexBufferData[5]  = 0;
+	vertexBufferData[6]  = 0;
+	vertexBufferData[7]  = 0 + 1;
+	vertexBufferData[8]  = 0;
+	vertexBufferData[9]  = 0 + 1;
+	vertexBufferData[10] = 0 + 1;
+	vertexBufferData[11] = 0;
 
 	Vec3f colorNormalized = color.normalized();
 
-	colorData[0]  = colorNormalized.x;
-	colorData[1]  = colorNormalized.y;
-	colorData[2]  = colorNormalized.z;
-	colorData[3]  = colorNormalized.x;
-	colorData[4]  = colorNormalized.y;
-	colorData[5]  = colorNormalized.z;
-	colorData[6]  = colorNormalized.x;
-	colorData[7]  = colorNormalized.y;
-	colorData[8]  = colorNormalized.z;
-	colorData[9]  = colorNormalized.x;
-	colorData[10] = colorNormalized.y;
-	colorData[11] = colorNormalized.z;
+	colorBufferData[0]  = colorNormalized.x;
+	colorBufferData[1]  = colorNormalized.y;
+	colorBufferData[2]  = colorNormalized.z;
+	colorBufferData[3]  = colorNormalized.x;
+	colorBufferData[4]  = colorNormalized.y;
+	colorBufferData[5]  = colorNormalized.z;
+	colorBufferData[6]  = colorNormalized.x;
+	colorBufferData[7]  = colorNormalized.y;
+	colorBufferData[8]  = colorNormalized.z;
+	colorBufferData[9]  = colorNormalized.x;
+	colorBufferData[10] = colorNormalized.y;
+	colorBufferData[11] = colorNormalized.z;
 
 	shapeData.setMode(GL_TRIANGLE_STRIP);
 	shapeData.genBuffers(2);
 	shapeData.setVertexAmount(4);
-	shapeData.setBufferData(0, vertexData, 3);
-	shapeData.setBufferData(1, colorData, 3);
+	shapeData.setBufferData(0, vertexBufferData, 3);
+	shapeData.setBufferData(1, colorBufferData, 3);
 }
