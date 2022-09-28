@@ -36,8 +36,10 @@ int main(int argc, char *argv[])
 	agl::Event event;
 	event.setWindow(window);
 
-	agl::Shader shader;
-	shader.loadFromFile("./vert.vert", "./frag.frag");
+	agl::Shader shader1;
+	agl::Shader shader2;
+	shader1.loadFromFile("./vert.vert", "./frag1.frag");
+	shader2.loadFromFile("./vert.vert", "./frag.frag");
 
 	agl::Camera camera;
 	camera.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
@@ -128,16 +130,26 @@ int main(int argc, char *argv[])
 	cube.setBufferData(0, g_vertex_buffer_data, 3);
 	cube.setBufferData(1, g_uv_buffer_data, 2);
 
-	agl::Texture UVTexture;
-	UVTexture.loadFromFile("./uvtemplate.bmp");
+	agl::Texture UVTexture1;
+	agl::Texture UVtexture2;
+	UVTexture1.loadFromFile("./uvtemplate.bmp");
+	UVtexture2.loadFromFile("./uvtemplateInvert.bmp");
 
 	agl::Cuboid cuboid;
 
-	shader.use();
-	int mvpID		= shader.getUniformLocation("MVP");
-	int transformID = shader.getUniformLocation("Transform");
-	UVTexture.setTextureSampler(shader.getUniformLocation("myTextureSampler"));
-	shader.setUniformMatrix4fv(mvpID, &camera.getMVP()[0][0]);
+	int mvpID1		 = shader1.getUniformLocation("MVP");
+	int transformID1 = shader1.getUniformLocation("Transform");
+	int mvpID2		 = shader2.getUniformLocation("MVP");
+	int transformID2 = shader2.getUniformLocation("Transform");
+
+	shader1.use();
+	camera.setMvpID(mvpID1);
+	window.setTransformID(transformID1);
+	shader1.setUniformMatrix4fv(mvpID1, &camera.getMVP()[0][0]);
+	shader2.use();
+	camera.setMvpID(mvpID2);
+	window.setTransformID(transformID2);
+	shader2.setUniformMatrix4fv(mvpID2, &camera.getMVP()[0][0]);
 
 	agl::Vec3f pos = {4, 3, 3};
 
@@ -147,12 +159,21 @@ int main(int argc, char *argv[])
 		event.pollKeyboard();
 		event.pollPointer();
 
-		UVTexture.bind();
+		if (event.isKeyPressed(XK_Return))
+		{
+			shader1.use();
+			window.setTransformID(transformID1);
+		}
+		else
+		{
+			shader2.use();
+			window.setTransformID(transformID2);
+		}
 
 		window.clear();
 
-		window.drawPrimative(cube);
-		// window.drawShape(cuboid, shader, transformID);
+		// window.drawPrimative(cube);
+		window.drawShape(cuboid);
 
 		window.display();
 
@@ -184,14 +205,15 @@ int main(int argc, char *argv[])
 		}
 
 		camera.setView(pos, {0, 0, 0}, {0, 1, 0});
-		shader.setUniformMatrix4fv(mvpID, &camera.getMVP()[0][0]);
+		shader2.setUniformMatrix4fv(mvpID2, &camera.getMVP()[0][0]);
+		// camera.update();
 	}
 
 	cube.deleteData();
 
-	shader.deleteProgram();
+	shader1.deleteProgram();
 
-	UVTexture.deleteTexture();
+	UVTexture1.deleteTexture();
 
 	window.close();
 

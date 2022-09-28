@@ -126,6 +126,13 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 	return exitCode;
 }
 
+void agl::Shader::use()
+{
+	glUseProgram(programID);
+
+	return;
+}
+
 void agl::Shader::deleteProgram()
 {
 	glDeleteProgram(programID);
@@ -146,13 +153,6 @@ int agl::Shader::getUniformLocation(const char *name)
 void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix)
 {
 	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, matrix);
-
-	return;
-}
-
-void agl::Shader::use()
-{
-	glUseProgram(programID);
 
 	return;
 }

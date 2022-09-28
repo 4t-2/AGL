@@ -35,6 +35,9 @@ namespace agl
 
 			GLuint VertexArrayID;
 
+			int		mvpID;
+			int		transformID;
+
 		public:
 			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, glm::mat4 *MPV);
 
@@ -52,13 +55,16 @@ namespace agl
 			void setClearColor(agl::Color color);
 			void setFPS(int fps);
 
+			void setMvpID(int ID);
+			void setTransformID(int ID);
+
 			void close();
 
 			void clear();
 
 			void drawPrimative(GLPrimative primative);
 
-			void drawShape(Shape &shape, Shader shader, int transformID);
+			void drawShape(Shape &shape);
 
 			void display();
 

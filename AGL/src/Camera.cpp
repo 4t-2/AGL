@@ -20,6 +20,18 @@ void agl::Camera::setView(Vec3f pos, Vec3f target, Vec3f head)
 	view = glm::lookAt(glm::vec3(pos.x, pos.y, pos.z), glm::vec3(target.x, target.y, target.z), glm::vec3(head.x, head.y, head.z));
 }
 
+void agl::Camera::setMvpID(int mvpID)
+{
+	this->mvpID = mvpID;
+
+	return;
+}
+
+void agl::Camera::update()
+{
+	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &MVP[0][0]);
+}
+
 glm::mat4 agl::Camera::getMVP()
 {
 	return projection * view * model;

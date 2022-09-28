@@ -20,10 +20,10 @@ namespace agl
 			\ 2 - Other error
 			*/
 			int	 loadFromFile(const char *vertex_file_path, const char *fragment_file_path);
-			void use();
 			// void setCamera(Camera &camera);
 			// void updateCamera();
 
+			void use();
 			int getUniformLocation(const char *name);
 			void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix);
 			void deleteProgram();

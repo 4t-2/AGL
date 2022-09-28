@@ -156,6 +156,20 @@ void agl::RenderWindow::setFPS(int fps)
 	return;
 }
 
+void agl::RenderWindow::setMvpID(int ID)
+{
+	mvpID = ID;
+
+	return;
+}
+
+void agl::RenderWindow::setTransformID(int ID)
+{
+	transformID = ID;
+
+	return;
+}
+
 void agl::RenderWindow::display()
 {
 	glXSwapBuffers(this->dpy, this->win);
@@ -208,7 +222,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 	return;
 }
 
-void agl::RenderWindow::drawShape(agl::Shape &shape, Shader shader, int transformID)
+void agl::RenderWindow::drawShape(agl::Shape &shape)
 {
 	agl::Mat4f transform;
 	agl::Mat4f translate;
@@ -221,7 +235,7 @@ void agl::RenderWindow::drawShape(agl::Shape &shape, Shader shader, int transfor
 
 	transform = translate * rotate * scale;
 
-	shader.setUniformMatrix4fv(transformID, &transform.data[0][0]);
+	glUniformMatrix4fv(transformID, 1, GL_FALSE, &transform.data[0][0]);
 
 	this->drawPrimative(shape.getShapeData());
 
