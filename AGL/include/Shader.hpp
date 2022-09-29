@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Camera.hpp"
-
-#include <GL/gl.h>
+#include "external.hpp"
 
 namespace agl
 {
@@ -11,7 +9,6 @@ namespace agl
 		private:
 			GLuint	programID;
 			GLuint	matrixID;
-			Camera *camera;
 
 		public:
 			/*
@@ -25,7 +22,7 @@ namespace agl
 
 			void use();
 			int getUniformLocation(const char *name);
-			void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix);
+			static void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix);
 			void deleteProgram();
 
 			GLuint getProgramID();

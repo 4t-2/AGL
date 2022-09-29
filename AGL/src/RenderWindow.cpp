@@ -9,6 +9,7 @@
 #include <bits/types/struct_timespec.h>
 #include <cstdlib>
 #include <ctime>
+#include <glm/ext/matrix_clip_space.hpp>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>

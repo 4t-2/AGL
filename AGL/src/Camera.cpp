@@ -27,9 +27,9 @@ void agl::Camera::setMvpID(int mvpID)
 	return;
 }
 
-void agl::Camera::update()
+void agl::Camera::update(int mvpID)
 {
-	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &MVP[0][0]);
+	agl::Shader::setUniformMatrix4fv(mvpID, &this->getMVP()[0][0]);
 }
 
 glm::mat4 agl::Camera::getMVP()

@@ -13,6 +13,7 @@
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 
+#include <glm/ext/matrix_float4x4.hpp>
 #include <iostream>
 
 namespace agl

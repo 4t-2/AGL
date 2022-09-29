@@ -41,9 +41,13 @@ int main(int argc, char *argv[])
 	shader1.loadFromFile("./vert.vert", "./frag1.frag");
 	shader2.loadFromFile("./vert.vert", "./frag.frag");
 
-	agl::Camera camera;
-	camera.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
-	camera.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
+	agl::Camera camera1;
+	camera1.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
+	camera1.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
+
+	agl::Camera camera2;
+	camera2.setPerspectiveProjection(45, WIDTH / HEIGHT, 0.1, 100);
+	camera2.setView({4, 3, 3}, {0, 0, 0}, {0, 1, 0});
 
 	GLfloat g_vertex_buffer_data[] = {
 		-1.0f, -1.0f, -1.0f, // 1
@@ -137,19 +141,10 @@ int main(int argc, char *argv[])
 
 	agl::Cuboid cuboid;
 
-	int mvpID1		 = shader1.getUniformLocation("MVP");
 	int transformID1 = shader1.getUniformLocation("Transform");
-	int mvpID2		 = shader2.getUniformLocation("MVP");
+	int mvpID1		 = shader1.getUniformLocation("MVP");
 	int transformID2 = shader2.getUniformLocation("Transform");
-
-	shader1.use();
-	camera.setMvpID(mvpID1);
-	window.setTransformID(transformID1);
-	shader1.setUniformMatrix4fv(mvpID1, &camera.getMVP()[0][0]);
-	shader2.use();
-	camera.setMvpID(mvpID2);
-	window.setTransformID(transformID2);
-	shader2.setUniformMatrix4fv(mvpID2, &camera.getMVP()[0][0]);
+	int mvpID2		 = shader2.getUniformLocation("MVP");
 
 	agl::Vec3f pos = {4, 3, 3};
 
@@ -162,12 +157,14 @@ int main(int argc, char *argv[])
 		if (event.isKeyPressed(XK_Return))
 		{
 			shader1.use();
-			window.setTransformID(transformID1);
+			camera1.setMvpID(shader1.getUniformLocation("MVP"));
+			window.setTransformID(shader1.getUniformLocation("Transform"));
 		}
 		else
 		{
 			shader2.use();
-			window.setTransformID(transformID2);
+			camera2.setMvpID(shader2.getUniformLocation("MVP"));
+			window.setTransformID(shader2.getUniformLocation("Transform"));
 		}
 
 		window.clear();
@@ -204,9 +201,11 @@ int main(int argc, char *argv[])
 			pos.z += speed;
 		}
 
-		camera.setView(pos, {0, 0, 0}, {0, 1, 0});
-		shader2.setUniformMatrix4fv(mvpID2, &camera.getMVP()[0][0]);
-		// camera.update();
+		camera1.setView(pos, {0, 0, 0}, {0, 1, 0});
+		camera2.setView({-pos.x, -pos.y, -pos.z}, {0, 0, 0}, {0, 1, 0});
+
+		camera2.update(mvpID2);
+		camera1.update(mvpID1);
 	}
 
 	cube.deleteData();

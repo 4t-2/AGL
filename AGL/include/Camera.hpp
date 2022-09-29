@@ -4,6 +4,7 @@
 
 #include "Vec3f.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include "Shader.hpp"
 
 #include "GL/gl.h"
 
@@ -24,7 +25,7 @@ namespace agl
 			void setView(Vec3f pos, Vec3f target, Vec3f head);
 
 			void setMvpID(int mvpID);
-			void update();
+			void update(int mvpID);
 
 			glm::mat4 getMVP();
 	};

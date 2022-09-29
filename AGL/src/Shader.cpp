@@ -156,18 +156,3 @@ void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix)
 
 	return;
 }
-
-// void agl::Shader::setCamera(agl::Camera &camera)
-// {
-// 	matrixID = this->getUniformLocation("MVP");
-// 	this->camera = &camera;
-//
-// 	return;
-// }
-//
-// void agl::Shader::updateCamera()
-// {
-// 	this->setUniformMatrix4fv(matrixID, &camera->getMVP()[0][0]);
-//
-// 	return;
-// }
