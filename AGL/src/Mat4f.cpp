@@ -125,13 +125,53 @@ void agl::Mat4f::rotate(agl::Vec3f rotation) // HACK lazy and can definately be 
 
 	rotationTotal = rotationX * rotationY * rotationZ;
 
-	for(int x = 0; x < 4; x++)
+	for (int x = 0; x < 4; x++)
 	{
-		for(int y = 0; y < 4; y++)
+		for (int y = 0; y < 4; y++)
 		{
 			data[x][y] = rotationTotal.data[x][y];
 		}
 	}
+
+	return;
+}
+
+agl::Vec3f normalize(agl::Vec3f v)
+{
+	float len = std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	return {v.x /= len, v.y /= len, v.z /= len};
+}
+
+agl::Vec3f cross(const agl::Vec3f a, const agl::Vec3f b)
+{
+	return {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x};
+}
+
+float dot(agl::Vec3f a, agl::Vec3f b)
+{
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+void agl::Mat4f::lookat(Vec3f pos, Vec3f target, Vec3f head)
+{
+	agl::Vec3f f = (normalize(target - pos));
+	agl::Vec3f s = (normalize(cross(f, head)));
+	agl::Vec3f u = (cross(s, f));
+
+	data[0][0] = s.x;
+	data[1][0] = s.y;
+	data[2][0] = s.z;
+	data[0][1] = u.x;
+	data[1][1] = u.y;
+	data[2][1] = u.z;
+	data[0][2] = -f.x;
+	data[1][2] = -f.y;
+	data[2][2] = -f.z;
+	data[3][0] = -dot(s, pos);
+	data[3][1] = -dot(u, pos);
+	data[3][2] = dot(f, pos);
+
+	data[3][3] = 1.0f;
 
 	return;
 }
