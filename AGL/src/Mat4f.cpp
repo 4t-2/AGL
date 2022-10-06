@@ -175,3 +175,16 @@ void agl::Mat4f::lookat(Vec3f pos, Vec3f target, Vec3f head)
 
 	return;
 }
+
+void agl::Mat4f::perspective(float fov, float aspectRatio, float near, float far)
+{
+	float tanHalfFovy = tan(fov / 2);
+
+	data[0][0] = 1 / (aspectRatio * tanHalfFovy);
+	data[1][1] = 1 / (tanHalfFovy);
+	data[2][2] = -(far + near) / (far - near);
+	data[2][3] = -1;
+	data[3][2] = -(2 * far * near) / (far - near);
+
+	return;
+}

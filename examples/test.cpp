@@ -1,6 +1,8 @@
 #include "../AGL/agl.hpp"
 #include "../AGL/include/Mat4f.hpp"
+#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/vector_float3.hpp>
 
 #define TITLE  "winfloat"
 #define WIDTH  500.
@@ -16,18 +18,13 @@ int main(int argc, char *argv[])
 	agl::Mat4f AGLmat;
 	glm::mat4  GLMmat;
 
-	AGLmat.lookat({1, 1, 1}, {0, 0, 0}, {0, 1, 0});
-	GLMmat = glm::lookAt(glm::vec3(1, 1, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	float fov = 1;
+	float aspect = 2;
+	float near = 3;
+	float far = 4;
 
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			printf("%f ", AGLmat.data[x][y]);
-		}
-		printf("\n");
-	}
-	printf("\n");
+	GLMmat = glm::perspective(fov, aspect, near, far);
+	AGLmat.perspective(fov, aspect, near, far);
 
 	for (int x = 0; x < 4; x++)
 	{
@@ -37,7 +34,17 @@ int main(int argc, char *argv[])
 		}
 		printf("\n");
 	}
+
 	printf("\n");
+
+	for (int x = 0; x < 4; x++)
+	{
+		for (int y = 0; y < 4; y++)
+		{
+			printf("%f ", AGLmat.data[x][y]);
+		}
+		printf("\n");
+	}
 
 	return 0;
 
