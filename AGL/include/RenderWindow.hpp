@@ -10,10 +10,10 @@
 #include "Vec2f.hpp"
 #include "Vec2i.hpp"
 #include "Vec3f.hpp"
+#include "Camera.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 
-#include <glm/ext/matrix_float4x4.hpp>
 #include <iostream>
 
 namespace agl
@@ -40,7 +40,7 @@ namespace agl
 			int		transformID;
 
 		public:
-			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, glm::mat4 *MPV);
+			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, Camera camera);
 
 			int	 openDisplay();
 			void createRootWindow();

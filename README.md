@@ -8,7 +8,6 @@ This reason for making this is that I wanted a graphics library that had 3D supp
 - Xorg
 - OpenGL
 - GLEW
-- GLM
 
 ## Learn
 If you want to learn how to use AGL then go to [my site](https://synteng.github.io/) for documentation and tutorials on how to use AGL
@@ -17,7 +16,6 @@ If you want to learn how to use AGL then go to [my site](https://synteng.github.
 The AGL source code is distributed under the MIT License.
 
 ## TODO
-- Create own matrix type (drop GLM dependency)
 - Textures (as many filetypes as can be easily done)
 - Text (.ttf)
 - Add comments to code

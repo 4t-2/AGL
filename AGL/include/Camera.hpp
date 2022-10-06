@@ -1,22 +1,17 @@
 #pragma once
 
-#include "GL/glew.h"
-
 #include "Vec3f.hpp"
-#include <glm/gtc/matrix_transform.hpp>
 #include "Shader.hpp"
-
-#include "GL/gl.h"
+#include "Mat4f.hpp"
 
 namespace agl
 {
 	class Camera
 	{
 		private:
-			glm::mat4 projection;
-			glm::mat4 view;
-			glm::mat4 model = glm::mat4(1.0f);
-			glm::mat4 MVP;
+			agl::Mat4f projection;
+			agl::Mat4f view;
+			
 			int mvpID;
 
 		public:
@@ -27,6 +22,6 @@ namespace agl
 			void setMvpID(int mvpID);
 			void update(int mvpID);
 
-			glm::mat4 getMVP();
+			Mat4f getMVP();
 	};
 } // namespace agl

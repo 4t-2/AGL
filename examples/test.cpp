@@ -1,8 +1,5 @@
 #include "../AGL/agl.hpp"
 #include "../AGL/include/Mat4f.hpp"
-#include <glm/ext/matrix_clip_space.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/vector_float3.hpp>
 
 #define TITLE  "winfloat"
 #define WIDTH  500.
@@ -15,41 +12,6 @@
 
 int main(int argc, char *argv[])
 {
-	agl::Mat4f AGLmat;
-	glm::mat4  GLMmat;
-
-	float left	 = 1;
-	float right	 = 2;
-	float bottom = 3;
-	float top	 = 4;
-	float near	 = 5;
-	float far	 = 6;
-
-	GLMmat = glm::ortho(left, right, bottom, top, near, far);
-	AGLmat.ortho(left, right, bottom, top, near, far);
-
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			printf("%f ", GLMmat[x][y]);
-		}
-		printf("\n");
-	}
-
-	printf("\n");
-
-	for (int x = 0; x < 4; x++)
-	{
-		for (int y = 0; y < 4; y++)
-		{
-			printf("%f ", AGLmat.data[x][y]);
-		}
-		printf("\n");
-	}
-
-	return 0;
-
 	agl::RenderWindow window;
 	GLint			  attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
 

@@ -31,6 +31,6 @@ namespace agl
 
 			void perspective(float fov, float aspectRatio, float near, float far);
 			void ortho(float left, float right, float bottom, float top, float near, float far);
-			void lookat(Vec3f pos, Vec3f target, Vec3f head);
+			void lookAt(Vec3f pos, Vec3f target, Vec3f head);
 	};
 } // namespace agl

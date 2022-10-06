@@ -152,7 +152,7 @@ float dot(agl::Vec3f a, agl::Vec3f b)
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-void agl::Mat4f::lookat(Vec3f pos, Vec3f target, Vec3f head)
+void agl::Mat4f::lookAt(Vec3f pos, Vec3f target, Vec3f head)
 {
 	agl::Vec3f f = (normalize(target - pos));
 	agl::Vec3f s = (normalize(cross(f, head)));

@@ -9,7 +9,6 @@
 #include <bits/types/struct_timespec.h>
 #include <cstdlib>
 #include <ctime>
-#include <glm/ext/matrix_clip_space.hpp>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -19,7 +18,7 @@
 #include "../include/RenderWindow.hpp"
 
 void agl::RenderWindow::setup2D(int width, int height, std::string title, int fps, agl::Color clearColor,
-								glm::mat4 *MPV)
+								Camera camera) // FIXME just editted it to stop compiler errors DOES NOT WORK
 {
 	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
 
@@ -38,7 +37,7 @@ void agl::RenderWindow::setup2D(int width, int height, std::string title, int fp
 	this->setFPS(fps);
 	this->mapWindow();
 
-	*MPV = glm::ortho(float(0), float(width), float(height), float(0));
+	// *MPV = glm::ortho(float(0), float(width), float(height), float(0));
 
 	return;
 }
