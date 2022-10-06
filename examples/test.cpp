@@ -18,13 +18,15 @@ int main(int argc, char *argv[])
 	agl::Mat4f AGLmat;
 	glm::mat4  GLMmat;
 
-	float fov = 1;
-	float aspect = 2;
-	float near = 3;
-	float far = 4;
+	float left	 = 1;
+	float right	 = 2;
+	float bottom = 3;
+	float top	 = 4;
+	float near	 = 5;
+	float far	 = 6;
 
-	GLMmat = glm::perspective(fov, aspect, near, far);
-	AGLmat.perspective(fov, aspect, near, far);
+	GLMmat = glm::ortho(left, right, bottom, top, near, far);
+	AGLmat.ortho(left, right, bottom, top, near, far);
 
 	for (int x = 0; x < 4; x++)
 	{

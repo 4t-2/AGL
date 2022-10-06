@@ -188,3 +188,16 @@ void agl::Mat4f::perspective(float fov, float aspectRatio, float near, float far
 
 	return;
 }
+
+void agl::Mat4f::ortho(float left, float right, float bottom, float top, float near, float far)
+{
+	data[0][0] = 2 / (right - left);
+	data[1][1] = 2 / (top - bottom);
+	data[2][2] = -2 / (far - near);
+	data[3][0] = -(right + left) / (right - left);
+	data[3][1] = -(top + bottom) / (top - bottom);
+	data[3][2] = -(far + near) / (far - near);
+	data[3][3] = 1;
+
+	return;
+}
