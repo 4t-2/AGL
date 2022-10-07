@@ -150,9 +150,16 @@ int agl::Shader::getUniformLocation(const char *name)
 	return glGetUniformLocation(programID, name);
 }
 
-void agl::Shader::setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix)
+void agl::Shader::setUniformMatrix4fv(GLuint location, const GLfloat *matrix)
 {
-	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, matrix);
+	glUniformMatrix4fv(location, 1, GL_FALSE, matrix);
+
+	return;
+}
+
+void agl::Shader::setUniformVector3fv(GLuint location, Vec3f vector)
+{
+	glUniform3f(location, vector.x, vector.y, vector.z);
 
 	return;
 }

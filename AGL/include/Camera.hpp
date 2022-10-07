@@ -20,7 +20,7 @@ namespace agl
 			void setView(Vec3f pos, Vec3f target, Vec3f head);
 
 			void setMvpID(int mvpID);
-			void update(int mvpID);
+			void update();
 
 			Mat4f getMVP();
 	};

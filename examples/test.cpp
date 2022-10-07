@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
 	agl::Shader shader1;
 	agl::Shader shader2;
-	shader1.loadFromFile("./vert.vert", "./frag1.frag");
+	shader1.loadFromFile("./vert1.vert", "./frag1.frag");
 	shader2.loadFromFile("./vert.vert", "./frag.frag");
 
 	agl::Camera camera1;
@@ -142,14 +142,24 @@ int main(int argc, char *argv[])
 	agl::Cuboid cuboid;
 
 	int transformID1 = shader1.getUniformLocation("Transform");
-	int mvpID1		 = shader1.getUniformLocation("MVP");
+	int vecID1		 = shader1.getUniformLocation("VecColor");
+	camera1.setMvpID(shader1.getUniformLocation("MVP"));
+
 	int transformID2 = shader2.getUniformLocation("Transform");
-	int mvpID2		 = shader2.getUniformLocation("MVP");
+	camera2.setMvpID(shader2.getUniformLocation("MVP"));
 
 	agl::Vec3f pos = {4, 3, 3};
 
+	float x = 0;
+
 	while (!event.windowClose())
 	{
+		x += 0.01;
+		if (x >= 1)
+		{
+			x = 0;
+		}
+
 		event.pollWindow();
 		event.pollKeyboard();
 		event.pollPointer();
@@ -157,14 +167,15 @@ int main(int argc, char *argv[])
 		if (event.isKeyPressed(XK_Return))
 		{
 			shader1.use();
-			camera1.setMvpID(shader1.getUniformLocation("MVP"));
 			window.setTransformID(shader1.getUniformLocation("Transform"));
+			camera1.update();
+			agl::Shader::setUniformVector3fv(vecID1, {0, 0, x});
 		}
 		else
 		{
 			shader2.use();
-			camera2.setMvpID(shader2.getUniformLocation("MVP"));
 			window.setTransformID(shader2.getUniformLocation("Transform"));
+			camera2.update();
 		}
 
 		window.clear();
@@ -203,9 +214,6 @@ int main(int argc, char *argv[])
 
 		camera1.setView(pos, {0, 0, 0}, {0, 1, 0});
 		camera2.setView({-pos.x, -pos.y, -pos.z}, {0, 0, 0}, {0, 1, 0});
-
-		camera2.update(mvpID2);
-		camera1.update(mvpID1);
 	}
 
 	cube.deleteData();

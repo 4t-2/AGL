@@ -1,11 +1,10 @@
 #version 330 core
 
 in vec2 UV;
+in vec3 vecC;
 out vec3 color;
-
-uniform sampler2D myTextureSampler;
 
 void main()
 {
-    color = vec3(1.0, 1.0, 0.0);
+    color = vecC;
 }

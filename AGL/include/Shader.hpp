@@ -2,13 +2,15 @@
 
 #include "external.hpp"
 
+#include "Vec3f.hpp"
+
 namespace agl
 {
 	class Shader
 	{
 		private:
-			GLuint	programID;
-			GLuint	matrixID;
+			GLuint programID;
+			GLuint matrixID;
 
 		public:
 			/*
@@ -16,14 +18,15 @@ namespace agl
 			\ 1 - File(s) not found
 			\ 2 - Other error
 			*/
-			int	 loadFromFile(const char *vertex_file_path, const char *fragment_file_path);
+			int loadFromFile(const char *vertex_file_path, const char *fragment_file_path);
 			// void setCamera(Camera &camera);
 			// void updateCamera();
 
-			void use();
-			int getUniformLocation(const char *name);
-			static void setUniformMatrix4fv(GLuint MatrixID, const GLfloat *matrix);
-			void deleteProgram();
+			void		use();
+			int			getUniformLocation(const char *name);
+			static void setUniformMatrix4fv(GLuint location, const GLfloat *matrix);
+			static void setUniformVector3fv(GLuint location, Vec3f vector);
+			void		deleteProgram();
 
 			GLuint getProgramID();
 	};
