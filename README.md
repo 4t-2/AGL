@@ -16,7 +16,6 @@ If you want to learn how to use AGL then go to [my site](https://synteng.github.
 The AGL source code is distributed under the MIT License.
 
 ## TODO
-- Textures (as many filetypes as can be easily done)
 - Text (.ttf)
 - Add comments to code
 - Tutorials on website
