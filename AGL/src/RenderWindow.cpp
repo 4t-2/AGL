@@ -235,9 +235,13 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 
 	transform = translate * rotate * scale;
 
-	glUniformMatrix4fv(transformID, 1, GL_FALSE, &transform.data[0][0]);
+	Shader::setUniformMatrix4fv(transformID, transform);
+
+	Texture::bind(shape.getTextureID());
 
 	this->drawPrimative(shape.getShapeData());
+
+	Texture::bind(0);
 
 	return;
 }

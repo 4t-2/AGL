@@ -7,92 +7,90 @@
 agl::Cuboid::Cuboid()
 {
 	GLfloat vertexBufferData[] = {
-		position.x,			 position.y,		  position.z,		   // t1 v1
-		position.x,			 position.y,		  position.z + size.z, // t1 v2
-		position.x,			 position.y + size.y, position.z + size.z, // t1 v3
-		position.x + size.x, position.y + size.y, position.z,		   // t2 v1
-		position.x,			 position.y,		  position.z,		   // t2 v2
-		position.x,			 position.y + size.y, position.z,		   // t2 v3
-		position.x + size.x, position.y,		  position.z + size.z, // t3 v1
-		position.x,			 position.y,		  position.z,		   // t3 v2
-		position.x + size.x, position.y,		  position.z,		   // t3 v3
-		position.x + size.x, position.y + size.y, position.z,		   // t4 v1
-		position.x + size.x, position.y,		  position.z,		   // t4 v2
-		position.x,			 position.y,		  position.z,		   // t4 v3
-		position.x,			 position.y,		  position.z,		   // t5 v1
-		position.x,			 position.y + size.y, position.z + size.z, // t5 v2
-		position.x,			 position.y + size.y, position.z,		   // t5 v3
-		position.x + size.x, position.y,		  position.z + size.z, // t6 v1
-		position.x,			 position.y,		  position.z + size.z, // t6 v2
-		position.x,			 position.y,		  position.z,		   // t6 v3
-		position.x,			 position.y + size.y, position.z + size.z, // t7 v1
-		position.x,			 position.y,		  position.z + size.z, // t7 v2
-		position.x + size.x, position.y,		  position.z + size.z, // t7 v3
-		position.x + size.x, position.y + size.y, position.z + size.z, // t8 v1
-		position.x + size.x, position.y,		  position.z,		   // t8 v2
-		position.x + size.x, position.y + size.y, position.z,		   // t8 v3
-		position.x + size.x, position.y,		  position.z,		   // t9 v1
-		position.x + size.x, position.y + size.y, position.z + size.z, // t9 v2
-		position.x + size.x, position.y,		  position.z + size.z, // t9 v3
-		position.x + size.x, position.y + size.y, position.z + size.z, // t10 v1
-		position.x + size.x, position.y + size.y, position.z,		   // t10 v2
-		position.x,			 position.y + size.y, position.z,		   // t10 v3
-		position.x + size.x, position.y + size.y, position.z + size.z, // t11 v1
-		position.x,			 position.y + size.y, position.z,		   // t11 v2
-		position.x,			 position.y + size.y, position.z + size.z, // t11 v3
-		position.x + size.x, position.y + size.y, position.z + size.z, // t12 v1
-		position.x,			 position.y + size.y, position.z + size.z, // t12 v2
-		position.x + size.x, position.y,		  position.z + size.z  // t12 v3
+		0, 0, 0, // t1 v1
+		0, 0, 1, // t1 v2
+		0, 1, 1, // t1 v3
+		1, 1, 0, // t2 v1
+		0, 0, 0, // t2 v2
+		0, 1, 0, // t2 v3
+		1, 0, 1, // t3 v1
+		0, 0, 0, // t3 v2
+		1, 0, 0, // t3 v3
+		1, 1, 0, // t4 v1
+		1, 0, 0, // t4 v2
+		0, 0, 0, // t4 v3
+		0, 0, 0, // t5 v1
+		0, 1, 1, // t5 v2
+		0, 1, 0, // t5 v3
+		1, 0, 1, // t6 v1
+		0, 0, 1, // t6 v2
+		0, 0, 0, // t6 v3
+		0, 1, 1, // t7 v1
+		0, 0, 1, // t7 v2
+		1, 0, 1, // t7 v3
+		1, 1, 1, // t8 v1
+		1, 0, 0, // t8 v2
+		1, 1, 0, // t8 v3
+		1, 0, 0, // t9 v1
+		1, 1, 1, // t9 v2
+		1, 0, 1, // t9 v3
+		1, 1, 1, // t10 v1
+		1, 1, 0, // t10 v2
+		0, 1, 0, // t10 v3
+		1, 1, 1, // t11 v1
+		0, 1, 0, // t11 v2
+		0, 1, 1, // t11 v3
+		1, 1, 1, // t12 v1
+		0, 1, 1, // t12 v2
+		1, 0, 1	 // t12 v3
 	};
 
 	Vec3f colorNormalized = color.normalized();
 
-	float colorBufferData[] = {
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t1 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t1 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t1 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t2 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t2 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t2 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t3 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t3 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t3 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t4 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t4 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t4 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t5 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t5 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t5 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t6 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t6 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t6 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t7 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t7 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t7 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t8 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t8 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t8 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t9 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t9 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t9 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t10 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t10 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t10 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t11 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t11 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t11 v3
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t12 v1
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t12 v2
-		colorNormalized.x, colorNormalized.y, colorNormalized.z, // t12 v3
+	float UVBufferData[] = {
+		0.000059f, 1.0f - 0.000004f, // t1 v1
+		0.000103f, 1.0f - 0.336048f, // t1 v2
+		0.335973f, 1.0f - 0.335903f, // t1 v3
+		1.000023f, 1.0f - 0.000013f, // t2 v1
+		0.667979f, 1.0f - 0.335851f, // t2 v2
+		0.999958f, 1.0f - 0.336064f, // t2 v3
+		0.667979f, 1.0f - 0.335851f, // t3 v1
+		0.336024f, 1.0f - 0.671877f, // t3 v2
+		0.667969f, 1.0f - 0.671889f, // t3 v3
+		1.000023f, 1.0f - 0.000013f, // t4 v1
+		0.668104f, 1.0f - 0.000013f, // t4 v2
+		0.667979f, 1.0f - 0.335851f, // t4 v3
+		0.000059f, 1.0f - 0.000004f, // t5 v1
+		0.335973f, 1.0f - 0.335903f, // t5 v2
+		0.336098f, 1.0f - 0.000071f, // t5 v3
+		0.667979f, 1.0f - 0.335851f, // t6 v1
+		0.335973f, 1.0f - 0.335903f, // t6 v2
+		0.336024f, 1.0f - 0.671877f, // t6 v3
+		1.000004f, 1.0f - 0.671847f, // t7 v1
+		0.999958f, 1.0f - 0.336064f, // t7 v2
+		0.667979f, 1.0f - 0.335851f, // t7 v3
+		0.668104f, 1.0f - 0.000013f, // t8 v1
+		0.335973f, 1.0f - 0.335903f, // t8 v2
+		0.667979f, 1.0f - 0.335851f, // t8 v3
+		0.335973f, 1.0f - 0.335903f, // t9 v1
+		0.668104f, 1.0f - 0.000013f, // t9 v2
+		0.336098f, 1.0f - 0.000071f, // t9 v3
+		0.000103f, 1.0f - 0.336048f, // t10 v1
+		0.000004f, 1.0f - 0.671870f, // t10 v2
+		0.336024f, 1.0f - 0.671877f, // t10 v3
+		0.000103f, 1.0f - 0.336048f, // t11 v1
+		0.336024f, 1.0f - 0.671877f, // t11 v2
+		0.335973f, 1.0f - 0.335903f, // t11 v3
+		0.667969f, 1.0f - 0.671889f, // t12 v1
+		1.000004f, 1.0f - 0.671847f, // t12 v2
+		0.667979f, 1.0f - 0.335851f	 // t12 v3
 	};
 
-	int dataSize = sizeof(float) * 108;
-
-	shapeData.setMode(GL_TRIANGLES);
 	shapeData.genBuffers(2);
 	shapeData.setVertexAmount(36);
+	shapeData.setMode(GL_TRIANGLES);
 	shapeData.setBufferData(0, vertexBufferData, 3);
-	shapeData.setBufferData(1, colorBufferData, 3);
+	shapeData.setBufferData(1, UVBufferData, 2);
 
 	return;
 }

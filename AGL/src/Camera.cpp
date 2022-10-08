@@ -28,8 +28,7 @@ void agl::Camera::setMvpID(int mvpID)
 
 void agl::Camera::update()
 {
-	Mat4f mvp = this->getMVP();
-	agl::Shader::setUniformMatrix4fv(mvpID, &mvp.data[0][0]);
+	agl::Shader::setUniformMatrix4fv(mvpID, this->getMVP());
 }
 
 agl::Mat4f agl::Camera::getMVP()

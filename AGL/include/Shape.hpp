@@ -17,7 +17,7 @@ namespace agl
 			Color color	   = {255, 0, 0, 0};
 
 			GLPrimative shapeData;
-			unsigned int textureID;
+			int textureID = 0;
 
 		public:
 			~Shape();
@@ -30,12 +30,13 @@ namespace agl
 			void setRotation(Vec2f rotation);
 			void setColor(Color color);
 
-			void setTexture(Texture texture);
+			void setTexture(Texture *texture);
 
 			Vec3f getPosition();
 			Vec3f getSize();
 			Vec3f getRotation();
 			Color getColor();
+			int getTextureID();
 
 			void		setShapeData();
 			GLPrimative getShapeData();

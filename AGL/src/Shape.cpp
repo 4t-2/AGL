@@ -63,6 +63,13 @@ void agl::Shape::setColor(agl::Color color)
 	return;
 }
 
+void agl::Shape::setTexture(Texture *texture)
+{
+	textureID = texture->getTextureID();
+
+	return;
+}
+
 agl::Vec3f agl::Shape::getPosition()
 {
 	return position;
@@ -81,6 +88,11 @@ agl::Vec3f agl::Shape::getRotation()
 agl::Color agl::Shape::getColor()
 {
 	return color;
+}
+
+int agl::Shape::getTextureID()
+{
+	return textureID;
 }
 
 agl::GLPrimative agl::Shape::getShapeData()

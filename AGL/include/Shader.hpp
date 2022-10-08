@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Mat4f.hpp"
 #include "external.hpp"
 
 #include "Vec3f.hpp"
@@ -24,7 +25,7 @@ namespace agl
 
 			void		use();
 			int			getUniformLocation(const char *name);
-			static void setUniformMatrix4fv(GLuint location, const GLfloat *matrix);
+			static void setUniformMatrix4fv(GLuint location, Mat4f matrix);
 			static void setUniformVector3fv(GLuint location, Vec3f vector);
 			void		deleteProgram();
 

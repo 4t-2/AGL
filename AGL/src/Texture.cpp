@@ -107,9 +107,8 @@ int agl::Texture::loadFromFile(const char *filePath)
 	return 0;
 }
 
-void agl::Texture::bind()
+void agl::Texture::bind(int textureID)
 {
-	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, textureID);
 }
 

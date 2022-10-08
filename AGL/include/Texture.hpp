@@ -12,7 +12,7 @@ namespace agl
 		public:
 			int loadFromFile(const char *filePath);
 
-			void bind();
+			static void bind(int textureID);
 
 			void deleteTexture();
 
