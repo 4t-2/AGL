@@ -9,25 +9,9 @@ int main()
 
 	// setup window
 
-	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
-
-	window.openDisplay();
-	window.createRootWindow();
-	window.createColormap(attribute, AllocNone);
-	window.setEventMask(ExposureMask | KeyPressMask);
-	window.createWindow(0, 0, 1000, 1000, CWColormap | CWEventMask);
-	window.setTitle("Triangle");
-
-	XWindowAttributes gwa = window.getWindowAttributes();
-
-	window.initGL();
-	window.setViewport(0, 0, gwa.width, gwa.height);
-	window.setClearColor(agl::Color::Black);
-	window.setFPS(60);
-	window.mapWindow();
-
-	window.GLEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	window.setup({500, 500}, "Triangle"); // setup X and OpenGL parts
+	window.setClearColor({0, 0, 0});	  // set the clear color
+	window.setFPS(30);					  // set the FPS
 
 	// enable events
 
@@ -38,25 +22,34 @@ int main()
 	shader.loadFromFile("./vert.vert", "./frag.frag");
 	shader.use();
 
-	// set the vertex and buffer data to be drawn
+	// set the vertex and buffer data
 
+	// 3 verticies making a triangle
 	float vertexBufferData[] = {
 		-0.5, -0.5, 0.0, // 1
 		0.5,  -0.5, 0.0, // 2
 		0.0,  0.5,	0.0, // 3
 	};
 
+	// each vertex of the triangle will either be red, green or blue
+	// there will be a color gradiant between each of the vertecies
 	float colorBufferData[] = {
 		1, 0, 0, // 1
 		0, 1, 0, // 1
 		0, 0, 1, // 1
 	};
 
-	triangle.genBuffers(2);
-	triangle.setVertexAmount(3);
-	triangle.setMode(GL_TRIANGLES);
-	triangle.setBufferData(0, vertexBufferData, 3);
-	triangle.setBufferData(1, colorBufferData, 3);
+	triangle.genBuffers(2);			// two buffers so to buffers need to be generated
+	triangle.setVertexAmount(3);	// triangle has 3 vertecies
+	triangle.setMode(GL_TRIANGLES); // set OpenGL to draw in triangle mode
+
+	triangle.setBufferData(0,				 // set location 0 (vertex data)
+						   vertexBufferData, // set location 0 data to vertex data
+						   3);				 // each vector has 3 values
+
+	triangle.setBufferData(1,				// set location 0 (vertex data)
+						   colorBufferData, // set location 0 data to vertex data
+						   3);				// each vector has 3 values
 
 	// render loop (end if the window should close)
 
