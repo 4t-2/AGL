@@ -40,7 +40,10 @@ namespace agl
 			int		transformID;
 
 		public:
-			void setup2D(int width, int height, std::string title, int fps, agl::Color clearColor, Camera camera);
+			// Create an AGL Window with defaults that are usable in most projects
+			// size - the size of the window
+			// title - the window title
+			void setup(Vec2f size, const char title[]);
 
 			// Open X displat
 			int	 openDisplay();
@@ -50,7 +53,7 @@ namespace agl
 			
 			// \ Create colormap
 			// \ attribute[] - attributes top be used
-			// \ alloc - collormap entries to be allocated
+			// \ alloc - colormap entries to be allocated
 			int	 createColormap(GLint attribute[5], int alloc);
 			
 			// \ Set event mask

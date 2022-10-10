@@ -17,8 +17,7 @@
 
 #include "../include/RenderWindow.hpp"
 
-void agl::RenderWindow::setup2D(int width, int height, std::string title, int fps, agl::Color clearColor,
-								Camera camera) // FIXME just editted it to stop compiler errors DOES NOT WORK
+void agl::RenderWindow::setup(Vec2f size, const char title[])
 {
 	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
 
@@ -26,18 +25,14 @@ void agl::RenderWindow::setup2D(int width, int height, std::string title, int fp
 	this->createRootWindow();
 	this->createColormap(attribute, AllocNone);
 	this->setEventMask(ExposureMask | KeyPressMask);
-	this->createWindow(0, 0, width, height, CWColormap | CWEventMask);
+	this->createWindow(0, 0, size.x, size.y, CWColormap | CWEventMask);
 	this->setTitle(title);
 
 	XWindowAttributes gwa = this->getWindowAttributes();
 
 	this->initGL();
 	this->setViewport(0, 0, gwa.width, gwa.height);
-	this->setClearColor(clearColor);
-	this->setFPS(fps);
 	this->mapWindow();
-
-	// *MPV = glm::ortho(float(0), float(width), float(height), float(0));
 
 	return;
 }
