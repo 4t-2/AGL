@@ -165,6 +165,13 @@ void agl::RenderWindow::setTransformID(int ID)
 	return;
 }
 
+void agl::RenderWindow::setUniformColorID(int ID)
+{
+	uniformColorID = ID;
+
+	return;
+}
+
 void agl::RenderWindow::display()
 {
 	glXSwapBuffers(this->dpy, this->win);
@@ -200,7 +207,7 @@ void agl::RenderWindow::clear()
 
 void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 {
-	for(int i = 0; i < primative.getBufferAmount(); i++)
+	for (int i = 0; i < primative.getBufferAmount(); i++)
 	{
 		glEnableVertexAttribArray(i);
 		glBindBuffer(GL_ARRAY_BUFFER, primative.getBuffer(i));
@@ -209,7 +216,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 
 	glDrawArrays(primative.getMode(), 0, primative.getVertexAmount());
 
-	for(int i = 0; i < primative.getBufferAmount(); i++)
+	for (int i = 0; i < primative.getBufferAmount(); i++)
 	{
 		glDisableVertexAttribArray(i);
 	}
@@ -231,6 +238,7 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 	transform = translate * rotate * scale;
 
 	Shader::setUniformMatrix4fv(transformID, transform);
+	Shader::setUniformVector3fv(uniformColorID, shape.getColor().normalized());
 
 	Texture::bind(shape.getTextureID());
 

@@ -29,7 +29,9 @@ int main()
 						"./frag.frag");							   // load frag and vert from file
 	window.setTransformID(shader.getUniformLocation("Transform")); // store location of Transform uniform in window
 	window.setMvpID(shader.getUniformLocation("MVP"));			   // store location of MVP uniform in window
-	shader.use();												   // use the shader
+	window.setUniformColorID(
+		shader.getUniformLocation("uniformColor")); // store location of the color uniform in window
+	shader.use();									// use the shader
 
 	// setup camera for 3D rendering
 
