@@ -70,6 +70,8 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 		char *VertexShaderErrorMessage = (char *)malloc(InfoLogLength + 1);
 
 		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+
+		printf("%s\n", VertexShaderErrorMessage);
 		exitCode = 2;
 
 		free(VertexShaderErrorMessage);
@@ -88,6 +90,8 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 		char *FragmentShaderErrorMessage = (char *)malloc(InfoLogLength + 1);
 
 		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+
+		printf("%s\n", FragmentShaderErrorMessage);
 		exitCode = 2;
 
 		free(FragmentShaderErrorMessage);
@@ -107,6 +111,8 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 		char *ProgramErrorMessage = (char *)malloc(InfoLogLength + 1);
 
 		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+
+		printf("%s\n", ProgramErrorMessage);
 		exitCode = 2;
 
 		free(ProgramErrorMessage);

@@ -38,7 +38,7 @@ namespace agl
 
 			int mvpID;
 			int transformID;
-			int uniformColorID;
+			int shapeColorID;
 
 		public:
 			// Create an AGL Window with defaults that are usable in most projects
@@ -111,7 +111,12 @@ namespace agl
 
 			// \ Set the uniform location of the Color uniform
 			// \ ID - Color uniform location
-			void setUniformColorID(int ID);
+			void setShapeColorID(int ID);
+
+			// \ Gets and stores the uniform locations used when rendering an AGL shape
+			// \ DO NOT confuse with Shader::use()
+			// \ shader - The shader to get uniform locations from
+			void getShaderUniforms(Shader shader);
 
 			// \ Close the window
 			void close();

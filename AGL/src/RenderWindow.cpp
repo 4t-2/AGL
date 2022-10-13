@@ -165,9 +165,9 @@ void agl::RenderWindow::setTransformID(int ID)
 	return;
 }
 
-void agl::RenderWindow::setUniformColorID(int ID)
+void agl::RenderWindow::setShapeColorID(int ID)
 {
-	uniformColorID = ID;
+	shapeColorID = ID;
 
 	return;
 }
@@ -238,7 +238,7 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 	transform = translate * rotate * scale;
 
 	Shader::setUniformMatrix4fv(transformID, transform);
-	Shader::setUniformVector3fv(uniformColorID, shape.getColor().normalized());
+	Shader::setUniformVector3fv(shapeColorID, shape.getColor().normalized());
 
 	Texture::bind(shape.getTextureID());
 
@@ -255,4 +255,13 @@ XWindowAttributes agl::RenderWindow::getWindowAttributes()
 	XGetWindowAttributes(dpy, win, &gwa);
 
 	return gwa;
+}
+
+void agl::RenderWindow::getShaderUniforms(Shader shader)
+{
+	this->setMvpID(shader.getUniformLocation("mvp"));
+	this->setTransformID(shader.getUniformLocation("transform"));
+	this->setShapeColorID(shader.getUniformLocation("shapeColor"));
+
+	return;
 }

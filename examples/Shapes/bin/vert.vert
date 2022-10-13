@@ -3,18 +3,19 @@
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec2 vertexUV;
 
-uniform mat4 Transform;
-uniform mat4 MVP;
-uniform vec3 uniformColor;
+uniform mat4 transform;
+uniform mat4 mvp;
+uniform vec3 shapeColor;
 
 out vec2 UV;
-out vec3 shapeColor;
+out vec3 fragColor;
 
 void main()
 {
     UV = vertexUV;
 
-	shapeColor = uniformColor;
+	fragColor = shapeColor;
 
-    gl_Position = MVP * Transform * vec4(position, 1);
+    gl_Position = mvp * transform * vec4(position, 1);
 }
+
