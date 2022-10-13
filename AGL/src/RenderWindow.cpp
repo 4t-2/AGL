@@ -265,3 +265,10 @@ void agl::RenderWindow::getShaderUniforms(Shader shader)
 
 	return;
 }
+
+void agl::RenderWindow::updateMvp(Camera camera)
+{
+	agl::Shader::setUniformMatrix4fv(mvpID, camera.getMVP());
+
+	return;
+}

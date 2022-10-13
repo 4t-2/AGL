@@ -10,12 +10,12 @@ int main()
 	window.setup({500, 500}, "Shapes");  // setup X and OpenGL parts
 	window.setClearColor({127, 127, 127}); // set the clear color
 	window.setFPS(30);					   // set the FPS
-
+	
 	agl::Event	   event;
 	agl::Camera	   camera;
 	agl::Shader	   shader;
 	agl::Rectangle rectangle;
-	agl::Circle	   circle(12); // set circle to have 10 sides
+	agl::Circle	   circle(12); // set circle to have 12 sides
 	agl::Cuboid	   cuboid;
 	agl::Texture   texture;
 
@@ -43,9 +43,6 @@ int main()
 				   {0, 1, 0}  // set camera to be oriented to have the head point up
 	);
 
-	camera.setMvpID(shader.getUniformLocation("mvp"));
-	camera.update();
-
 	// setup blank texture
 	texture.loadFromFile("blank.bmp");
 
@@ -71,7 +68,7 @@ int main()
 	while (!event.windowClose())
 	{
 		camera.setView(pos, {0, 0, 0}, {0, 1, 0});
-		camera.update();
+		window.updateMvp(camera);
 
 		// poll for window events
 

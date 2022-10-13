@@ -118,6 +118,10 @@ namespace agl
 			// \ shader - The shader to get uniform locations from
 			void getShaderUniforms(Shader shader);
 
+			// \ Update the mvp shader uniform according to the chosen camera
+			// \ camera - camera to update mvp
+			void updateMvp(Camera camera);
+
 			// \ Close the window
 			void close();
 

@@ -19,9 +19,6 @@ namespace agl
 			void setOrthographicProjection(float left, float right, float bottom, float top, float near, float far);
 			void setView(Vec3f pos, Vec3f target, Vec3f head);
 
-			void setMvpID(int mvpID);
-			void update();
-
 			Mat4f getMVP();
 	};
 } // namespace agl

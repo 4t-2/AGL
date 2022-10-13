@@ -21,9 +21,5 @@ The AGL source code is distributed under the MIT License.
 - Tutorials on website
 - Create a few basic examples
 	- Orbit sim (interactive with text)
-	- 2d shapes (triangle, rectangle, circle)
-	- Texture demo
-	- Shader demo
 	- Orbit sim but in 3D
-	- 3D shapes
 	- simple minecraft clone
