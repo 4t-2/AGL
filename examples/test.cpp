@@ -51,18 +51,11 @@ int main(int argc, char *argv[])
 
 	agl::Texture UVTexture1;
 	agl::Texture UVtexture2;
-	UVTexture1.loadFromFile("./uvtemplate.bmp");
+	UVTexture1.setBlank();
 	UVtexture2.loadFromFile("./uvtemplateInvert.bmp");
 
 	agl::Cuboid cuboid;
 	cuboid.setTexture(&UVTexture1);
-
-	int transformID1 = shader1.getUniformLocation("Transform");
-	int vecID1		 = shader1.getUniformLocation("vec3Color");
-	camera1.setMvpID(shader1.getUniformLocation("MVP"));
-
-	int transformID2 = shader2.getUniformLocation("Transform");
-	camera2.setMvpID(shader2.getUniformLocation("MVP"));
 
 	agl::Vec3f pos = {4, 3, 3};
 
@@ -71,6 +64,8 @@ int main(int argc, char *argv[])
 	while (!event.windowClose())
 	{
 		x += 0.01;
+		cuboid.setColor({(unsigned char)(x * 255), 0, 0});
+
 		if (x >= 1)
 		{
 			x = 0;
@@ -83,15 +78,14 @@ int main(int argc, char *argv[])
 		if (event.isKeyPressed(XK_Return))
 		{
 			shader1.use();
-			window.setTransformID(shader1.getUniformLocation("Transform"));
-			camera1.update();
-			agl::Shader::setUniformVector3fv(vecID1, {0, 0, x});
+			window.getShaderUniforms(shader1);
+			window.updateMvp(camera1);
 		}
 		else
 		{
 			shader2.use();
-			window.setTransformID(shader2.getUniformLocation("Transform"));
-			camera2.update();
+			window.getShaderUniforms(shader2);
+			window.updateMvp(camera2);
 		}
 
 		window.clear();

@@ -44,7 +44,7 @@ int main()
 	);
 
 	// setup blank texture
-	texture.loadFromFile("blank.bmp");
+	texture.setBlank();
 
 	// setup shapes
 

@@ -107,6 +107,23 @@ int agl::Texture::loadFromFile(const char *filePath)
 	return 0;
 }
 
+void agl::Texture::setBlank()
+{
+	glGenTextures(1, &textureID);
+
+	glBindTexture(GL_TEXTURE_2D, textureID);
+
+	unsigned char data[] = {255, 255, 255};
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1, 1, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	// Poor filtering, or ...
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	
+	return;
+}
+
 void agl::Texture::bind(int textureID)
 {
 	glBindTexture(GL_TEXTURE_2D, textureID);

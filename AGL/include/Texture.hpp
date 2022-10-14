@@ -11,6 +11,7 @@ namespace agl
 
 		public:
 			int loadFromFile(const char *filePath);
+			void setBlank();
 
 			static void bind(int textureID);
 
