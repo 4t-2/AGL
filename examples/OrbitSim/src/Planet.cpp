@@ -46,23 +46,31 @@ void Planet::setFixed(bool fixed)
 	this->fixed = fixed;
 }
 
+void Planet::setVelocity(agl::Vec2f velocity)
+{
+	this->velocity = velocity;
+}
+
 void Planet::updateAcceleration(Planet &planet)
 {
-	float mass = planet.getMass();
+	if (!fixed)
+	{
+		float mass = planet.getMass();
 
-	agl::Vec2f offset = planet.getPosition();
-	offset.x -= this->position.x;
-	offset.y -= this->position.y;
+		agl::Vec2f offset = planet.getPosition();
+		offset.x -= this->position.x;
+		offset.y -= this->position.y;
 
-	float distance = sqrt((offset.x * offset.x) + (offset.y * offset.y));
+		float distance = sqrt((offset.x * offset.x) + (offset.y * offset.y));
 
-	float force = GRAV_CONST * ((this->mass * mass) / (distance * distance));
-	force *= 10000000000;
+		float force = GRAV_CONST * ((this->mass * mass) / (distance * distance));
+		force *= 10000000000;
 
-	float totalOffset = abs(offset.x) + abs(offset.y);
+		float totalOffset = abs(offset.x) + abs(offset.y);
 
-	acceleration.x += force * (offset.x / totalOffset);
-	acceleration.y += force * (offset.y / totalOffset);
+		acceleration.x += force * (offset.x / totalOffset);
+		acceleration.y += force * (offset.y / totalOffset);
+	}
 }
 
 void Planet::updateVelocity()
@@ -70,7 +78,6 @@ void Planet::updateVelocity()
 	velocity.x += acceleration.x;
 	velocity.y += acceleration.y;
 	acceleration = {0, 0};
-	printf("%f %f\n", velocity.x, velocity.y);
 }
 
 void Planet::updatePosition()

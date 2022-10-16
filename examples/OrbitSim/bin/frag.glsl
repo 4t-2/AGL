@@ -8,5 +8,5 @@ uniform sampler2D myTextureSampler;
 
 void main()
 {
-    color = fragColor * texture(myTextureSampler, UV).rgb;
+	color = fragColor * texture(myTextureSampler, UV).rgb;
 }
