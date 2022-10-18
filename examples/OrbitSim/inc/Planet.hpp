@@ -9,7 +9,7 @@ class Planet
 		bool		fixed = 0;
 		agl::Vec2f	velocity = {0, 0};
 		agl::Vec2f	acceleration = {0, 0};
-		agl::Circle shape = agl::Circle(12);
+		agl::Circle shape = agl::Circle(24);
 
 	public:
 		Planet(agl::Texture texture, agl::Vec2f position, float mass, float radius, agl::Color color, bool fixed);
@@ -26,6 +26,8 @@ class Planet
 		void updatePosition();
 
 		agl::Vec2f getPosition();
+		agl::Vec2f getVelocity();
+		agl::Vec2f getAcceleration();
 		float getMass();
 		agl::Circle *getShape();
 };

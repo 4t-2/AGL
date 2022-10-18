@@ -68,8 +68,8 @@ void Planet::updateAcceleration(Planet &planet)
 
 		float totalOffset = abs(offset.x) + abs(offset.y);
 
-		acceleration.x += force * (offset.x / totalOffset);
-		acceleration.y += force * (offset.y / totalOffset);
+		acceleration.x += (force / this->mass) * (offset.x / totalOffset);
+		acceleration.y += (force / this->mass) * (offset.y / totalOffset);
 	}
 }
 
@@ -91,6 +91,16 @@ void Planet::updatePosition()
 agl::Vec2f Planet::getPosition()
 {
 	return position;
+}
+
+agl::Vec2f Planet::getVelocity()
+{
+	return velocity;
+}
+
+agl::Vec2f Planet::getAcceleration()
+{
+	return acceleration;
 }
 
 float Planet::getMass()

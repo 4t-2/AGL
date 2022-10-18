@@ -4,7 +4,7 @@
 #define HEIGHT 1000
 #define WIDTH  1000
 
-#define PLANETS 2
+#define PLANETS 3
 
 void drawPlanet(agl::RenderWindow &window, Planet &planet)
 {
@@ -37,26 +37,38 @@ int main()
 	texture.setBlank();
 
 	Planet planet[PLANETS] = {
-		Planet(texture, {(float)WIDTH / 4, (float)HEIGHT / 2}, 100, 25, agl::Color::Red, false),
-		Planet(texture, {(float)WIDTH / 2, (float)HEIGHT / 2}, 100, 25, agl::Color::Green, false),
+		Planet(texture, {(float)WIDTH / 2, (float)HEIGHT / 2}, 10000, 100, agl::Color::Yellow, true),
+		Planet(texture, {((float)WIDTH / 3) * 2, (float)HEIGHT / 2}, 1, 5, agl::Color::Gray, false),
+		Planet(texture, {((float)WIDTH / 4) * 3, (float)HEIGHT / 2}, 70, 25, agl::Color::Blue, false),
 	};
 
-	planet[0].setVelocity({0, 5});
-	planet[1].setVelocity({0, 0});
+	planet[0].setVelocity({0, 0});
+	planet[1].setVelocity({0, 6});
+	planet[2].setVelocity({0, 5});
 
 	while (!event.windowClose())
 	{
 		event.pollWindow();
 		event.pollPointer();
 
-		planet[0].updateAcceleration(planet[1]);
+		for (int i = 0; i < PLANETS; i++)
+		{
+			for (int x = 0; x < PLANETS; x++)
+			{
+				if (x == i)
+				{
+					continue;
+				}
 
-		planet[1].updateAcceleration(planet[0]);
+				planet[i].updateAcceleration(planet[x]);
+			}
+		}
 
-		planet[0].updateVelocity();
-		planet[0].updatePosition();
-		planet[1].updateVelocity();
-		planet[1].updateVelocity();
+		for (int i = 0; i < PLANETS; i++)
+		{
+			planet[i].updateVelocity();
+			planet[i].updatePosition();
+		}
 
 		window.clear();
 
