@@ -41,6 +41,36 @@ void agl::Shape::setSize(agl::Vec2f size)
 	return;
 }
 
+void agl::Shape::genBuffers(int vertices)
+{
+	shapeData.genBuffers(2);
+	shapeData.setVertexAmount(vertices);
+	shapeData.setMode(GL_TRIANGLES);
+
+	return;
+}
+
+void agl::Shape::setBufferData(Vec3f vertexBufferData[], Vec2f UVBufferData[])
+{
+	int vertexVertices = shapeData.getVertexAmount() * 3;
+	int UVvertices = shapeData.getVertexAmount() * 2;
+
+	float *vertexBufferDataFloat = (float*)malloc(vertexVertices * sizeof(float));
+	float *UVBufferDataFloat = (float*)malloc(UVvertices * sizeof(float));
+
+	for(int i = 0; i < vertexVertices / 3; i++)
+	{
+		vertexBufferDataFloat[i*3+0] = vertexBufferData[i].x;
+		vertexBufferDataFloat[i*3+1] = vertexBufferData[i].y;
+		vertexBufferDataFloat[i*3+2] = vertexBufferData[i].z;
+	}
+
+	free(vertexBufferDataFloat);
+	free(UVBufferDataFloat);
+
+	return;
+}
+
 void agl::Shape::setRotation(agl::Vec3f rotation)
 {
 	this->rotation = rotation;
