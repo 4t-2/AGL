@@ -30,7 +30,8 @@ namespace agl
 			void setRotation(Vec2f rotation);
 			void setColor(Color color);
 
-			void genBuffers(int vertices);
+			void genBuffers();
+			void setVertexAmount(int vertices);
 			void setBufferData(Vec3f vertexBufferData[], Vec2f UVBufferData[]);
 
 			void setTexture(Texture *texture);

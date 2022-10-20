@@ -86,11 +86,25 @@ agl::Cuboid::Cuboid()
 		0.667979f, 1.0f - 0.335851f	 // t12 v3
 	};
 
-	shapeData.genBuffers(2);
-	shapeData.setVertexAmount(36);
-	shapeData.setMode(GL_TRIANGLES);
-	shapeData.setBufferData(0, vertexBufferData, 3);
-	shapeData.setBufferData(1, UVBufferData, 2);
+	agl::Vec3f vertexBufferDataVec[36];
+	agl::Vec2f UVBufferDataVec[36];
+
+	for (int i = 0; i < 36; i++)
+	{
+		vertexBufferDataVec[i].x = vertexBufferData[i * 3 + 0];
+		vertexBufferDataVec[i].y = vertexBufferData[i * 3 + 1];
+		vertexBufferDataVec[i].z = vertexBufferData[i * 3 + 2];
+	}
+
+	for (int i = 0; i < 36; i++)
+	{
+		UVBufferDataVec[i].x = UVBufferData[i * 3 + 0];
+		UVBufferDataVec[i].y = UVBufferData[i * 3 + 1];
+	}
+
+	this->genBuffers();
+	this->setVertexAmount(36);
+	this->setBufferData(vertexBufferDataVec, UVBufferDataVec);
 
 	return;
 }
