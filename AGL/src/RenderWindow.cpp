@@ -32,6 +32,8 @@ void agl::RenderWindow::setup(Vec2f size, const char title[])
 
 	this->initGL();
 	this->setViewport(0, 0, gwa.width, gwa.height);
+	this->GLEnable(GL_DEPTH_TEST);
+
 	this->mapWindow();
 
 	return;

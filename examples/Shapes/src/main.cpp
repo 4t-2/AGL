@@ -44,7 +44,7 @@ int main()
 	);
 
 	// setup blank texture
-	texture.setBlank();
+	texture.loadFromFile("./uvtemplate.bmp");
 
 	// setup shapes
 
@@ -117,6 +117,7 @@ int main()
 
 	// cleanup
 
+	texture.deleteTexture();
 	shader.deleteProgram();
 	window.close();
 

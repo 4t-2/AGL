@@ -41,47 +41,19 @@ void agl::Shape::setSize(agl::Vec2f size)
 	return;
 }
 
-void agl::Shape::genBuffers()
+void agl::Shape::genBuffers(int mode)
 {
 	shapeData.genBuffers(2);
-	shapeData.setMode(GL_TRIANGLES);
+	shapeData.setMode(mode);
 
 	return;
 }
 
-void agl::Shape::setVertexAmount(int vertices)
+void agl::Shape::setBufferData(float vertexBufferData[], float UVBufferData[], int vertices)
 {
 	shapeData.setVertexAmount(vertices);
-
-	return;
-}
-
-void agl::Shape::setBufferData(Vec3f vertexBufferData[], Vec2f UVBufferData[])
-{
-	int vertexVertices = shapeData.getVertexAmount() * 3;
-	int UVvertices = shapeData.getVertexAmount() * 2;
-
-	float *vertexBufferDataFloat = (float*)malloc(vertexVertices * sizeof(float));
-	float *UVBufferDataFloat = (float*)malloc(UVvertices * sizeof(float));
-
-	for(int i = 0; i < vertexVertices / 3; i++)
-	{
-		vertexBufferDataFloat[i*3+0] = vertexBufferData[i].x;
-		vertexBufferDataFloat[i*3+1] = vertexBufferData[i].y;
-		vertexBufferDataFloat[i*3+2] = vertexBufferData[i].z;
-	}
-
-	for(int i = 0; i < UVvertices / 2; i++)
-	{
-		UVBufferDataFloat[i*2+0] = UVBufferData[i].x;
-		UVBufferDataFloat[i*2+1] = UVBufferData[i].y;
-	}
-
-	shapeData.setBufferData(0, vertexBufferDataFloat, 3);
-	shapeData.setBufferData(1, UVBufferDataFloat, 2);
-
-	free(vertexBufferDataFloat);
-	free(UVBufferDataFloat);
+	shapeData.setBufferData(0, vertexBufferData, 3);
+	shapeData.setBufferData(1, UVBufferData, 2);
 
 	return;
 }

@@ -4,10 +4,8 @@
 
 agl::Rectangle::Rectangle()
 {
-	int dataSize = sizeof(float) * 12;
-
 	float vertexBufferData[12];
-	float colorBufferData[12];
+	float UVBufferData[8];
 
 	vertexBufferData[0]  = 0;
 	vertexBufferData[1]  = 0;
@@ -22,24 +20,17 @@ agl::Rectangle::Rectangle()
 	vertexBufferData[10] = 0 + 1;
 	vertexBufferData[11] = 0;
 
-	Vec3f colorNormalized = color.normalized();
+	UVBufferData[0] = vertexBufferData[0];
+	UVBufferData[1] = vertexBufferData[1];
+	UVBufferData[2] = vertexBufferData[3];
+	UVBufferData[3] = vertexBufferData[4];
+	UVBufferData[4] = vertexBufferData[6];
+	UVBufferData[5] = vertexBufferData[7];
+	UVBufferData[6] = vertexBufferData[9];
+	UVBufferData[7] = vertexBufferData[10];
 
-	colorBufferData[0]  = colorNormalized.x;
-	colorBufferData[1]  = colorNormalized.y;
-	colorBufferData[2]  = colorNormalized.z;
-	colorBufferData[3]  = colorNormalized.x;
-	colorBufferData[4]  = colorNormalized.y;
-	colorBufferData[5]  = colorNormalized.z;
-	colorBufferData[6]  = colorNormalized.x;
-	colorBufferData[7]  = colorNormalized.y;
-	colorBufferData[8]  = colorNormalized.z;
-	colorBufferData[9]  = colorNormalized.x;
-	colorBufferData[10] = colorNormalized.y;
-	colorBufferData[11] = colorNormalized.z;
+	this->genBuffers(GL_TRIANGLE_STRIP);
+	this->setBufferData(vertexBufferData, UVBufferData, 4);
 
-	shapeData.setMode(GL_TRIANGLE_STRIP);
-	shapeData.genBuffers(2);
-	shapeData.setVertexAmount(4);
-	shapeData.setBufferData(0, vertexBufferData, 3);
-	shapeData.setBufferData(1, colorBufferData, 3);
+	return;
 }

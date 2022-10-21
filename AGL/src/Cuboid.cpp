@@ -45,8 +45,6 @@ agl::Cuboid::Cuboid()
 		1, 0, 1	 // t12 v3
 	};
 
-	Vec3f colorNormalized = color.normalized();
-
 	float UVBufferData[] = {
 		0.000059f, 1.0f - 0.000004f, // t1 v1
 		0.000103f, 1.0f - 0.336048f, // t1 v2
@@ -86,25 +84,8 @@ agl::Cuboid::Cuboid()
 		0.667979f, 1.0f - 0.335851f	 // t12 v3
 	};
 
-	agl::Vec3f vertexBufferDataVec[36];
-	agl::Vec2f UVBufferDataVec[36];
-
-	for (int i = 0; i < 36; i++)
-	{
-		vertexBufferDataVec[i].x = vertexBufferData[i * 3 + 0];
-		vertexBufferDataVec[i].y = vertexBufferData[i * 3 + 1];
-		vertexBufferDataVec[i].z = vertexBufferData[i * 3 + 2];
-	}
-
-	for (int i = 0; i < 36; i++)
-	{
-		UVBufferDataVec[i].x = UVBufferData[i * 3 + 0];
-		UVBufferDataVec[i].y = UVBufferData[i * 3 + 1];
-	}
-
-	this->genBuffers();
-	this->setVertexAmount(36);
-	this->setBufferData(vertexBufferDataVec, UVBufferDataVec);
+	this->genBuffers(GL_TRIANGLES);
+	this->setBufferData(vertexBufferData, UVBufferData, 36);
 
 	return;
 }

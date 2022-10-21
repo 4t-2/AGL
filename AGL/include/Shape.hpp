@@ -14,7 +14,7 @@ namespace agl
 			Vec3f position = {0, 0, 0};
 			Vec3f size	   = {1, 1, 1};
 			Vec3f rotation = {0, 0, 0};
-			Color color	   = {255, 0, 0, 0};
+			Color color	   = {255, 255, 255, 255};
 
 			GLPrimative shapeData;
 			int textureID = 0;
@@ -30,9 +30,8 @@ namespace agl
 			void setRotation(Vec2f rotation);
 			void setColor(Color color);
 
-			void genBuffers();
-			void setVertexAmount(int vertices);
-			void setBufferData(Vec3f vertexBufferData[], Vec2f UVBufferData[]);
+			void genBuffers(int mode);
+			void setBufferData(float vertexBufferData[], float UVBufferData[], int vertices);
 
 			void setTexture(Texture *texture);
 

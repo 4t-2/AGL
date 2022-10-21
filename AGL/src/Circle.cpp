@@ -5,16 +5,16 @@
 
 agl::Circle::Circle(unsigned int faces)
 {
-	int size = sizeof(float) * 3 * (faces + 2);
+	int vertices = (faces + 2);
 
-	float *vertexBufferData = (float *)malloc(size);
-	float *colorBufferData  = (float *)malloc(size);
+	float *vertexBufferData = (float *)malloc(vertices * 3 * sizeof(float));
+	float *UVBufferData		= (float *)malloc(vertices * 2 * sizeof(float));
 
 	vertexBufferData[0] = 0;
 	vertexBufferData[1] = 0;
 	vertexBufferData[2] = 0;
 
-	for (int i = 1; i < (faces + 1); i++)
+	for (int i = 1; i < (vertices - 1); i++)
 	{
 		float angle = (360. / faces) * i;
 
@@ -26,35 +26,21 @@ agl::Circle::Circle(unsigned int faces)
 		vertexBufferData[(i * 3) + 2] = 0;
 	}
 
-	vertexBufferData[((faces + 1) * 3) + 0] = vertexBufferData[((1) * 3) + 0];
-	vertexBufferData[((faces + 1) * 3) + 1] = vertexBufferData[((1) * 3) + 1];
-	vertexBufferData[((faces + 1) * 3) + 2] = vertexBufferData[((1) * 3) + 2];
+	vertexBufferData[((vertices - 1) * 3) + 0] = vertexBufferData[((1) * 3) + 0];
+	vertexBufferData[((vertices - 1) * 3) + 1] = vertexBufferData[((1) * 3) + 1];
+	vertexBufferData[((vertices - 1) * 3) + 2] = vertexBufferData[((1) * 3) + 2];
 
-	colorBufferData[0]  = 1;
-	colorBufferData[1]  = 0;
-	colorBufferData[2]  = 0;
-	colorBufferData[3]  = 0;
-	colorBufferData[4]  = 1;
-	colorBufferData[5]  = 0;
-	colorBufferData[6]  = 0;
-	colorBufferData[7]  = 0;
-	colorBufferData[8]  = 1;
-	colorBufferData[9]  = 1;
-	colorBufferData[10] = 0;
-	colorBufferData[11] = 0;
-	colorBufferData[12] = 0;
-	colorBufferData[13] = 1;
-	colorBufferData[14] = 0;
+	for (int i = 0; i < vertices; i++)
+	{
+		UVBufferData[(i * 2) + 0] = (vertexBufferData[(i * 3) + 0] / 2) + 0.5;
+		UVBufferData[(i * 2) + 1] = (vertexBufferData[(i * 3) + 1] / 2) + 0.5;
+	}
 
-	shapeData.setMode(GL_TRIANGLE_FAN);
-
-	shapeData.genBuffers(2);
-	shapeData.setVertexAmount(faces + 2);
-	shapeData.setBufferData(0, vertexBufferData, 3);
-	shapeData.setBufferData(1, colorBufferData, 3);
+	this->genBuffers(GL_TRIANGLE_FAN);
+	this->setBufferData(vertexBufferData, UVBufferData, vertices);
 
 	free(vertexBufferData);
-	free(colorBufferData);
+	free(UVBufferData);
 
 	return;
 }
