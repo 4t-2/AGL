@@ -17,7 +17,6 @@ The AGL source code is distributed under the MIT License.
 
 ## TODO
 - Texture transformation matrix
-- Fix circle and rectangle shape constructors
 - Text (.ttf)
 - Add comments to code
 - Tutorials on website

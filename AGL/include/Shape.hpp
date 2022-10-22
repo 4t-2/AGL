@@ -2,6 +2,7 @@
 
 #include "Color.hpp"
 #include "GLPrimative.hpp"
+#include "Mat4f.hpp"
 #include "Vec2f.hpp"
 #include "Vec3f.hpp"
 #include "Texture.hpp"
@@ -15,6 +16,10 @@ namespace agl
 			Vec3f size	   = {1, 1, 1};
 			Vec3f rotation = {0, 0, 0};
 			Color color	   = {255, 255, 255, 255};
+
+			Mat4f translationMatrix;
+			Mat4f scalingMatrix;
+			Mat4f rotationMatrix;
 
 			GLPrimative shapeData;
 			int textureID = 0;
@@ -41,7 +46,10 @@ namespace agl
 			Color getColor();
 			int getTextureID();
 
-			void		setShapeData();
+			Mat4f getTranslationMatrix();
+			Mat4f getScalingMatrix();
+			Mat4f getRotationMatrix();
+
 			GLPrimative getShapeData();
 	};
 } // namespace agl

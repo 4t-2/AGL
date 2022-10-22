@@ -32,5 +32,9 @@ agl::Rectangle::Rectangle()
 	this->genBuffers(GL_TRIANGLE_STRIP);
 	this->setBufferData(vertexBufferData, UVBufferData, 4);
 
+	translationMatrix.translate(position);
+	scalingMatrix.scale(size);
+	rotationMatrix.rotate(rotation);
+
 	return;
 }

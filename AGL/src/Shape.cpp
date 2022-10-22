@@ -15,6 +15,8 @@ void agl::Shape::setPosition(agl::Vec3f position)
 {
 	this->position = position;
 
+	translationMatrix.translate(position);
+
 	return;
 }
 
@@ -23,12 +25,16 @@ void agl::Shape::setPosition(agl::Vec2f position)
 	this->position.x = position.x;
 	this->position.y = position.y;
 
+	translationMatrix.translate(this->position);
+
 	return;
 }
 
 void agl::Shape::setSize(agl::Vec3f size)
 {
 	this->size = size;
+
+	scalingMatrix.scale(size);
 
 	return;
 }
@@ -37,6 +43,8 @@ void agl::Shape::setSize(agl::Vec2f size)
 {
 	this->size.x = size.x;
 	this->size.y = size.y;
+
+	scalingMatrix.scale(this->size);
 
 	return;
 }
@@ -62,6 +70,8 @@ void agl::Shape::setRotation(agl::Vec3f rotation)
 {
 	this->rotation = rotation;
 
+	rotationMatrix.rotate(rotation);
+
 	return;
 }
 
@@ -69,6 +79,8 @@ void agl::Shape::setRotation(agl::Vec2f rotation)
 {
 	this->rotation.x = rotation.x;
 	this->rotation.y = rotation.y;
+
+	rotationMatrix.rotate(this->rotation);
 
 	return;
 }
@@ -110,6 +122,21 @@ agl::Color agl::Shape::getColor()
 int agl::Shape::getTextureID()
 {
 	return textureID;
+}
+
+agl::Mat4f agl::Shape::getTranslationMatrix()
+{
+	return translationMatrix;
+}
+
+agl::Mat4f agl::Shape::getScalingMatrix()
+{
+	return scalingMatrix;
+}
+
+agl::Mat4f agl::Shape::getRotationMatrix()
+{
+	return rotationMatrix;
 }
 
 agl::GLPrimative agl::Shape::getShapeData()
