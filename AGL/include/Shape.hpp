@@ -3,30 +3,33 @@
 #include "Color.hpp"
 #include "GLPrimative.hpp"
 #include "Mat4f.hpp"
+#include "Texture.hpp"
 #include "Vec2f.hpp"
 #include "Vec3f.hpp"
-#include "Texture.hpp"
 
 namespace agl
 {
 	class Shape
 	{
 		protected:
+			Vec3f offset   = {0, 0, 0};
 			Vec3f position = {0, 0, 0};
 			Vec3f size	   = {1, 1, 1};
 			Vec3f rotation = {0, 0, 0};
 			Color color	   = {255, 255, 255, 255};
 
+			Mat4f offsetMatrix;
 			Mat4f translationMatrix;
 			Mat4f scalingMatrix;
 			Mat4f rotationMatrix;
 
 			GLPrimative shapeData;
-			int textureID = 0;
+			int			textureID = 0;
 
 		public:
 			~Shape();
 
+			void setOffset(Vec3f offset);
 			void setPosition(Vec3f position);
 			void setPosition(Vec2f position);
 			void setSize(Vec3f size);
@@ -40,12 +43,14 @@ namespace agl
 
 			void setTexture(Texture *texture);
 
+			Vec3f getOffset();
 			Vec3f getPosition();
 			Vec3f getSize();
 			Vec3f getRotation();
 			Color getColor();
-			int getTextureID();
+			int	  getTextureID();
 
+			Mat4f getOffsetMatrix();
 			Mat4f getTranslationMatrix();
 			Mat4f getScalingMatrix();
 			Mat4f getRotationMatrix();

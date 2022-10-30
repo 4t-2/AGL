@@ -229,11 +229,12 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 void agl::RenderWindow::drawShape(agl::Shape &shape)
 {
 	agl::Mat4f transform;
+	agl::Mat4f offset = shape.getOffsetMatrix();
 	agl::Mat4f translation = shape.getTranslationMatrix();
 	agl::Mat4f scaling = shape.getScalingMatrix();
 	agl::Mat4f rotate = shape.getRotationMatrix();
 
-	transform = translation * rotate * scaling;
+	transform = translation * rotate * offset * scaling;
 
 	Shader::setUniformMatrix4fv(transformID, transform);
 	Shader::setUniformVector3fv(shapeColorID, shape.getColor().normalized());

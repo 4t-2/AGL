@@ -87,6 +87,7 @@ agl::Cuboid::Cuboid()
 	this->genBuffers(GL_TRIANGLES);
 	this->setBufferData(vertexBufferData, UVBufferData, 36);
 
+	offsetMatrix.translate(offset);
 	translationMatrix.translate(position);
 	scalingMatrix.scale(size);
 	rotationMatrix.rotate(rotation);

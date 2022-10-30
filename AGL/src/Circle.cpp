@@ -42,6 +42,7 @@ agl::Circle::Circle(unsigned int faces)
 	free(vertexBufferData);
 	free(UVBufferData);
 
+	offsetMatrix.translate(offset);
 	translationMatrix.translate(position);
 	scalingMatrix.scale(size);
 	rotationMatrix.rotate(rotation);

@@ -11,6 +11,15 @@ agl::Shape::~Shape()
 	return;
 }
 
+void agl::Shape::setOffset(agl::Vec3f offset)
+{
+	this->offset = offset;
+
+	offsetMatrix.translate(offset);
+
+	return;
+}
+
 void agl::Shape::setPosition(agl::Vec3f position)
 {
 	this->position = position;
@@ -99,6 +108,11 @@ void agl::Shape::setTexture(Texture *texture)
 	return;
 }
 
+agl::Vec3f agl::Shape::getOffset()
+{
+	return offset;
+}
+
 agl::Vec3f agl::Shape::getPosition()
 {
 	return position;
@@ -122,6 +136,11 @@ agl::Color agl::Shape::getColor()
 int agl::Shape::getTextureID()
 {
 	return textureID;
+}
+
+agl::Mat4f agl::Shape::getOffsetMatrix()
+{
+	return offsetMatrix;
 }
 
 agl::Mat4f agl::Shape::getTranslationMatrix()
