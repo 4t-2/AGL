@@ -15,3 +15,4 @@
 #include "include/Cuboid.hpp"
 #include "include/Shape.hpp"
 #include "include/Circle.hpp"
+#include "include/Vec.hpp"
