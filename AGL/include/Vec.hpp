@@ -1,5 +1,8 @@
 #pragma once
 
+#include <ostream>
+#include <sstream>
+
 namespace agl
 {
 	template <typename T = float, int max = 4> class Vec
@@ -45,6 +48,32 @@ namespace agl
 				{
 					data[i] = vec.data[i];
 				}
+			}
+
+			Vec operator-(Vec vec)
+			{
+				Vec newVec;
+
+				for (int i = 0; i < max; i++)
+				{
+					newVec.data[i] = data[i] - vec.data[i];
+				}
+
+				return newVec;
+			}
+
+			friend std::ostream &operator<<(std::ostream &os, const Vec &vec)
+			{
+				std::stringstream output;
+
+				for (int i = 0; i < max; i++)
+				{
+					output << vec.data[i] << " ";
+				}
+
+				output << '\n';
+
+				return os << output.str();
 			}
 
 			const unsigned int size = max;
