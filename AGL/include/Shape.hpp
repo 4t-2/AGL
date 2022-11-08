@@ -4,18 +4,17 @@
 #include "GLPrimative.hpp"
 #include "Mat4f.hpp"
 #include "Texture.hpp"
-#include "Vec2f.hpp"
-#include "Vec3f.hpp"
+#include "Vec.hpp"
 
 namespace agl
 {
 	class Shape
 	{
 		protected:
-			Vec3f offset   = {0, 0, 0};
-			Vec3f position = {0, 0, 0};
-			Vec3f size	   = {1, 1, 1};
-			Vec3f rotation = {0, 0, 0};
+			Vec<float, 3> offset   = {0, 0, 0};
+			Vec<float, 3> position = {0, 0, 0};
+			Vec<float, 3> size	   = {1, 1, 1};
+			Vec<float, 3> rotation = {0, 0, 0};
 			Color color	   = {255, 255, 255, 255};
 
 			Mat4f offsetMatrix;
@@ -29,13 +28,13 @@ namespace agl
 		public:
 			~Shape();
 
-			void setOffset(Vec3f offset);
-			void setPosition(Vec3f position);
-			void setPosition(Vec2f position);
-			void setSize(Vec3f size);
-			void setSize(Vec2f size);
-			void setRotation(Vec3f rotation);
-			void setRotation(Vec2f rotation);
+			void setOffset(Vec<float, 3> offset);
+			void setPosition(Vec<float, 3> position);
+			void setPosition(Vec<float, 2> position);
+			void setSize(Vec<float, 3> size);
+			void setSize(Vec<float, 2> size);
+			void setRotation(Vec<float, 3> rotation);
+			void setRotation(Vec<float, 2> rotation);
 			void setColor(Color color);
 
 			void genBuffers(int mode);
@@ -43,10 +42,10 @@ namespace agl
 
 			void setTexture(Texture *texture);
 
-			Vec3f getOffset();
-			Vec3f getPosition();
-			Vec3f getSize();
-			Vec3f getRotation();
+			Vec<float, 3> getOffset();
+			Vec<float, 3> getPosition();
+			Vec<float, 3> getSize();
+			Vec<float, 3> getRotation();
 			Color getColor();
 			int	  getTextureID();
 

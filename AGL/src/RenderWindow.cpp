@@ -17,7 +17,7 @@
 
 #include "../include/RenderWindow.hpp"
 
-void agl::RenderWindow::setup(Vec2f size, const char title[])
+void agl::RenderWindow::setup(Vec<float, 2> size, const char title[])
 {
 	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
 
@@ -134,7 +134,7 @@ void agl::RenderWindow::setViewport(int x, int y, int width, int height)
 }
 void agl::RenderWindow::setClearColor(agl::Color color)
 {
-	Vec3f colorNormalized = color.normalized();
+	Vec<float, 3> colorNormalized = color.normalized();
 
 	glClearColor(colorNormalized.x, colorNormalized.y, colorNormalized.z, 0);
 

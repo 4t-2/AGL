@@ -3,8 +3,6 @@
 #include "Mat4f.hpp"
 #include "external.hpp"
 
-#include "Vec3f.hpp"
-
 namespace agl
 {
 	class Shader
@@ -39,7 +37,7 @@ namespace agl
 			// \ Sets the value of a vector uniform
 			// \ location - location of uniform
 			// \ vector - value to set uniform to
-			static void setUniformVector3fv(GLuint location, Vec3f vector);
+			static void setUniformVector3fv(GLuint location, Vec<float, 3> vector);
 			
 			// \ Delete shader
 			void		deleteProgram();

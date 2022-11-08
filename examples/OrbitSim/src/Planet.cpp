@@ -3,7 +3,8 @@
 
 #define GRAV_CONST 0.00000000006673
 
-Planet::Planet(agl::Texture texture, agl::Vec2f position, float mass, float radius, agl::Color color, bool fixed)
+Planet::Planet(agl::Texture texture, agl::Vec<float, 2> position, float mass, float radius, agl::Color color,
+			   bool fixed)
 {
 	shape.setTexture(&texture);
 	this->setPosition(position);
@@ -13,7 +14,7 @@ Planet::Planet(agl::Texture texture, agl::Vec2f position, float mass, float radi
 	this->setFixed(fixed);
 }
 
-void Planet::setPosition(agl::Vec2f position)
+void Planet::setPosition(agl::Vec<float, 2> position)
 {
 	this->position = position;
 	shape.setPosition(position);
@@ -31,7 +32,7 @@ void Planet::setMass(float mass)
 void Planet::setRadius(float radius)
 {
 	this->radius = radius;
-	shape.setSize(agl::Vec2f{radius, radius});
+	shape.setSize(agl::Vec<float, 2>{radius, radius});
 
 	return;
 }
@@ -46,7 +47,7 @@ void Planet::setFixed(bool fixed)
 	this->fixed = fixed;
 }
 
-void Planet::setVelocity(agl::Vec2f velocity)
+void Planet::setVelocity(agl::Vec<float, 2> velocity)
 {
 	this->velocity = velocity;
 }
@@ -57,14 +58,14 @@ void Planet::updateAcceleration(Planet &planet)
 	{
 		float mass = planet.getMass();
 
-		agl::Vec2f offset = planet.getPosition();
+		agl::Vec<float, 2> offset = planet.getPosition(); // FIXME i think somewhere here
 		offset.x -= this->position.x;
 		offset.y -= this->position.y;
 
 		float distance = sqrt((offset.x * offset.x) + (offset.y * offset.y));
 
 		float force = GRAV_CONST * ((this->mass * mass) / (distance * distance));
-		force *= 10000000000;
+		force *= 1;
 
 		float totalOffset = abs(offset.x) + abs(offset.y);
 
@@ -82,23 +83,23 @@ void Planet::updateVelocity()
 
 void Planet::updatePosition()
 {
-	agl::Vec2f oldPos = this->getPosition();
-	agl::Vec2f newPos = {oldPos.x + velocity.x, oldPos.y + velocity.y};
+	agl::Vec<float, 2> oldPos = this->getPosition();
+	agl::Vec<float, 2> newPos = {oldPos.x + velocity.x, oldPos.y + velocity.y};
 
 	this->setPosition(newPos);
 }
 
-agl::Vec2f Planet::getPosition()
+agl::Vec<float, 2> Planet::getPosition()
 {
 	return position;
 }
 
-agl::Vec2f Planet::getVelocity()
+agl::Vec<float, 2> Planet::getVelocity()
 {
 	return velocity;
 }
 
-agl::Vec2f Planet::getAcceleration()
+agl::Vec<float, 2> Planet::getAcceleration()
 {
 	return acceleration;
 }

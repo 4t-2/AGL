@@ -163,7 +163,7 @@ void agl::Shader::setUniformMatrix4fv(GLuint location, Mat4f matrix)
 	return;
 }
 
-void agl::Shader::setUniformVector3fv(GLuint location, Vec3f vector)
+void agl::Shader::setUniformVector3fv(GLuint location, Vec<float, 3> vector)
 {
 	glUniform3f(location, vector.x, vector.y, vector.z);
 

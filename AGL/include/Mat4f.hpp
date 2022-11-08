@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Vec3f.hpp"
-#include "Vec4f.hpp"
-
+#include "Vec.hpp"
 #include <cstdio>
 #include <iostream>
 
@@ -19,7 +17,7 @@ namespace agl
 			};
 
 			Mat4f operator*(Mat4f matrix);
-			Vec4f operator*(Vec4f vector);
+			Vec<float, 4> operator*(Vec<float, 4> vector);
 
 			friend std::ostream &operator<<(std::ostream &os, const Mat4f &mat)
 			{
@@ -42,15 +40,15 @@ namespace agl
 			void clear();
 
 			void identity();
-			void translate(Vec3f translation);
-			void scale(Vec3f scale);
-			void rotate(Vec3f rotation);
+			void translate(Vec<float, 3> translation);
+			void scale(Vec<float, 3> scale);
+			void rotate(Vec<float, 3> rotation);
 			void rotateX(float x);
 			void rotateY(float y);
 			void rotateZ(float z);
 
 			void perspective(float fov, float aspectRatio, float near, float far);
 			void ortho(float left, float right, float bottom, float top, float near, float far);
-			void lookAt(Vec3f pos, Vec3f target, Vec3f head);
+			void lookAt(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3> head);
 	};
 } // namespace agl

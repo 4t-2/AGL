@@ -1,7 +1,6 @@
 #include "Color.hpp"
 #include "GLPrimative.hpp"
 #include "Shape.hpp"
-#include "Vec2f.hpp"
 #include <GL/gl.h>
 
 namespace agl

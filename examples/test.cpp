@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 	agl::Cuboid cuboid;
 	cuboid.setTexture(&UVTexture1);
 
-	agl::Vec3f pos = {4, 3, 3};
+	agl::Vec<float, 3> pos = {4, 3, 3};
 
 	float x = 0;
 

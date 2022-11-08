@@ -8,9 +8,7 @@
 #include "Rectangle.hpp"
 #include "Shader.hpp"
 #include "Shape.hpp"
-#include "Vec2f.hpp"
-#include "Vec2i.hpp"
-#include "Vec3f.hpp"
+#include "Vec.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 
@@ -44,7 +42,7 @@ namespace agl
 			// Create an AGL Window with defaults that are usable in most projects
 			// size - the size of the window
 			// title - the window title
-			void setup(Vec2f size, const char title[]);
+			void setup(Vec<float, 2> size, const char title[]);
 
 			// Open X displat
 			int openDisplay();

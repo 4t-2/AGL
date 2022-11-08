@@ -39,12 +39,12 @@ int main()
 
 	rectangle.setColor({255, 0, 0});
 	rectangle.setTexture(&texture);
-	rectangle.setPosition({500, 500, 0});
-	rectangle.setSize({400, 400, 0});
-	rectangle.setRotation({0, 0, 45});
+	rectangle.setPosition(agl::Vec<float, 3>{500, 500, 0});
+	rectangle.setSize(agl::Vec<float, 3>{400, 400, 0});
+	rectangle.setRotation(agl::Vec<float, 3>{0, 0, 45});
 	rectangle.setOffset({0, 0, 0});
 
-	agl::Vec3f offset = {0, 0, 0};
+	agl::Vec<float, 3> offset = {0, 0, 0};
 	int rotation = 0;
 
 	// render loop (end if the window should close)
@@ -88,9 +88,9 @@ int main()
 		rotation++;
 
 		rectangle.setOffset(offset);
-		rectangle.setRotation({0, 0, (float)rotation});
+		rectangle.setRotation(agl::Vec<float, 3>{0, 0, (float)rotation});
 
-		std::cout << offset;
+		std::cout << offset << '\n';
 	}
 
 	// cleanup

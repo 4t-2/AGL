@@ -2,7 +2,7 @@
 
 int main()
 {
-	agl::Vec3f pos = {5, 5, 5};
+	agl::Vec<float, 3> pos = {5, 5, 5};
 
 	// setup window
 
@@ -50,16 +50,16 @@ int main()
 
 	rectangle.setColor({255, 0, 0});
 	rectangle.setTexture(&texture);
-	rectangle.setPosition({0, 0, 0});
+	rectangle.setPosition(agl::Vec<float, 3>{0, 0, 0});
 
 	circle.setColor({0, 255, 0});
 	circle.setTexture(&texture);
-	circle.setPosition({2.5, .5, 0});
-	circle.setSize({.5, .5, .5});
+	circle.setPosition(agl::Vec<float, 3>{2.5, .5, 0});
+	circle.setSize(agl::Vec<float, 3>{.5, .5, .5});
 
 	cuboid.setColor({0, 0, 255});
 	cuboid.setTexture(&texture);
-	cuboid.setPosition({-2, 0, 0});
+	cuboid.setPosition(agl::Vec<float, 3>{-2, 0, 0});
 
 	float speed = 0.1;
 

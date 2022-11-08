@@ -66,12 +66,12 @@ namespace agl
 			{
 				std::stringstream output;
 
-				for (int i = 0; i < max; i++)
+				for (int i = 0; i < max-1; i++)
 				{
 					output << vec.data[i] << " ";
 				}
-
-				output << '\n';
+					
+				output << vec.data[max-1];
 
 				return os << output.str();
 			}

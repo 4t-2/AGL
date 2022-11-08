@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Vec3f.hpp"
 #include "Shader.hpp"
 #include "Mat4f.hpp"
 
@@ -17,7 +16,7 @@ namespace agl
 		public:
 			void setPerspectiveProjection(float fov, float aspectRatio, float near, float far);
 			void setOrthographicProjection(float left, float right, float bottom, float top, float near, float far);
-			void setView(Vec3f pos, Vec3f target, Vec3f head);
+			void setView(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3> head);
 
 			Mat4f getMVP();
 	};

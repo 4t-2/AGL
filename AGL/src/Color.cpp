@@ -12,7 +12,7 @@ const agl::Color agl::Color::White = {255, 255, 255, 255};
 const agl::Color agl::Color::Black = {0, 0, 0, 255};
 const agl::Color agl::Color::Gray  = {127, 127, 127, 255};
 
-agl::Vec3f agl::Color::normalized()
+agl::Vec<float, 3> agl::Color::normalized()
 {
 	return {float(r) / 255, float(g) / 255, float(b) / 255};
 }

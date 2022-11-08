@@ -11,7 +11,7 @@ agl::Shape::~Shape()
 	return;
 }
 
-void agl::Shape::setOffset(agl::Vec3f offset)
+void agl::Shape::setOffset(agl::Vec<float, 3> offset)
 {
 	this->offset = offset;
 
@@ -20,7 +20,7 @@ void agl::Shape::setOffset(agl::Vec3f offset)
 	return;
 }
 
-void agl::Shape::setPosition(agl::Vec3f position)
+void agl::Shape::setPosition(agl::Vec<float, 3> position)
 {
 	this->position = position;
 
@@ -29,7 +29,7 @@ void agl::Shape::setPosition(agl::Vec3f position)
 	return;
 }
 
-void agl::Shape::setPosition(agl::Vec2f position)
+void agl::Shape::setPosition(agl::Vec<float, 2> position)
 {
 	this->position.x = position.x;
 	this->position.y = position.y;
@@ -39,7 +39,7 @@ void agl::Shape::setPosition(agl::Vec2f position)
 	return;
 }
 
-void agl::Shape::setSize(agl::Vec3f size)
+void agl::Shape::setSize(agl::Vec<float, 3> size)
 {
 	this->size = size;
 
@@ -48,7 +48,7 @@ void agl::Shape::setSize(agl::Vec3f size)
 	return;
 }
 
-void agl::Shape::setSize(agl::Vec2f size)
+void agl::Shape::setSize(agl::Vec<float, 2> size)
 {
 	this->size.x = size.x;
 	this->size.y = size.y;
@@ -75,7 +75,7 @@ void agl::Shape::setBufferData(float vertexBufferData[], float UVBufferData[], i
 	return;
 }
 
-void agl::Shape::setRotation(agl::Vec3f rotation)
+void agl::Shape::setRotation(agl::Vec<float, 3> rotation)
 {
 	this->rotation = rotation;
 
@@ -84,7 +84,7 @@ void agl::Shape::setRotation(agl::Vec3f rotation)
 	return;
 }
 
-void agl::Shape::setRotation(agl::Vec2f rotation)
+void agl::Shape::setRotation(agl::Vec<float, 2> rotation)
 {
 	this->rotation.x = rotation.x;
 	this->rotation.y = rotation.y;
@@ -108,22 +108,22 @@ void agl::Shape::setTexture(Texture *texture)
 	return;
 }
 
-agl::Vec3f agl::Shape::getOffset()
+agl::Vec<float, 3> agl::Shape::getOffset()
 {
 	return offset;
 }
 
-agl::Vec3f agl::Shape::getPosition()
+agl::Vec<float, 3> agl::Shape::getPosition()
 {
 	return position;
 }
 
-agl::Vec3f agl::Shape::getSize()
+agl::Vec<float, 3> agl::Shape::getSize()
 {
 	return size;
 }
 
-agl::Vec3f agl::Shape::getRotation()
+agl::Vec<float, 3> agl::Shape::getRotation()
 {
 	return rotation;
 }

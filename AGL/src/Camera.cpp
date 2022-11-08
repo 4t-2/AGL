@@ -14,7 +14,7 @@ void agl::Camera::setOrthographicProjection(float left, float right, float botto
 	return;
 }
 
-void agl::Camera::setView(Vec3f pos, Vec3f target, Vec3f head)
+void agl::Camera::setView(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3> head)
 {
 	view.lookAt({pos.x, pos.y, pos.z}, {target.x, target.y, target.z}, {head.x, head.y, head.z});
 }

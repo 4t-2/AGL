@@ -19,9 +19,9 @@ agl::Mat4f agl::Mat4f::operator*(agl::Mat4f matrix)
 	return newMatrix;
 }
 
-agl::Vec4f agl::Mat4f::operator*(agl::Vec4f vector)
+agl::Vec<float, 4> agl::Mat4f::operator*(agl::Vec<float, 4> vector)
 {
-	Vec4f newVector;
+	Vec<float, 4> newVector;
 
 	newVector.x = (data[0][0] * vector.x) + (data[1][0] * vector.y) + (data[2][0] * vector.z) + (data[3][0] * vector.w);
 	newVector.y = (data[0][1] * vector.x) + (data[1][1] * vector.y) + (data[2][1] * vector.z) + (data[3][1] * vector.w);
@@ -40,7 +40,7 @@ void agl::Mat4f::identity()
 	return;
 }
 
-void agl::Mat4f::translate(agl::Vec3f translation)
+void agl::Mat4f::translate(agl::Vec<float, 3> translation)
 {
 	data[0][0] = 1;
 	data[1][1] = 1;
@@ -54,7 +54,7 @@ void agl::Mat4f::translate(agl::Vec3f translation)
 	return;
 }
 
-void agl::Mat4f::scale(agl::Vec3f scale)
+void agl::Mat4f::scale(agl::Vec<float, 3> scale)
 {
 	data[0][0] = scale.x;
 	data[1][1] = scale.y;
@@ -112,7 +112,7 @@ void agl::Mat4f::rotateZ(float z)
 	return;
 }
 
-void agl::Mat4f::rotate(agl::Vec3f rotation) // HACK lazy and can definately be optimized
+void agl::Mat4f::rotate(agl::Vec<float, 3> rotation) // HACK lazy and can definately be optimized
 {
 	Mat4f rotationX;
 	Mat4f rotationY;
@@ -136,27 +136,27 @@ void agl::Mat4f::rotate(agl::Vec3f rotation) // HACK lazy and can definately be 
 	return;
 }
 
-agl::Vec3f normalize(agl::Vec3f v)
+agl::Vec<float, 3> normalize(agl::Vec<float, 3> v)
 {
 	float len = std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 	return {v.x /= len, v.y /= len, v.z /= len};
 }
 
-agl::Vec3f cross(const agl::Vec3f a, const agl::Vec3f b)
+agl::Vec<float, 3> cross(const agl::Vec<float, 3> a, const agl::Vec<float, 3> b)
 {
 	return {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x};
 }
 
-float dot(agl::Vec3f a, agl::Vec3f b)
+float dot(agl::Vec<float, 3> a, agl::Vec<float, 3> b)
 {
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-void agl::Mat4f::lookAt(Vec3f pos, Vec3f target, Vec3f head)
+void agl::Mat4f::lookAt(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3> head)
 {
-	agl::Vec3f f = (normalize(target - pos));
-	agl::Vec3f s = (normalize(cross(f, head)));
-	agl::Vec3f u = (cross(s, f));
+	agl::Vec<float, 3> f = (normalize(target - pos));
+	agl::Vec<float, 3> s = (normalize(cross(f, head)));
+	agl::Vec<float, 3> u = (cross(s, f));
 
 	data[0][0] = s.x;
 	data[1][0] = s.y;

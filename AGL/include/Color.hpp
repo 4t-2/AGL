@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Vec3f.hpp"
+#include "Vec.hpp"
+
 namespace agl
 {
 	class Color
@@ -23,6 +24,6 @@ namespace agl
 			unsigned char b = 0;
 			unsigned char a = 0;
 
-			agl::Vec3f normalized();
+			agl::Vec<float, 3> normalized();
 	};
 } // namespace agl

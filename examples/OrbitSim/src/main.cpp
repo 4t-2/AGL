@@ -66,8 +66,9 @@ int main()
 
 		for (int i = 0; i < PLANETS; i++)
 		{
+			// std::cout << planet[i].getVelocity() << '\n';
 			planet[i].updateVelocity();
-			planet[i].updatePosition();
+			// planet[i].updatePosition();
 		}
 
 		window.clear();
@@ -78,6 +79,8 @@ int main()
 		}
 
 		window.display();
+
+		printf("tea\n");
 	}
 }
 
