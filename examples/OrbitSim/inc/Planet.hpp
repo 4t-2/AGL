@@ -20,6 +20,7 @@ class Planet
 		void setColor(agl::Color color);
 		void setFixed(bool fixed);
 
+		void setAccceleration(agl::Vec<float, 2> acceleration);
 		void setVelocity(agl::Vec<float, 2> velocity);
 
 		void updateAcceleration(Planet &planet);

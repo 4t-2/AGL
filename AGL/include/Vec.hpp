@@ -16,6 +16,14 @@ namespace agl
 				}
 			}
 
+			Vec(Vec const &vec)
+			{
+				for (unsigned int i = 0; i < max; i++)
+				{
+					data[i] = vec.data[i];
+				}
+			}
+
 			Vec(T x, T y, T z, T w)
 			{
 				this->x = x;

@@ -47,6 +47,11 @@ void Planet::setFixed(bool fixed)
 	this->fixed = fixed;
 }
 
+void Planet::setAccceleration(agl::Vec<float, 2> acceleration)
+{
+	this->acceleration = acceleration;
+}
+
 void Planet::setVelocity(agl::Vec<float, 2> velocity)
 {
 	this->velocity = velocity;
@@ -58,13 +63,13 @@ void Planet::updateAcceleration(Planet &planet)
 	{
 		float mass = planet.getMass();
 
-		agl::Vec<float, 2> offset = planet.getPosition(); // FIXME i think somewhere here
+		agl::Vec<float, 2> offset = planet.getPosition();
 		offset.x -= this->position.x;
 		offset.y -= this->position.y;
 
 		float distance = sqrt((offset.x * offset.x) + (offset.y * offset.y));
 
-		float force = GRAV_CONST * ((this->mass * mass) / (distance * distance));
+		float force = ((this->mass * mass) / (distance * distance));
 		force *= 1;
 
 		float totalOffset = abs(offset.x) + abs(offset.y);

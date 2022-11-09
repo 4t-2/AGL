@@ -1,8 +1,8 @@
 #include "../../../AGL/agl.hpp"
 #include "../inc/Planet.hpp"
 
-#define HEIGHT 1000
-#define WIDTH  1000
+#define WIDTH  1920
+#define HEIGHT 1080
 
 #define PLANETS 3
 
@@ -16,7 +16,7 @@ void drawPlanet(agl::RenderWindow &window, Planet &planet)
 int main()
 {
 	agl::RenderWindow window;
-	window.setup({HEIGHT, WIDTH}, "winfloat");
+	window.setup({WIDTH, HEIGHT}, "OrbitSim");
 	window.setClearColor({0, 0, 0});
 	window.setFPS(60);
 
@@ -37,14 +37,14 @@ int main()
 	texture.setBlank();
 
 	Planet planet[PLANETS] = {
-		Planet(texture, {(float)WIDTH / 2, (float)HEIGHT / 2}, 10000, 100, agl::Color::Yellow, true),
+		Planet(texture, {(float)WIDTH / 2, (float)HEIGHT / 2}, 10000, 100, agl::Color::Yellow, false),
 		Planet(texture, {((float)WIDTH / 3) * 2, (float)HEIGHT / 2}, 1, 5, agl::Color::Gray, false),
 		Planet(texture, {((float)WIDTH / 4) * 3, (float)HEIGHT / 2}, 70, 25, agl::Color::Blue, false),
 	};
 
 	planet[0].setVelocity({0, 0});
 	planet[1].setVelocity({0, 6});
-	planet[2].setVelocity({0, 5});
+	planet[2].setVelocity({0, 3});
 
 	while (!event.windowClose())
 	{
@@ -66,9 +66,8 @@ int main()
 
 		for (int i = 0; i < PLANETS; i++)
 		{
-			// std::cout << planet[i].getVelocity() << '\n';
 			planet[i].updateVelocity();
-			// planet[i].updatePosition();
+			planet[i].updatePosition();
 		}
 
 		window.clear();
@@ -79,8 +78,6 @@ int main()
 		}
 
 		window.display();
-
-		printf("tea\n");
 	}
 }
 
