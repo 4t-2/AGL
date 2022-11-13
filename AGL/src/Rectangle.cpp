@@ -29,7 +29,8 @@ agl::Rectangle::Rectangle()
 	UVBufferData[6] = vertexBufferData[9];
 	UVBufferData[7] = vertexBufferData[10];
 
-	this->genBuffers(GL_TRIANGLE_STRIP);
+	this->genBuffers();
+	this->setMode(GL_TRIANGLE_STRIP);
 	this->setBufferData(vertexBufferData, UVBufferData, 4);
 
 	offsetMatrix.translate(offset);

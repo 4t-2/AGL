@@ -36,7 +36,8 @@ agl::Circle::Circle(unsigned int faces)
 		UVBufferData[(i * 2) + 1] = (vertexBufferData[(i * 3) + 1] / 2) + 0.5;
 	}
 
-	this->genBuffers(GL_TRIANGLE_FAN);
+	this->genBuffers();
+	this->setMode(GL_TRIANGLE_FAN);
 	this->setBufferData(vertexBufferData, UVBufferData, vertices);
 
 	free(vertexBufferData);

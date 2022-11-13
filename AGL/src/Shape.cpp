@@ -58,9 +58,15 @@ void agl::Shape::setSize(agl::Vec<float, 2> size)
 	return;
 }
 
-void agl::Shape::genBuffers(int mode)
+void agl::Shape::genBuffers()
 {
 	shapeData.genBuffers(2);
+
+	return;
+}
+
+void agl::Shape::setMode(int mode)
+{
 	shapeData.setMode(mode);
 
 	return;

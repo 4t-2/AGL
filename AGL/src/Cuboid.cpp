@@ -84,7 +84,8 @@ agl::Cuboid::Cuboid()
 		0.667979f, 1.0f - 0.335851f	 // t12 v3
 	};
 
-	this->genBuffers(GL_TRIANGLES);
+	this->genBuffers();
+	this->setMode(GL_TRIANGLES);
 	this->setBufferData(vertexBufferData, UVBufferData, 36);
 
 	offsetMatrix.translate(offset);
