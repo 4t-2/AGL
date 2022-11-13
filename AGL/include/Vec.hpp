@@ -1,5 +1,6 @@
 #pragma once
 
+#include <math.h>
 #include <ostream>
 #include <sstream>
 
@@ -70,16 +71,39 @@ namespace agl
 				return newVec;
 			}
 
+			T length()
+			{
+				return sqrt(this->dot(*this));
+			}
+
+			Vec normalize()
+			{
+				T len = this->length();
+				return {x /= len, y /= len, z /= len};
+			}
+
+			float dot(Vec vec)
+			{
+				float dot = 0;
+
+				for (int i = 0; i < size; i++)
+				{
+					dot += data[i] * vec.data[i];
+				}
+
+				return dot;
+			}
+
 			friend std::ostream &operator<<(std::ostream &os, const Vec &vec)
 			{
 				std::stringstream output;
 
-				for (int i = 0; i < max-1; i++)
+				for (int i = 0; i < max - 1; i++)
 				{
 					output << vec.data[i] << " ";
 				}
-					
-				output << vec.data[max-1];
+
+				output << vec.data[max - 1];
 
 				return os << output.str();
 			}

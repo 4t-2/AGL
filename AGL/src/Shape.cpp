@@ -2,7 +2,6 @@
 #include "../include/Mat4f.hpp"
 #include <cstdio>
 #include <cstdlib>
-#include <math.h>
 
 agl::Shape::~Shape()
 {

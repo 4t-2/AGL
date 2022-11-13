@@ -1,5 +1,4 @@
 #include "../inc/Planet.hpp"
-#include <math.h>
 
 #define GRAV_CONST 0.00000000006673
 
@@ -63,11 +62,9 @@ void Planet::updateAcceleration(Planet &planet)
 	{
 		float mass = planet.getMass();
 
-		agl::Vec<float, 2> offset = planet.getPosition();
-		offset.x -= this->position.x;
-		offset.y -= this->position.y;
+		agl::Vec<float, 2> offset = planet.getPosition() - position;
 
-		float distance = sqrt((offset.x * offset.x) + (offset.y * offset.y));
+		float distance = agl::hypotenuse(offset);
 
 		float force = ((this->mass * mass) / (distance * distance));
 		force *= 1;

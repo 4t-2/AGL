@@ -1,5 +1,5 @@
 #include "../include/Mat4f.hpp"
-#include <math.h>
+#include "../include/math.hpp"
 
 agl::Mat4f agl::Mat4f::operator*(agl::Mat4f matrix)
 {
@@ -136,27 +136,11 @@ void agl::Mat4f::rotate(agl::Vec<float, 3> rotation) // HACK lazy and can defina
 	return;
 }
 
-agl::Vec<float, 3> normalize(agl::Vec<float, 3> v)
-{
-	float len = std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-	return {v.x /= len, v.y /= len, v.z /= len};
-}
-
-agl::Vec<float, 3> cross(const agl::Vec<float, 3> a, const agl::Vec<float, 3> b)
-{
-	return {a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x};
-}
-
-float dot(agl::Vec<float, 3> a, agl::Vec<float, 3> b)
-{
-	return a.x * b.x + a.y * b.y + a.z * b.z;
-}
-
 void agl::Mat4f::lookAt(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3> head)
 {
-	agl::Vec<float, 3> f = (normalize(target - pos));
-	agl::Vec<float, 3> s = (normalize(cross(f, head)));
-	agl::Vec<float, 3> u = (cross(s, f));
+	agl::Vec<float, 3> f = ((target - pos).normalize());
+	agl::Vec<float, 3> s = (agl::cross(f, head).normalize());
+	agl::Vec<float, 3> u = (agl::cross(s, f));
 
 	data[0][0] = s.x;
 	data[1][0] = s.y;
@@ -167,9 +151,9 @@ void agl::Mat4f::lookAt(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3> h
 	data[0][2] = -f.x;
 	data[1][2] = -f.y;
 	data[2][2] = -f.z;
-	data[3][0] = -dot(s, pos);
-	data[3][1] = -dot(u, pos);
-	data[3][2] = dot(f, pos);
+	data[3][0] = -s.dot(pos);
+	data[3][1] = -u.dot(pos);
+	data[3][2] = f.dot(pos);
 
 	data[3][3] = 1.0f;
 
