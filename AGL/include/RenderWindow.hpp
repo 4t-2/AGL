@@ -39,9 +39,9 @@ namespace agl
 			int shapeColorID;
 
 		public:
-			// Create an AGL Window with defaults that are usable in most projects
-			// size - the size of the window
-			// title - the window title
+			// \ Create an AGL Window with defaults that are usable in most projects
+			// \ size - the size of the window
+			// \ title - the window title
 			void setup(Vec<float, 2> size, const char title[]);
 
 			// Open X displat
@@ -134,10 +134,10 @@ namespace agl
 			// \ shape - AGL shape
 			void drawShape(Shape &shape);
 
-			// Swap the display buffer and sleep
+			// \ Swap the display buffer and sleep
 			void display();
 
-			// Get window attributes
+			// \ Get window attributes
 			XWindowAttributes getWindowAttributes();
 
 			Display *getDisplay()

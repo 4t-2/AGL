@@ -9,6 +9,7 @@ namespace agl
 	template <typename T = float, int max = 4> class Vec
 	{
 		public:
+			// \ Construct Vec with data starting all at 0
 			Vec()
 			{
 				for (unsigned int i = 0; i < size; i++)
@@ -17,6 +18,8 @@ namespace agl
 				}
 			}
 
+			// \ Construct Vec to be equal to vec
+			// \ &vec - vec for data to be equal to
 			Vec(Vec const &vec)
 			{
 				for (unsigned int i = 0; i < max; i++)
@@ -25,6 +28,11 @@ namespace agl
 				}
 			}
 
+			// \ Construct Vec to xyzw values
+			// \ x - X value
+			// \ y - Y value
+			// \ z - Z value
+			// \ w - W value
 			Vec(T x, T y, T z, T w)
 			{
 				this->x = x;
@@ -33,6 +41,10 @@ namespace agl
 				this->w = w;
 			}
 
+			// \ Construct Vec to xyz values
+			// \ x - X value
+			// \ y - Y value
+			// \ z - Z value
 			Vec(T x, T y, T z)
 			{
 				this->x = x;
@@ -40,12 +52,17 @@ namespace agl
 				this->z = z;
 			}
 
+			// \ Construct Vec to xy values
+			// \ x - X value
+			// \ y - Y value
 			Vec(T x, T y)
 			{
 				this->x = x;
 				this->y = y;
 			}
 
+			// \ Construct Vec to x value
+			// \ x - X value
 			Vec(T x)
 			{
 				this->x = x;
@@ -71,17 +88,21 @@ namespace agl
 				return newVec;
 			}
 
+			// \ Get length of Vec
 			T length()
 			{
 				return sqrt(this->dot(*this));
 			}
 
+			// \ Normalize Vec
 			Vec normalize()
 			{
 				T len = this->length();
 				return {x /= len, y /= len, z /= len};
 			}
 
+			// \ Get the dot product of Vec and vec
+			// \ vec - second vector
 			float dot(Vec vec)
 			{
 				float dot = 0;
