@@ -10,3 +10,4 @@ void main()
 {
     color = vec3(fragColor.z, fragColor.x, fragColor.y) * texture(myTextureSampler, UV).rgb;
 }
+

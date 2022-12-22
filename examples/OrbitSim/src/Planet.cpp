@@ -64,7 +64,7 @@ void Planet::updateAcceleration(Planet &planet)
 
 		agl::Vec<float, 2> offset = planet.getPosition() - position;
 
-		float distance = agl::hypotenuse(offset);
+		float distance = offset.length();
 
 		float force = ((this->mass * mass) / (distance * distance));
 		force *= 1;

@@ -10,3 +10,4 @@ void main()
 {
     color = fragColor * texture(myTextureSampler, UV).rgb;
 }
+

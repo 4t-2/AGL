@@ -8,6 +8,7 @@ This reason for making this is that I wanted a graphics library that had 3D supp
 - Xorg
 - OpenGL
 - GLEW
+- SOIL
 
 ## Learn
 If you want to learn how to use AGL then go to [my site](https://synteng.github.io/) for documentation and tutorials on how to use AGL
@@ -19,6 +20,8 @@ The AGL source code is distributed under the MIT License.
 - Texture transformation matrix
 - Text (.ttf)
 - Add comments to code
+- Remove SOIL dependency
+- Fix memory leaks
 - Tutorials on website
 - Create a few basic examples
 	- Orbit sim (interactive with text)

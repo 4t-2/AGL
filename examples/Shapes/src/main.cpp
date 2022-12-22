@@ -10,7 +10,9 @@ int main()
 	window.setup({500, 500}, "Shapes");  // setup X and OpenGL parts
 	window.setClearColor({127, 127, 127}); // set the clear color
 	window.setFPS(30);					   // set the FPS
-	
+	// Enable blending
+glEnable(GL_BLEND);
+glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	agl::Event	   event;
 	agl::Camera	   camera;
 	agl::Shader	   shader;
@@ -25,8 +27,8 @@ int main()
 
 	// setup and use the shaders
 
-	shader.loadFromFile("./vert.vert",
-						"./frag.frag"); // load frag and vert from file
+	shader.loadFromFile("./vert.glsl",
+						"./frag.glsl"); // load frag and vert from file
 	window.getShaderUniforms(shader);	// get the locations transform, mvp and shapeColor uniforms
 	shader.use();						// use the shader
 
@@ -44,7 +46,7 @@ int main()
 	);
 
 	// setup blank texture
-	texture.loadFromFile("./uvtemplate.bmp");
+	texture.loadFromFile("uvtemplate.bmp");
 
 	// setup shapes
 
