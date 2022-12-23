@@ -93,5 +93,8 @@ agl::Cuboid::Cuboid()
 	scalingMatrix.scale(size);
 	rotationMatrix.rotate(rotation);
 
+	textureTranslation.translate({0, 0});
+	textureScaling.scale({1, 1});
+	
 	return;
 }

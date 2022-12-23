@@ -72,13 +72,16 @@ int main()
 
 		window.clear();
 
-		for (int i = 0; i < PLANETS; i++)
-		{
-			drawPlanet(window, planet[i]);
-		}
+		drawPlanet(window, planet[0]);
+		drawPlanet(window, planet[1]);
+		drawPlanet(window, planet[2]);
 
 		window.display();
 	}
+
+	texture.deleteTexture();
+	shader.deleteProgram();
+	window.close();
 }
 
 // TODO

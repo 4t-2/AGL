@@ -108,9 +108,19 @@ void agl::Shape::setColor(agl::Color color)
 
 void agl::Shape::setTexture(Texture *texture)
 {
-	textureID = texture->getTextureID();
+	this->texture = texture;
 
 	return;
+}
+
+void agl::Shape::setTextureTranslation(Vec<float, 2> translation)
+{
+	textureTranslation.translate(Vec<float, 3>{translation.x, translation.y, 0});
+}
+
+void agl::Shape::setTextureScaling(Vec<float, 2> scale)
+{
+	textureScaling.scale(Vec<float, 3>{scale.x, scale.y, 0});
 }
 
 agl::Vec<float, 3> agl::Shape::getOffset()
@@ -138,9 +148,9 @@ agl::Color agl::Shape::getColor()
 	return color;
 }
 
-int agl::Shape::getTextureID()
+agl::Texture *agl::Shape::getTexture()
 {
-	return textureID;
+	return texture;
 }
 
 agl::Mat4f agl::Shape::getOffsetMatrix()
@@ -166,4 +176,14 @@ agl::Mat4f agl::Shape::getRotationMatrix()
 agl::GLPrimative agl::Shape::getShapeData()
 {
 	return shapeData;
+}
+
+agl::Mat4f agl::Shape::getTextureTranslation()
+{
+	return textureTranslation;
+}
+
+agl::Mat4f agl::Shape::getTextureScaling()
+{
+	return textureScaling;
 }

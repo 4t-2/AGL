@@ -7,12 +7,10 @@ int main()
 	// setup window
 
 	agl::RenderWindow window;
-	window.setup({500, 500}, "Shapes");  // setup X and OpenGL parts
+	window.setup({500, 500}, "Shapes");	   // setup X and OpenGL parts
 	window.setClearColor({127, 127, 127}); // set the clear color
 	window.setFPS(30);					   // set the FPS
-	// Enable blending
-glEnable(GL_BLEND);
-glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	agl::Event	   event;
 	agl::Camera	   camera;
 	agl::Shader	   shader;
@@ -45,7 +43,7 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 				   {0, 1, 0}  // set camera to be oriented to have the head point up
 	);
 
-	// setup blank texture
+	// setup texture
 	texture.loadFromFile("uvtemplate.bmp");
 
 	// setup shapes
@@ -114,6 +112,15 @@ glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		if (event.isKeyPressed(XK_Down))
 		{
 			pos.z += speed;
+		}
+
+		if (event.isKeyPressed(XK_Return))
+		{
+			texture.useLinearFiltering();
+		}
+		else
+		{
+			texture.useNearestFiltering();
 		}
 	}
 

@@ -23,7 +23,10 @@ namespace agl
 			Mat4f rotationMatrix;
 
 			GLPrimative shapeData;
-			int			textureID = 0;
+			Texture *texture;
+
+			Mat4f textureTranslation;
+			Mat4f textureScaling;
 
 		public:
 			~Shape();
@@ -37,6 +40,9 @@ namespace agl
 			void setRotation(Vec<float, 2> rotation);
 			void setColor(Color color);
 
+			void setTextureTranslation(Vec<float, 2> translation);
+			void  setTextureScaling(Vec<float, 2> scale);
+
 			void genBuffers();
 			void setMode(int mode);
 			void setBufferData(float vertexBufferData[], float UVBufferData[], int vertices);
@@ -48,12 +54,15 @@ namespace agl
 			Vec<float, 3> getSize();
 			Vec<float, 3> getRotation();
 			Color getColor();
-			int	  getTextureID();
+			Texture *getTexture();
 
 			Mat4f getOffsetMatrix();
 			Mat4f getTranslationMatrix();
 			Mat4f getScalingMatrix();
 			Mat4f getRotationMatrix();
+
+			Mat4f getTextureTranslation();
+			Mat4f getTextureScaling();
 
 			GLPrimative getShapeData();
 	};

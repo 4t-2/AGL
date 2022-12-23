@@ -33,6 +33,8 @@ void agl::RenderWindow::setup(Vec<float, 2> size, const char title[])
 	this->initGL();
 	this->setViewport(0, 0, gwa.width, gwa.height);
 	this->GLEnable(GL_DEPTH_TEST);
+	this->GLEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	this->mapWindow();
 
@@ -236,14 +238,21 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 
 	transform = translation * rotate * offset * scaling;
 
+	agl::Mat4f textureTransform;
+	agl::Mat4f textureTranslation = shape.getTextureTranslation();
+	agl::Mat4f textureScaling = shape.getTextureScaling();
+	
+	textureTransform = textureTranslation * textureScaling;
+
 	Shader::setUniformMatrix4fv(transformID, transform);
 	Shader::setUniformVector3fv(shapeColorID, shape.getColor().normalized());
+	Shader::setUniformMatrix4fv(textureTransformID , textureTransform);
 
-	Texture::bind(shape.getTextureID());
+	Texture::bind(*shape.getTexture());
 
 	this->drawPrimative(shape.getShapeData());
 
-	Texture::bind(0);
+	Texture::bind(Texture());
 
 	return;
 }
@@ -256,11 +265,17 @@ XWindowAttributes agl::RenderWindow::getWindowAttributes()
 	return gwa;
 }
 
+void agl::RenderWindow::setTextureTransformID(int ID)
+{
+	textureTransformID = ID;
+}
+
 void agl::RenderWindow::getShaderUniforms(Shader shader)
 {
 	this->setMvpID(shader.getUniformLocation("mvp"));
 	this->setTransformID(shader.getUniformLocation("transform"));
 	this->setShapeColorID(shader.getUniformLocation("shapeColor"));
+	this->setTextureTransformID(shader.getUniformLocation("textureTransform"));
 
 	return;
 }
