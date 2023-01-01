@@ -4,6 +4,7 @@ int main()
 {
 	agl::RenderWindow window;
 	window.setup({1920, 1080}, "text");
+	window.setClearColor(agl::Color::Gray);
 
 	agl::Event event;
 	event.setWindow(window);
@@ -18,17 +19,20 @@ int main()
 	camera.setView({0, 0, 10}, {0, 0, 0}, {0, 1, 0});
 	window.updateMvp(camera);
 
-	agl::Texture blank;
-	blank.setBlank();
+	agl::Font font;
+	font.setup();
 
 	agl::Rectangle test;
-	test.setSize(agl::Vec<float, 2>{100, 100});
+	test.setSize(agl::Vec<float, 2>{900, 900});
 	test.setPosition(agl::Vec<float, 2>{100, 100});
-	test.setTexture(&blank);
+	test.setTexture(&font.texture);
+	test.setColor(agl::Color::White);
 
 	while (!event.windowClose())
 	{
 		event.pollWindow();
+		event.pollKeyboard();
+		event.pollPointer();
 
 		window.clear();
 
@@ -36,6 +40,4 @@ int main()
 
 		window.display();
 	}
-
-	window.close();
 }

@@ -9,6 +9,7 @@ This reason for making this is that I wanted a graphics library that had 3D supp
 - OpenGL
 - GLEW
 - SOIL
+- FreeType2
 
 ## Learn
 If you want to learn how to use AGL then go to [my site](https://synteng.github.io/) for documentation and tutorials on how to use AGL

@@ -14,3 +14,4 @@
 #include "include/Circle.hpp"
 #include "include/Vec.hpp"
 #include "include/math.hpp"
+#include "include/Font.hpp"

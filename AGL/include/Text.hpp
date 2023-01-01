@@ -7,7 +7,7 @@
 
 namespace agl
 {
-	class Text
+	class Font
 	{
 		private:
 		public:

@@ -16,7 +16,7 @@ namespace agl
 
 			void genTexture();
 			static void bind(Texture texture);
-			static void setImage(int format, Vec<int, 2> size, unsigned char *data);
+			static void setImage(int format, int internalFormat, Vec<int, 2> size, unsigned char *data);
 			static void setParameter(int pname, int parameter);
 
 			void loadFromFile(const char *filePath);

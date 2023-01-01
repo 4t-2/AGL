@@ -11,9 +11,9 @@ void agl::Texture::genTexture()
 	glGenTextures(1, &textureID);
 }
 
-void agl::Texture::setImage(int format, Vec<int, 2> size, unsigned char *data)
+void agl::Texture::setImage(int format, int internalFormat, Vec<int, 2> size, unsigned char *data)
 {
-	glTexImage2D(GL_TEXTURE_2D, 0, format, size.x, size.y, 0, format, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, size.x, size.y, 0, format, GL_UNSIGNED_BYTE, data);
 }
 
 void agl::Texture::setParameter(int pname, int parameter)
@@ -33,7 +33,7 @@ void agl::Texture::loadFromFile(const char *filePath)
 	unsigned char *data = SOIL_load_image(filePath, &size.x, &size.y, 0, SOIL_LOAD_RGBA);
 
 	// set texture data
-	Texture::setImage(GL_RGBA, size, data);
+	Texture::setImage(GL_RGBA, GL_RGBA, size, data);
 
 	// free data
 	SOIL_free_image_data(data);
@@ -58,7 +58,7 @@ void agl::Texture::setBlank()
 	size = {1, 1};
 	
 	// set texture data
-	Texture::setImage(GL_RGBA, size, data);
+	Texture::setImage(GL_RGBA, GL_RGBA, size, data);
 
 
 	// set nearest filtering
