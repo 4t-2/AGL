@@ -28,6 +28,21 @@ namespace agl
 				}
 			}
 
+			template <typename U, int amount> Vec(Vec<U, amount> const &vec)
+			{
+				unsigned int i;
+
+				for (i = 0; (i < max) && (i < amount); i++)
+				{
+					data[i] = vec.data[i];
+				}
+
+				for (; i < max; i++)
+				{
+					data[i] = 0;
+				}
+			}
+
 			// \ Construct Vec to xyzw values
 			// \ x - X value
 			// \ y - Y value

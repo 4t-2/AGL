@@ -28,31 +28,11 @@ void agl::Shape::setPosition(agl::Vec<float, 3> position)
 	return;
 }
 
-void agl::Shape::setPosition(agl::Vec<float, 2> position)
-{
-	this->position.x = position.x;
-	this->position.y = position.y;
-
-	translationMatrix.translate(this->position);
-
-	return;
-}
-
 void agl::Shape::setSize(agl::Vec<float, 3> size)
 {
 	this->size = size;
 
 	scalingMatrix.scale(size);
-
-	return;
-}
-
-void agl::Shape::setSize(agl::Vec<float, 2> size)
-{
-	this->size.x = size.x;
-	this->size.y = size.y;
-
-	scalingMatrix.scale(this->size);
 
 	return;
 }
@@ -85,16 +65,6 @@ void agl::Shape::setRotation(agl::Vec<float, 3> rotation)
 	this->rotation = rotation;
 
 	rotationMatrix.rotate(rotation);
-
-	return;
-}
-
-void agl::Shape::setRotation(agl::Vec<float, 2> rotation)
-{
-	this->rotation.x = rotation.x;
-	this->rotation.y = rotation.y;
-
-	rotationMatrix.rotate(this->rotation);
 
 	return;
 }

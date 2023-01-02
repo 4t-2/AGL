@@ -24,21 +24,15 @@ void agl::Font::setup()
 	{
 		FT_Load_Char(face, i, FT_LOAD_RENDER);
 
-		glyph[i].size = {(int)face->glyph->bitmap.width, (int)face->glyph->bitmap.width};
+		glyph[i].size = {(int)face->glyph->bitmap.width, (int)face->glyph->bitmap.rows};
 
-		glyph[i].position = {width, 0};
+		width += face->glyph->bitmap.width;
 
-		width += glyph[i].size.x;
-
-		if (glyph[i].size.y > height)
+		if (face->glyph->bitmap.rows > height)
 		{
-			height = glyph[i].size.y;
+			height = face->glyph->bitmap.rows;
 		}
-
-		printf("%d %c %d\n", i, i, width);
 	}
-
-	printf("%d\n%d\n", width, height);
 
 	int sideLength = 1;
 
@@ -49,47 +43,70 @@ void agl::Font::setup()
 
 	atlasSize = {sideLength, sideLength};
 
-	unsigned char *buffer = new unsigned char[sideLength * sideLength * 4];
-
-	for (int i = 0; i < (sideLength * sideLength * 4); i++)
-	{
-		buffer[i] = 16;
-	}
+	unsigned char *texData = new unsigned char[sideLength * sideLength * 4];
 
 	Vec<int, 2> offset = {0, 0};
 
-	for (int i = 33; i < 40; i++)
+	for (int i = 33; i < 127; i++)
 	{
-		FT_Load_Char(face, 33, FT_LOAD_RENDER);
-		
+		FT_Load_Char(face, i, FT_LOAD_RENDER);
+
 		FT_Bitmap bitmap = face->glyph->bitmap;
 
-		for (int x = offset.x; x < (bitmap.width + offset.x); x++)
+		if (bitmap.width + offset.x > sideLength)
 		{
-			for (int y = offset.y; y < (bitmap.rows + offset.y); y++)
+			offset.x = 0;
+			offset.y += height;
+		}
+
+		for (int x = 0; x < bitmap.width; x++)
+		{
+			for (int y = 0; y < bitmap.rows; y++)
 			{
-				buffer[((y * sideLength * 4) + (x * 4)) + 0] = 88;
-				buffer[((y * sideLength * 4) + (x * 4)) + 1] = 255;
-				buffer[((y * sideLength * 4) + (x * 4)) + 2] = 255;
-				buffer[((y * sideLength * 4) + (x * 4)) + 3] = 255;
+				int bufIndex = (y * bitmap.width) + x;
+				int texIndex = ((y + offset.y) * sideLength * 4) + ((x + offset.x) * 4);
+
+				texData[texIndex + 0] = 0;
+				texData[texIndex + 1] = 0;
+				texData[texIndex + 2] = 0;
+				texData[texIndex + 3] = bitmap.buffer[bufIndex];
 			}
 		}
 
-		offset.x += width;
+		glyph[i].size.x = bitmap.width;
+		glyph[i].size.y = bitmap.rows;
+
+		glyph[i].scale.x = (float)glyph[i].size.x / sideLength;
+		glyph[i].scale.y = (float)glyph[i].size.y / sideLength;
+
+		glyph[i].position.x = (float)offset.x / sideLength;
+		glyph[i].position.y = (float)offset.y / sideLength;
+
+		offset.x += bitmap.width;
 	}
 
 	FT_Done_FreeType(ft);
 
 	texture.genTexture();
 	Texture::bind(texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sideLength, sideLength, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sideLength, sideLength, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
 
 	texture.useNearestFiltering();
 
 	return;
 }
 
-agl::Glyph agl::Font::getGlyph(int i)
+void agl::Font::deleteFont()
 {
-	return glyph[i];
+	texture.deleteTexture();
+}
+
+agl::Texture *agl::Font::getTexture()
+{
+	return &texture;
+}
+
+agl::Glyph *agl::Font::getGlyph(int i)
+{
+	return &glyph[i];
 }

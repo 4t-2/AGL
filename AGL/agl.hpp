@@ -15,3 +15,4 @@
 #include "include/Vec.hpp"
 #include "include/math.hpp"
 #include "include/Font.hpp"
+#include "include/Text.hpp"

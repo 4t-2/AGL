@@ -13,7 +13,7 @@ out vec4 fragColor;
 
 void main()
 {
-    UVcoord = vec2((vec4(vertexUV, 0, 1) * textureTransform).xy);
+    UVcoord = vec2((textureTransform * vec4(vertexUV, 1, 1)).xy);
 
 	fragColor = vec4(shapeColor, 1);
 

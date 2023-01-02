@@ -9,19 +9,25 @@ namespace agl
 	class Glyph
 	{
 		public:
-			Vec<int, 2> size;
-			Vec<int, 2> position;
+			Vec<int, 2>	  size;		// pixels
+			Vec<float, 2> scale;	// fraction of texture
+			Vec<float, 2> position; // fraction of texture
 	};
 
 	class Font
 	{
 		private:
-			FT_Face face;
-			Glyph glyph[128];
+			FT_Face		face;
+			Glyph		glyph[128];
 			Vec<int, 2> atlasSize;
-		public:
 			Texture texture;
-			void setup();
-			Glyph getGlyph(int i);
+
+		public:
+			void	setup();
+			
+			void deleteFont();
+			
+			Texture *getTexture();
+			Glyph	*getGlyph(int i);
 	};
-}
+} // namespace agl

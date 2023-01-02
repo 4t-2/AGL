@@ -257,6 +257,27 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 	return;
 }
 
+void agl::RenderWindow::drawText(Text &text)
+{
+	agl::Rectangle *shape = text.getCharBox();
+
+	Vec<int, 2> offset = {0, 0};
+
+	for(int i = 0; i < text.getLength(); i++)
+	{
+		shape->setSize(text.getGlyph(i)->size);
+		shape->setPosition(offset);
+		shape->setTextureScaling(text.getGlyph(i)->scale);
+		shape->setTextureTranslation(text.getGlyph(i)->position);
+
+		this->drawShape(*shape);
+
+		offset.x+= text.getGlyph(i)->size.x;
+	}
+
+	return;
+}
+
 XWindowAttributes agl::RenderWindow::getWindowAttributes()
 {
 	XWindowAttributes gwa;

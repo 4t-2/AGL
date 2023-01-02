@@ -33,11 +33,8 @@ namespace agl
 
 			void setOffset(Vec<float, 3> offset);
 			void setPosition(Vec<float, 3> position);
-			void setPosition(Vec<float, 2> position);
 			void setSize(Vec<float, 3> size);
-			void setSize(Vec<float, 2> size);
 			void setRotation(Vec<float, 3> rotation);
-			void setRotation(Vec<float, 2> rotation);
 			void setColor(Color color);
 
 			void setTextureTranslation(Vec<float, 2> translation);

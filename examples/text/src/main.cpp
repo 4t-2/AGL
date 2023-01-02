@@ -22,11 +22,28 @@ int main()
 	agl::Font font;
 	font.setup();
 
+	agl::Text text;
+	text.setFont(&font);
+
+	text.setText("hello", 5);
+
 	agl::Rectangle test;
-	test.setSize(agl::Vec<float, 2>{900, 900});
-	test.setPosition(agl::Vec<float, 2>{100, 100});
-	test.setTexture(&font.texture);
+	test.setSize({900, 900, 0});
+	test.setPosition({100, 100, 0});
+	test.setTexture(font.getTexture());
 	test.setColor(agl::Color::White);
+
+	agl::Vec<float, 3> scale = font.getGlyph('e')->scale;
+	std::cout << scale << '\n';
+	agl::Vec<float, 3> size = font.getGlyph('e')->size;
+	std::cout << size << '\n';
+	agl::Vec<float, 3> pos = font.getGlyph('e')->position;
+	std::cout << pos << '\n';
+
+	test.setSize(size);
+
+	test.setTextureScaling(scale);
+	test.setTextureTranslation(pos);
 
 	while (!event.windowClose())
 	{
@@ -36,7 +53,7 @@ int main()
 
 		window.clear();
 
-		window.drawShape(test);
+		window.drawText(text);
 
 		window.display();
 	}

@@ -8,6 +8,7 @@
 #include "Rectangle.hpp"
 #include "Shader.hpp"
 #include "Shape.hpp"
+#include "Text.hpp"
 #include "Vec.hpp"
 #include <GL/glx.h>
 #include <X11/Xlib.h>
@@ -138,6 +139,8 @@ namespace agl
 			// \ Draw an AGL shape onto the window
 			// \ shape - AGL shape
 			void drawShape(Shape &shape);
+
+			void drawText(Text &text);
 
 			// \ Swap the display buffer and sleep
 			void display();
