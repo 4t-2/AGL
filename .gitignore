@@ -1,6 +1,4 @@
-examples/test
 *.out
-examples/text/build
 compile_commands.json
 .cache
-examples/Rectangle/build
+build

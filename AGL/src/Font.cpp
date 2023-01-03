@@ -2,7 +2,10 @@
 #include "freetype/freetype.h"
 #include <cstdio>
 
-void agl::Font::setup()
+#define MIN 32
+#define MAX 127
+
+void agl::Font::setup(std::string path, int height)
 {
 	FT_Library ft;
 	if (FT_Init_FreeType(&ft))
@@ -10,28 +13,33 @@ void agl::Font::setup()
 		printf("ERROR::FREETYPE: Could not init FreeType Library");
 	}
 
-	if (FT_New_Face(ft, "/usr/share/fonts/TTF/Arial.TTF", 0, &face))
+	if (FT_New_Face(ft, path.c_str(), 0, &face))
 	{
 		printf("ERROR::FREETYPE: Failed to load font");
 	}
 
-	FT_Set_Pixel_Sizes(face, 0, 48);
+	this->height = height;
+
+	FT_Set_Pixel_Sizes(face, 0, height);
 
 	int width  = 0;
-	int height = 0;
 
-	for (int i = 33; i < 127; i++)
+	for(int i = 0; i < MIN; i++)
+	{
+		glyph[i].value = i;
+	}
+
+	for (int i = MIN; i < MAX; i++)
 	{
 		FT_Load_Char(face, i, FT_LOAD_RENDER);
 
 		glyph[i].size = {(int)face->glyph->bitmap.width, (int)face->glyph->bitmap.rows};
 
-		width += face->glyph->bitmap.width;
+		glyph[i].advance = face->glyph->advance.x / 64;
+		glyph[i].bearing = {face->glyph->bitmap_left, face->glyph->bitmap_top};
+		glyph[i].value = i;
 
-		if (face->glyph->bitmap.rows > height)
-		{
-			height = face->glyph->bitmap.rows;
-		}
+		width += face->glyph->bitmap.width;
 	}
 
 	int sideLength = 1;
@@ -47,7 +55,7 @@ void agl::Font::setup()
 
 	Vec<int, 2> offset = {0, 0};
 
-	for (int i = 33; i < 127; i++)
+	for (int i = MIN; i < MAX; i++)
 	{
 		FT_Load_Char(face, i, FT_LOAD_RENDER);
 
@@ -109,4 +117,9 @@ agl::Texture *agl::Font::getTexture()
 agl::Glyph *agl::Font::getGlyph(int i)
 {
 	return &glyph[i];
+}
+
+int agl::Font::getHeight()
+{
+	return height;
 }

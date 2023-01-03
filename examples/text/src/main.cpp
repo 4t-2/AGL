@@ -20,30 +20,16 @@ int main()
 	window.updateMvp(camera);
 
 	agl::Font font;
-	font.setup();
+	font.setup("/usr/share/fonts/TTF/Arial.TTF", 48);
 
 	agl::Text text;
 	text.setFont(&font);
 
-	text.setText("hello", 5);
+	std::string str = "Hello World\nThis is a new line!";
 
-	agl::Rectangle test;
-	test.setSize({900, 900, 0});
-	test.setPosition({100, 100, 0});
-	test.setTexture(font.getTexture());
-	test.setColor(agl::Color::White);
-
-	agl::Vec<float, 3> scale = font.getGlyph('e')->scale;
-	std::cout << scale << '\n';
-	agl::Vec<float, 3> size = font.getGlyph('e')->size;
-	std::cout << size << '\n';
-	agl::Vec<float, 3> pos = font.getGlyph('e')->position;
-	std::cout << pos << '\n';
-
-	test.setSize(size);
-
-	test.setTextureScaling(scale);
-	test.setTextureTranslation(pos);
+	text.setText(str);
+	text.setScale(2);
+	text.setPosition({100, 100, 0});
 
 	while (!event.windowClose())
 	{

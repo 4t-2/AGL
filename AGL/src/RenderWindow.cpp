@@ -231,22 +231,22 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 void agl::RenderWindow::drawShape(agl::Shape &shape)
 {
 	agl::Mat4f transform;
-	agl::Mat4f offset = shape.getOffsetMatrix();
+	agl::Mat4f offset	   = shape.getOffsetMatrix();
 	agl::Mat4f translation = shape.getTranslationMatrix();
-	agl::Mat4f scaling = shape.getScalingMatrix();
-	agl::Mat4f rotate = shape.getRotationMatrix();
+	agl::Mat4f scaling	   = shape.getScalingMatrix();
+	agl::Mat4f rotate	   = shape.getRotationMatrix();
 
 	transform = translation * rotate * offset * scaling;
 
 	agl::Mat4f textureTransform;
 	agl::Mat4f textureTranslation = shape.getTextureTranslation();
-	agl::Mat4f textureScaling = shape.getTextureScaling();
-	
+	agl::Mat4f textureScaling	  = shape.getTextureScaling();
+
 	textureTransform = textureTranslation * textureScaling;
 
 	Shader::setUniformMatrix4fv(transformID, transform);
 	Shader::setUniformVector3fv(shapeColorID, shape.getColor().normalized());
-	Shader::setUniformMatrix4fv(textureTransformID , textureTransform);
+	Shader::setUniformMatrix4fv(textureTransformID, textureTransform);
 
 	Texture::bind(*shape.getTexture());
 
@@ -261,18 +261,49 @@ void agl::RenderWindow::drawText(Text &text)
 {
 	agl::Rectangle *shape = text.getCharBox();
 
-	Vec<int, 2> offset = {0, 0};
+	Vec<int, 2> pen = {0, 0};
 
-	for(int i = 0; i < text.getLength(); i++)
+	Texture::bind(*shape->getTexture());
+
+	for (int i = 0; i < text.getLength(); i++)
 	{
-		shape->setSize(text.getGlyph(i)->size);
-		shape->setPosition(offset);
-		shape->setTextureScaling(text.getGlyph(i)->scale);
-		shape->setTextureTranslation(text.getGlyph(i)->position);
+		Glyph * glyph = text.getGlyph(i);
 
-		this->drawShape(*shape);
+		if(glyph->value == '\n')
+		{
+			pen.x = 0;
+			pen.y += text.getHeight() * text.getScale();
+		}
 
-		offset.x+= text.getGlyph(i)->size.x;
+		Vec<float, 3> shapeSize = {glyph->size.x * text.getScale(), glyph->size.y * text.getScale()};
+		Vec<float, 3> shapePosition = {(float)pen.x + (glyph->bearing.x * text.getScale()), (float)pen.y - (glyph->bearing.y * text.getScale()), 0};
+		
+		shapePosition.x += (text.getPosition().x * text.getScale());
+		shapePosition.y += (text.getPosition().y * text.getScale()) + (text.getHeight() * text.getScale());
+
+		shape->setSize(shapeSize);
+		shape->setPosition(shapePosition);
+		shape->setTextureScaling(glyph->scale);
+		shape->setTextureTranslation(glyph->position);
+
+		agl::Mat4f transform;
+		agl::Mat4f translation = shape->getTranslationMatrix();
+		agl::Mat4f scaling	   = shape->getScalingMatrix();
+
+		transform = translation * scaling;
+
+		agl::Mat4f textureTransform;
+		agl::Mat4f textureTranslation = shape->getTextureTranslation();
+		agl::Mat4f textureScaling	  = shape->getTextureScaling();
+
+		textureTransform = textureTranslation * textureScaling;
+
+		Shader::setUniformMatrix4fv(transformID, transform);
+		Shader::setUniformMatrix4fv(textureTransformID, textureTransform);
+
+		this->drawPrimative(shape->getShapeData());
+
+		pen.x += glyph->advance * text.getScale();
 	}
 
 	return;
