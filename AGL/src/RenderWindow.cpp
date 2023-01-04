@@ -278,8 +278,9 @@ void agl::RenderWindow::drawText(Text &text)
 		Vec<float, 3> shapeSize = {glyph->size.x * text.getScale(), glyph->size.y * text.getScale()};
 		Vec<float, 3> shapePosition = {(float)pen.x + (glyph->bearing.x * text.getScale()), (float)pen.y - (glyph->bearing.y * text.getScale()), 0};
 		
-		shapePosition.x += (text.getPosition().x * text.getScale());
-		shapePosition.y += (text.getPosition().y * text.getScale()) + (text.getHeight() * text.getScale());
+		shapePosition.x += (text.getPosition().x);
+		shapePosition.y += (text.getPosition().y) + (text.getHeight() * text.getScale());
+		shapePosition.z = text.getPosition().z;
 
 		shape->setSize(shapeSize);
 		shape->setPosition(shapePosition);
@@ -299,6 +300,7 @@ void agl::RenderWindow::drawText(Text &text)
 		textureTransform = textureTranslation * textureScaling;
 
 		Shader::setUniformMatrix4fv(transformID, transform);
+		Shader::setUniformVector3fv(shapeColorID, shape->getColor().normalized());
 		Shader::setUniformMatrix4fv(textureTransformID, textureTransform);
 
 		this->drawPrimative(shape->getShapeData());

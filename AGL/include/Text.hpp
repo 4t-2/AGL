@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Color.hpp"
 #include "Font.hpp"
 #include "Rectangle.hpp"
 #include "Texture.hpp"
@@ -27,6 +28,7 @@ namespace agl
 			void setText(std::string str);
 			void setScale(float scale);
 			void setPosition(agl::Vec<float, 3> position);
+			void setColor(agl::Color color);
 
 			void clearText();
 

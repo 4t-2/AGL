@@ -30,6 +30,11 @@ void agl::Text::setPosition(agl::Vec<float, 3> position)
 	this->position = position;
 }
 
+void agl::Text::setColor(agl::Color color)
+{
+	charBox.setColor(color);
+}
+
 void agl::Text::clearText()
 {
 	delete[] glyph;

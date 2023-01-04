@@ -74,9 +74,9 @@ void agl::Font::setup(std::string path, int height)
 				int bufIndex = (y * bitmap.width) + x;
 				int texIndex = ((y + offset.y) * sideLength * 4) + ((x + offset.x) * 4);
 
-				texData[texIndex + 0] = 0;
-				texData[texIndex + 1] = 0;
-				texData[texIndex + 2] = 0;
+				texData[texIndex + 0] = bitmap.buffer[bufIndex];
+				texData[texIndex + 1] = bitmap.buffer[bufIndex];
+				texData[texIndex + 2] = bitmap.buffer[bufIndex];
 				texData[texIndex + 3] = bitmap.buffer[bufIndex];
 			}
 		}
