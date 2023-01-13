@@ -6,6 +6,7 @@
 #include <GL/gl.h>
 #include <GL/glx.h>
 
+#include <X11/Xutil.h>
 #include <bits/types/struct_timespec.h>
 #include <cstdlib>
 #include <ctime>
@@ -193,10 +194,10 @@ void agl::RenderWindow::display()
 void agl::RenderWindow::close()
 {
 	glDeleteVertexArrays(1, &VertexArrayID);
-
 	glXMakeCurrent(dpy, None, NULL); // release gl binding to window
 	glXDestroyContext(dpy, glc);	 // destroy context
 	XDestroyWindow(dpy, win);		 // kill window
+	XFreeColormap(dpy, cmap);		 // free colormap
 	XCloseDisplay(dpy);				 // close display
 
 	return;
@@ -267,17 +268,18 @@ void agl::RenderWindow::drawText(Text &text)
 
 	for (int i = 0; i < text.getLength(); i++)
 	{
-		Glyph * glyph = text.getGlyph(i);
+		Glyph *glyph = text.getGlyph(i);
 
-		if(glyph->value == '\n')
+		if (glyph->value == '\n')
 		{
 			pen.x = 0;
 			pen.y += text.getHeight() * text.getScale();
 		}
 
-		Vec<float, 3> shapeSize = {glyph->size.x * text.getScale(), glyph->size.y * text.getScale()};
-		Vec<float, 3> shapePosition = {(float)pen.x + (glyph->bearing.x * text.getScale()), (float)pen.y - (glyph->bearing.y * text.getScale()), 0};
-		
+		Vec<float, 3> shapeSize		= {glyph->size.x * text.getScale(), glyph->size.y * text.getScale()};
+		Vec<float, 3> shapePosition = {(float)pen.x + (glyph->bearing.x * text.getScale()),
+									   (float)pen.y - (glyph->bearing.y * text.getScale()), 0};
+
 		shapePosition.x += (text.getPosition().x);
 		shapePosition.y += (text.getPosition().y) + (text.getHeight() * text.getScale());
 		shapePosition.z = text.getPosition().z;

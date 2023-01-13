@@ -101,6 +101,8 @@ void agl::Font::setup(std::string path, int height)
 
 	texture.useNearestFiltering();
 
+	delete[] texData;
+
 	return;
 }
 

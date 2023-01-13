@@ -26,10 +26,12 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 
 	VertexShaderCode = (char *)malloc(size);
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size-1; i++)
 	{
 		VertexShaderCode[i] = fgetc(VertexShaderCodeStream);
 	}
+
+	VertexShaderCode[size-1] = 0;
 
 	fclose(VertexShaderCodeStream);
 
@@ -47,10 +49,12 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 
 	FragmentShaderCode = (char *)malloc(size);
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size-1; i++)
 	{
 		FragmentShaderCode[i] = fgetc(FragmentShaderCodeStream);
 	}
+
+	FragmentShaderCode[size-1] = 0;
 
 	fclose(FragmentShaderCodeStream);
 
