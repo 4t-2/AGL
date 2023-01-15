@@ -193,12 +193,14 @@ void agl::RenderWindow::display()
 
 void agl::RenderWindow::close()
 {
-	glDeleteVertexArrays(1, &VertexArrayID);
-	glXMakeCurrent(dpy, None, NULL); // release gl binding to window
-	glXDestroyContext(dpy, glc);	 // destroy context
-	XDestroyWindow(dpy, win);		 // kill window
-	XFreeColormap(dpy, cmap);		 // free colormap
-	XCloseDisplay(dpy);				 // close display
+	glDeleteVertexArrays(1, &VertexArrayID); // delete vertex arrays
+	glXMakeCurrent(dpy, None, NULL);		 // release gl binding to window
+	glXDestroyContext(dpy, glc);			 // destroy context
+
+	XFree(vi);								 // delete the visual info data
+	XDestroyWindow(dpy, win);				 // kill window
+	XFreeColormap(dpy, cmap);				 // free colormap
+	XCloseDisplay(dpy);						 // close display
 
 	return;
 }
