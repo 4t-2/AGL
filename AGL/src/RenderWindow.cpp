@@ -42,6 +42,11 @@ void agl::RenderWindow::setup(Vec<float, 2> size, const char title[])
 	return;
 }
 
+void agl::RenderWindow::setup(std::function<void(agl::RenderWindow &)> f)
+{
+	f(*this);
+}
+
 int agl::RenderWindow::openDisplay()
 {
 	dpy = XOpenDisplay(NULL);
@@ -197,10 +202,10 @@ void agl::RenderWindow::close()
 	glXMakeCurrent(dpy, None, NULL);		 // release gl binding to window
 	glXDestroyContext(dpy, glc);			 // destroy context
 
-	XFree(vi);								 // delete the visual info data
-	XDestroyWindow(dpy, win);				 // kill window
-	XFreeColormap(dpy, cmap);				 // free colormap
-	XCloseDisplay(dpy);						 // close display
+	XFree(vi);				  // delete the visual info data
+	XDestroyWindow(dpy, win); // kill window
+	XFreeColormap(dpy, cmap); // free colormap
+	XCloseDisplay(dpy);		  // close display
 
 	return;
 }
@@ -258,6 +263,11 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 	Texture::bind(Texture());
 
 	return;
+}
+
+void agl::RenderWindow::drawShape(agl::Shape &shape, std::function<void(RenderWindow &, Shape &)> draw)
+{
+	draw(*this, shape);
 }
 
 void agl::RenderWindow::drawText(Text &text)
@@ -336,6 +346,19 @@ void agl::RenderWindow::getShaderUniforms(Shader shader)
 	this->setTextureTransformID(shader.getUniformLocation("textureTransform"));
 
 	return;
+}
+
+int agl::RenderWindow::getTransformID()
+{
+	return transformID;
+}
+int agl::RenderWindow::getShapeColorID()
+{
+	return shapeColorID;
+}
+int agl::RenderWindow::getTextureTransformID()
+{
+	return textureTransformID;
 }
 
 void agl::RenderWindow::updateMvp(Camera camera)

@@ -3,6 +3,24 @@
 #include <cstdio>
 #include <cstdlib>
 
+agl::Shape::Shape()
+{
+
+}
+
+agl::Shape::Shape(std::function<void(Shape&)> f)
+{
+	f(*this);
+	
+	offsetMatrix.translate(offset);
+	translationMatrix.translate(position);
+	scalingMatrix.scale(size);
+	rotationMatrix.rotate(rotation);
+
+	textureTranslation.translate({0, 0});
+	textureScaling.scale({1, 1});
+}
+
 agl::Shape::~Shape()
 {
 	shapeData.deleteData();

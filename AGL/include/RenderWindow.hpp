@@ -10,10 +10,12 @@
 #include "Shape.hpp"
 #include "Text.hpp"
 #include "Vec.hpp"
+
 #include <GL/glx.h>
 #include <X11/Xlib.h>
 
 #include <iostream>
+#include <functional>
 
 namespace agl
 {
@@ -45,6 +47,8 @@ namespace agl
 			// \ size - the size of the window
 			// \ title - the window title
 			void setup(Vec<float, 2> size, const char title[]);
+			
+			void setup(std::function<void(agl::RenderWindow&)> f);
 
 			// Open X displat
 			int openDisplay();
@@ -122,6 +126,10 @@ namespace agl
 			// \ shader - The shader to get uniform locations from
 			void getShaderUniforms(Shader shader);
 
+			int getTransformID();
+			int getShapeColorID();
+			int getTextureTransformID();
+
 			// \ Update the mvp shader uniform according to the chosen camera
 			// \ camera - camera to update mvp
 			void updateMvp(Camera camera);
@@ -139,6 +147,8 @@ namespace agl
 			// \ Draw an AGL shape onto the window
 			// \ shape - AGL shape
 			void drawShape(Shape &shape);
+
+			void drawShape(Shape &shape, std::function<void(RenderWindow&, Shape&)> f);
 
 			void drawText(Text &text);
 

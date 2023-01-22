@@ -5,6 +5,7 @@
 #include "Mat4f.hpp"
 #include "Texture.hpp"
 #include "Vec.hpp"
+#include <functional>
 
 namespace agl
 {
@@ -29,6 +30,8 @@ namespace agl
 			Mat4f textureScaling;
 
 		public:
+			Shape();
+			Shape(std::function<void(Shape&)>);
 			~Shape();
 
 			void setOffset(Vec<float, 3> offset);
