@@ -125,6 +125,16 @@ int main()
 		});
 
 		window.display();
+
+		agl::Vec<int, 2> size;
+		size.x = window.getWindowAttributes().width;
+		size.y = window.getWindowAttributes().height;
+
+		std::cout << window.getWindowAttributes().width << " " << window.getWindowAttributes().height << '\n';
+
+		window.setViewport(0, 0, size.x, size.y);
+		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
+		window.updateMvp(camera);
 	}
 
 	window.close();

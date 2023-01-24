@@ -103,6 +103,18 @@ namespace agl
 				return newVec;
 			}
 
+			Vec operator+(Vec vec)
+			{
+				Vec newVec;
+
+				for (int i = 0; i < max; i++)
+				{
+					newVec.data[i] = data[i] + vec.data[i];
+				}
+
+				return newVec;
+			}
+
 			// \ Get length of Vec
 			T length()
 			{
