@@ -155,6 +155,8 @@ namespace agl
 			// \ Swap the display buffer and sleep
 			void display();
 
+			void setCursorShape(unsigned int shape);
+
 			// \ Get window attributes
 			XWindowAttributes getWindowAttributes();
 

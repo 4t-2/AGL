@@ -333,6 +333,13 @@ XWindowAttributes agl::RenderWindow::getWindowAttributes()
 	return gwa;
 }
 
+void agl::RenderWindow::setCursorShape(unsigned int shape)
+{
+	Cursor c;
+	c = XCreateFontCursor(dpy, shape);
+	XDefineCursor(dpy, win, c);
+}
+
 void agl::RenderWindow::setTextureTransformID(int ID)
 {
 	textureTransformID = ID;

@@ -88,6 +88,8 @@ int main()
 	shape.setPosition({100, 100, 0});
 	shape.setSize({500, 500, 0});
 
+	window.setCursorShape(XC_coffee_mug);
+
 	while (!event.windowClose())
 	{
 		event.pollWindow();
