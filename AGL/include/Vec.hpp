@@ -115,6 +115,18 @@ namespace agl
 				return newVec;
 			}
 
+			Vec operator*(float scale)
+			{
+				Vec newVec;
+
+				for (int i = 0; i < max; i++)
+				{
+					newVec.data[i] = data[i] * scale;
+				}
+
+				return newVec;
+			}
+
 			// \ Get length of Vec
 			T length()
 			{

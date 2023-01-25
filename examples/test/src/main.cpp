@@ -133,6 +133,7 @@ int main()
 		size.y = window.getWindowAttributes().height;
 
 		std::cout << window.getWindowAttributes().width << " " << window.getWindowAttributes().height << '\n';
+		std::cout << agl::Vec<float, 3>{1, 2, 3} * 3 << '\n';
 
 		window.setViewport(0, 0, size.x, size.y);
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
