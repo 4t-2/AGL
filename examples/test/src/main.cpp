@@ -1,7 +1,29 @@
 #include "../../../AGL/agl.hpp"
 
-void f(agl::RenderWindow &window)
+class TestClass : public agl::Drawable
 {
+	private:
+		agl::Rectangle rect1;
+		agl::Rectangle rect2;
+
+	public:
+		TestClass(agl::Texture &texture);
+};
+
+TestClass::TestClass(agl::Texture &texture)
+{
+	shape.push_back(&rect1);
+	shape.push_back(&rect2);
+
+	rect1.setPosition({0, 0, 0});
+	rect1.setSize({100, 100, 0});
+	rect1.setColor(agl::Color::White);
+	rect1.setTexture(&texture);
+
+	rect2.setPosition({200, 0, 0});
+	rect2.setSize({100, 100, 0});
+	rect2.setColor(agl::Color::Blue);
+	rect2.setTexture(&texture);
 }
 
 int main()
@@ -90,6 +112,8 @@ int main()
 
 	window.setCursorShape(XC_coffee_mug);
 
+	TestClass test(texture);
+
 	while (!event.windowClose())
 	{
 		event.pollWindow();
@@ -99,32 +123,9 @@ int main()
 		static char off = 0;
 		off++;
 
-		window.drawShape(shape, [=](agl::RenderWindow &window, agl::Shape &shape) {
-			agl::Mat4f transform;
-			agl::Mat4f offset	   = shape.getOffsetMatrix();
-			agl::Mat4f translation = shape.getTranslationMatrix();
-			agl::Mat4f scaling	   = shape.getScalingMatrix();
-			agl::Mat4f rotate	   = shape.getRotationMatrix();
-
-			agl::Mat4f matOff;
-			matOff.translate({(float)off, 0, 0});
-
-			transform = matOff * translation * rotate * offset * scaling;
-
-			agl::Mat4f textureTransform;
-			agl::Mat4f textureTranslation = shape.getTextureTranslation();
-			agl::Mat4f textureScaling	  = shape.getTextureScaling();
-
-			textureTransform = textureTranslation * textureScaling;
-
-			agl::Shader::setUniformMatrix4fv(window.getTransformID(), transform);
-			agl::Shader::setUniformVector3fv(window.getShapeColorID(), shape.getColor().normalized());
-			agl::Shader::setUniformMatrix4fv(window.getTextureTransformID(), textureTransform);
-
-			agl::Texture::bind(*shape.getTexture());
-
-			window.drawPrimative(shape.getShapeData());
-		});
+		std::cout << "test\n";
+		window.draw(test);
+		std::cout << "test\n";
 
 		window.display();
 

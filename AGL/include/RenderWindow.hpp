@@ -10,6 +10,7 @@
 #include "Shape.hpp"
 #include "Text.hpp"
 #include "Vec.hpp"
+#include "Drawable.hpp"
 
 #include <GL/glx.h>
 #include <X11/Xlib.h>
@@ -149,6 +150,8 @@ namespace agl
 			void drawShape(Shape &shape);
 
 			void drawShape(Shape &shape, std::function<void(RenderWindow&, Shape&)> f);
+
+			void draw(Drawable &drawable);
 
 			void drawText(Text &text);
 

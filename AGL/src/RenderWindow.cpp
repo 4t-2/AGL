@@ -270,6 +270,14 @@ void agl::RenderWindow::drawShape(agl::Shape &shape, std::function<void(RenderWi
 	draw(*this, shape);
 }
 
+void agl::RenderWindow::draw(agl::Drawable &drawable)
+{
+	for (Shape *shape : drawable.getShape())
+	{
+		this->drawShape(*shape);
+	}
+}
+
 void agl::RenderWindow::drawText(Text &text)
 {
 	agl::Rectangle *shape = text.getCharBox();
