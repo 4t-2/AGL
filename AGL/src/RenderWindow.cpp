@@ -260,8 +260,6 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 
 	this->drawPrimative(shape.getShapeData());
 
-	Texture::bind(Texture());
-
 	return;
 }
 
@@ -270,12 +268,9 @@ void agl::RenderWindow::drawShape(agl::Shape &shape, std::function<void(RenderWi
 	draw(*this, shape);
 }
 
-void agl::RenderWindow::draw(agl::Drawable &drawable)
+void agl::RenderWindow::draw(agl::Drawable<RenderWindow&> &drawable)
 {
-	for (Shape *shape : drawable.getShape())
-	{
-		this->drawShape(*shape);
-	}
+	drawable.getDrawFunction()(*this);
 }
 
 void agl::RenderWindow::drawText(Text &text)

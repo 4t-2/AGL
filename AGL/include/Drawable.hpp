@@ -5,12 +5,22 @@
 
 namespace agl
 {
-	class Drawable
+	// \ only use it with <agl::RenderWindow&>
+	// \ agl::RenderWindow::draw() wont work otherwise
+	template <typename T> class Drawable
 	{
 		protected:
-			std::vector<agl::Shape *> shape;
+			std::function<void(T)> drawFunction;
 
 		public:
-			std::vector<agl::Shape *> &getShape();
+			void setDrawFunction(std::function<void(T)> drawFunction)
+			{
+				this->drawFunction = drawFunction;
+			}
+
+			std::function<void(T)> getDrawFunction()
+			{
+				return drawFunction;
+			}
 	};
 } // namespace agl

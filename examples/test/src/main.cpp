@@ -1,6 +1,6 @@
 #include "../../../AGL/agl.hpp"
 
-class TestClass : public agl::Drawable
+class TestClass : public agl::Drawable<agl::RenderWindow&>
 {
 	private:
 		agl::Rectangle rect1;
@@ -12,9 +12,6 @@ class TestClass : public agl::Drawable
 
 TestClass::TestClass(agl::Texture &texture)
 {
-	shape.push_back(&rect1);
-	shape.push_back(&rect2);
-
 	rect1.setPosition({0, 0, 0});
 	rect1.setSize({100, 100, 0});
 	rect1.setColor(agl::Color::White);
@@ -24,6 +21,16 @@ TestClass::TestClass(agl::Texture &texture)
 	rect2.setSize({100, 100, 0});
 	rect2.setColor(agl::Color::Blue);
 	rect2.setTexture(&texture);
+
+	this->setDrawFunction([&](agl::RenderWindow &window) {
+		window.drawShape(rect1);
+		window.drawShape(rect2);
+
+		agl::Vec<float, 3> pos = rect1.getPosition();
+		pos.x++;
+
+		rect1.setPosition(pos);
+	});
 }
 
 int main()
