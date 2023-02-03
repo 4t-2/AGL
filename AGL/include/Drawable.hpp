@@ -7,7 +7,7 @@ namespace agl
 {
 	// \ only use it with <agl::RenderWindow&>
 	// \ agl::RenderWindow::draw() wont work otherwise
-	template <typename T> class Drawable
+	template <typename T> class _Drawable
 	{
 		protected:
 			std::function<void(T)> drawFunction;

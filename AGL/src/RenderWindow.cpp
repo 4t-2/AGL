@@ -268,7 +268,7 @@ void agl::RenderWindow::drawShape(agl::Shape &shape, std::function<void(RenderWi
 	draw(*this, shape);
 }
 
-void agl::RenderWindow::draw(agl::Drawable<RenderWindow&> &drawable)
+void agl::RenderWindow::draw(agl::_Drawable<RenderWindow&> &drawable)
 {
 	drawable.getDrawFunction()(*this);
 }

@@ -1,6 +1,6 @@
 #include "../../../AGL/agl.hpp"
 
-class TestClass : public agl::Drawable<agl::RenderWindow&>
+class TestClass : public agl::Drawable
 {
 	private:
 		agl::Rectangle rect1;

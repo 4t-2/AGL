@@ -151,7 +151,7 @@ namespace agl
 
 			void drawShape(Shape &shape, std::function<void(RenderWindow&, Shape&)> f);
 
-			void draw(Drawable<RenderWindow&> &drawable);
+			void draw(_Drawable<RenderWindow&> &drawable);
 
 			void drawText(Text &text);
 
@@ -172,4 +172,6 @@ namespace agl
 				return win;
 			}
 	};
+	
+	typedef _Drawable<RenderWindow&> Drawable;
 } // namespace agl
