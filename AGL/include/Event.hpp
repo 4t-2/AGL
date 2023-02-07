@@ -33,5 +33,12 @@ namespace agl
 			Vec<int, 2> getPointerWindowPosition();
 			Vec<int, 2> getPointerRootPosition();
 			bool	 isPointerButtonPressed(int buttonMask);
+
+			bool currentKeyPressed(char *key);
+
+			XEvent getXev()
+			{
+				return xev;
+			}
 	};
 } // namespace agl

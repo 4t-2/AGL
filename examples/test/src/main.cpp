@@ -1,4 +1,7 @@
 #include "../../../AGL/agl.hpp"
+#include <X11/X.h>
+#include <X11/XKBlib.h>
+#include <X11/Xlib.h>
 
 class TestClass : public agl::Drawable
 {
@@ -121,6 +124,13 @@ int main()
 
 	TestClass test(texture);
 
+	std::string testStr;
+
+	XIM xim = XOpenIM(window.getDisplay(), nullptr, nullptr, nullptr);
+	XIC xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing, NULL);
+
+	XSetICFocus(xic);
+
 	while (!event.windowClose())
 	{
 		event.pollWindow();
@@ -130,9 +140,7 @@ int main()
 		static char off = 0;
 		off++;
 
-		std::cout << "test\n";
 		window.draw(test);
-		std::cout << "test\n";
 
 		window.display();
 
@@ -140,12 +148,15 @@ int main()
 		size.x = window.getWindowAttributes().width;
 		size.y = window.getWindowAttributes().height;
 
-		std::cout << window.getWindowAttributes().width << " " << window.getWindowAttributes().height << '\n';
-		std::cout << agl::Vec<float, 3>{1, 2, 3} * 3 << '\n';
-
 		window.setViewport(0, 0, size.x, size.y);
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
 		window.updateMvp(camera);
+
+		char key;
+		if(event.currentKeyPressed(&key))
+		{
+			std::cout << (int)key << " \'" << key << "\'\n";
+		}
 	}
 
 	window.close();

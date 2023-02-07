@@ -25,7 +25,7 @@ void agl::RenderWindow::setup(Vec<float, 2> size, const char title[])
 	this->openDisplay();
 	this->createRootWindow();
 	this->createColormap(attribute, AllocNone);
-	this->setEventMask(ExposureMask | KeyPressMask);
+	this->setEventMask(ExposureMask | KeyPressMask | KeyReleaseMask);
 	this->createWindow(0, 0, size.x, size.y, CWColormap | CWEventMask);
 	this->setTitle(title);
 

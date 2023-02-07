@@ -23,6 +23,10 @@ void agl::Event::pollWindow()
 	{
 		XNextEvent(display, &xev);
 	}
+	else
+	{
+		xev = XEvent();
+	}
 }
 
 void agl::Event::pollKeyboard()
@@ -63,8 +67,33 @@ agl::Vec<int, 2> agl::Event::getPointerRootPosition()
 
 bool agl::Event::isPointerButtonPressed(int buttonMask)
 {
-	if(maskReturn & buttonMask)
+	if (maskReturn & buttonMask)
 	{
+		return true;
+	}
+
+	return false;
+}
+
+bool agl::Event::currentKeyPressed(char *key)
+{
+	if (xev.type == KeyPress)
+	{
+		KeySym keysym;
+
+		XLookupString((XKeyEvent *)&xev, nullptr, 0, &keysym, nullptr);
+
+		*key = keysym;
+
+		// need XOpenIM() and XCreateIC()
+		// char buffer[32];
+		// KeySym ignore;
+		// Status return_status;
+		// Xutf8LookupString(xic, &xev.xkey, buffer, 32, &ignore, &return_status);
+		// printf("%s\n", buffer);
+		// std::cout << (unsigned int)((unsigned char)buffer[0]) << '\n';
+		// std::cout << "keyrecieved" << '\n';
+
 		return true;
 	}
 
