@@ -80,10 +80,11 @@ bool agl::Event::currentKeyPressed(char *key)
 	if (xev.type == KeyPress)
 	{
 		KeySym keysym;
+		char test[1];
 
-		XLookupString((XKeyEvent *)&xev, nullptr, 0, &keysym, nullptr);
+		XLookupString((XKeyEvent *)&xev, test, 1, &keysym, nullptr);
 
-		*key = keysym;
+		*key = test[0];
 
 		// need XOpenIM() and XCreateIC()
 		// char buffer[32];

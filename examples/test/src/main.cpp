@@ -152,10 +152,22 @@ int main()
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
 		window.updateMvp(camera);
 
+		// XEvent xev = event.getXev();
+		// if (xev.type == KeyPress)
+		// {
+		// 	unsigned char   buffer[1];
+		// 	KeySym ignore;
+		// 	Status return_status;
+		// 	Xutf8LookupString(xic, &xev.xkey, (char*)buffer, 1, &ignore, &return_status);
+		//
+		// 	std::cout << (int)buffer[0] << '\n';
+		// }
+
 		char key;
 		if(event.currentKeyPressed(&key))
 		{
-			std::cout << (int)key << " \'" << key << "\'\n";
+			std::cout << (int)key << '\n';
+			std::cout << key << '\n';
 		}
 	}
 
