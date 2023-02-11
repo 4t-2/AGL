@@ -270,7 +270,7 @@ void agl::RenderWindow::drawShape(agl::Shape &shape, std::function<void(RenderWi
 
 void agl::RenderWindow::draw(agl::_Drawable<RenderWindow&> &drawable)
 {
-	drawable.getDrawFunction()(*this);
+	drawable.drawFunction(*this);
 }
 
 void agl::RenderWindow::drawText(Text &text)

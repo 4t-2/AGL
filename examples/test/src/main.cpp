@@ -11,6 +11,8 @@ class TestClass : public agl::Drawable
 
 	public:
 		TestClass(agl::Texture &texture);
+
+		void drawFunction(agl::RenderWindow &window);
 };
 
 TestClass::TestClass(agl::Texture &texture)
@@ -24,8 +26,10 @@ TestClass::TestClass(agl::Texture &texture)
 	rect2.setSize({100, 100, 0});
 	rect2.setColor(agl::Color::Blue);
 	rect2.setTexture(&texture);
+}
 
-	this->setDrawFunction([&](agl::RenderWindow &window) {
+void TestClass::drawFunction(agl::RenderWindow &window)
+{
 		window.drawShape(rect1);
 		window.drawShape(rect2);
 
@@ -33,7 +37,7 @@ TestClass::TestClass(agl::Texture &texture)
 		pos.x++;
 
 		rect1.setPosition(pos);
-	});
+
 }
 
 int main()
