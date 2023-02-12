@@ -29,10 +29,10 @@ int agl::Shader::loadFromFile(const std::string &vertex_file_path, const std::st
 		fragSrc += line + '\n';
 	}
 	
-	return this->compileShader(vertSrc, fragSrc);
+	return this->compileSrc(vertSrc, fragSrc);
 }
 
-int agl::Shader::compileShader(std::string &vertSrc, std::string &fragSrc)
+int agl::Shader::compileSrc(std::string &vertSrc, std::string &fragSrc)
 {
 	int exitCode = 0;
 
