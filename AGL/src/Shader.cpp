@@ -1,68 +1,50 @@
+#include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "../include/Shader.hpp"
 
-int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment_file_path)
+int agl::Shader::loadFromFile(const std::string &vertex_file_path, const std::string &fragment_file_path)
 {
+	std::fstream vertStream(vertex_file_path, std::ios::in);
+	std::fstream fragStream(fragment_file_path, std::ios::in);
+
+	std::string vertSrc;
+	std::string fragSrc;
+
+	if (!vertStream.good() || !fragStream.good())
+	{
+		return 1;
+	}
+
+	std::string line;
+	
+	while (std::getline(vertStream, line))
+	{
+		vertSrc += line + '\n';
+	}
+
+	while (std::getline(fragStream, line))
+	{
+		fragSrc += line + '\n';
+	}
+	
+	return this->compileShader(vertSrc, fragSrc);
+}
+
+int agl::Shader::compileShader(std::string &vertSrc, std::string &fragSrc)
+{
+	int exitCode = 0;
+
 	// Create the shaders
 	GLuint VertexShaderID	= glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-	int size;
-	int exitCode = 0;
-
-	char *VertexShaderCode;
-	FILE *VertexShaderCodeStream = fopen(vertex_file_path, "r");
-
-	if (VertexShaderCodeStream == NULL)
-	{
-		return 1;
-	}
-
-	fseek(VertexShaderCodeStream, 0L, SEEK_END);
-	size = ftell(VertexShaderCodeStream);
-	fseek(VertexShaderCodeStream, 0L, SEEK_SET);
-
-	VertexShaderCode = (char *)malloc(size);
-
-	for (int i = 0; i < size-1; i++)
-	{
-		VertexShaderCode[i] = fgetc(VertexShaderCodeStream);
-	}
-
-	VertexShaderCode[size-1] = 0;
-
-	fclose(VertexShaderCodeStream);
-
-	char *FragmentShaderCode;
-	FILE *FragmentShaderCodeStream = fopen(fragment_file_path, "r");
-
-	if (FragmentShaderCodeStream == NULL)
-	{
-		return 1;
-	}
-
-	fseek(FragmentShaderCodeStream, 0L, SEEK_END);
-	size = ftell(FragmentShaderCodeStream);
-	fseek(FragmentShaderCodeStream, 0L, SEEK_SET);
-
-	FragmentShaderCode = (char *)malloc(size);
-
-	for (int i = 0; i < size-1; i++)
-	{
-		FragmentShaderCode[i] = fgetc(FragmentShaderCodeStream);
-	}
-
-	FragmentShaderCode[size-1] = 0;
-
-	fclose(FragmentShaderCodeStream);
 
 	GLint Result = GL_FALSE;
 	int	  InfoLogLength;
 
 	// Compile Vertex Shader
-	char const *VertexSourcePointer = VertexShaderCode;
+	char const *VertexSourcePointer = vertSrc.c_str();
 	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
 	glCompileShader(VertexShaderID);
 
@@ -82,7 +64,7 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 	}
 
 	// Compile Fragment Shader
-	char const *FragmentSourcePointer = FragmentShaderCode;
+	char const *FragmentSourcePointer = fragSrc.c_str();
 	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(FragmentShaderID);
 
@@ -129,9 +111,6 @@ int agl::Shader::loadFromFile(const char *vertex_file_path, const char *fragment
 	glDeleteShader(FragmentShaderID);
 
 	this->programID = ProgramID;
-
-	free(FragmentShaderCode);
-	free(VertexShaderCode);
 
 	return exitCode;
 }

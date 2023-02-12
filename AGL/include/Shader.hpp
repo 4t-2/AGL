@@ -19,15 +19,17 @@ namespace agl
 			// \ 0 - Success
 			// \ 1 - File(s) not found
 			// \ 2 - Other error
-			int loadFromFile(const char *vertex_file_path, const char *fragment_file_path);
+			int loadFromFile(const std::string &vertex_file_path, const std::string &fragment_file_path);
+
+			int compileSrc(std::string &vertSrc, std::string &fragSrc);
 
 			// \ Use the shader
-			void		use();
+			void use();
 
 			// \ Get location of a uniform in the shader
 			// \ name - name of the uniform
 			// \ Returns the location of the uniform
-			int			getUniformLocation(const char *name);
+			int getUniformLocation(const char *name);
 
 			// \ Sets the value of a matrix uniform
 			// \ location - location of uniform
@@ -38,9 +40,9 @@ namespace agl
 			// \ location - location of uniform
 			// \ vector - value to set uniform to
 			static void setUniformVector3fv(GLuint location, Vec<float, 3> vector);
-			
+
 			// \ Delete shader
-			void		deleteProgram();
+			void deleteProgram();
 
 			// \ Get the ID of the shader program
 			// \ Returns the ID of the program

@@ -30,14 +30,13 @@ TestClass::TestClass(agl::Texture &texture)
 
 void TestClass::drawFunction(agl::RenderWindow &window)
 {
-		window.drawShape(rect1);
-		window.drawShape(rect2);
+	window.drawShape(rect1);
+	window.drawShape(rect2);
 
-		agl::Vec<float, 3> pos = rect1.getPosition();
-		pos.x++;
+	agl::Vec<float, 3> pos = rect1.getPosition();
+	pos.x++;
 
-		rect1.setPosition(pos);
-
+	rect1.setPosition(pos);
 }
 
 int main()
@@ -162,13 +161,14 @@ int main()
 		// 	unsigned char   buffer[1];
 		// 	KeySym ignore;
 		// 	Status return_status;
-		// 	Xutf8LookupString(xic, &xev.xkey, (char*)buffer, 1, &ignore, &return_status);
+		// 	Xutf8LookupString(xic, &xev.xkey, (char*)buffer, 1, &ignore,
+		// &return_status);
 		//
 		// 	std::cout << (int)buffer[0] << '\n';
 		// }
 
 		char key;
-		if(event.currentKeyPressed(&key))
+		if (event.currentKeyPressed(&key))
 		{
 			std::cout << (int)key << '\n';
 			std::cout << key << '\n';
