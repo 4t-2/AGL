@@ -71,6 +71,8 @@ int main()
 		window.mapWindow();
 	});
 
+	XSelectInput(window.getDisplay(), window.getWindow(), ButtonPressMask | ButtonReleaseMask);
+
 	agl::Event event;
 	event.setWindow(window);
 
@@ -136,7 +138,19 @@ int main()
 
 	while (!event.windowClose())
 	{
-		event.pollWindow();
+		event.poll([](XEvent xev) {
+			if (xev.type == ButtonPress)
+			{
+				if (xev.xbutton.button == 4)
+				{
+					std::cout << "up" << '\n';
+				}
+				if (xev.xbutton.button == 5)
+				{
+					std::cout << "down" << '\n';
+				}
+			}
+		});
 
 		window.clear();
 
@@ -155,23 +169,9 @@ int main()
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
 		window.updateMvp(camera);
 
-		// XEvent xev = event.getXev();
-		// if (xev.type == KeyPress)
-		// {
-		// 	unsigned char   buffer[1];
-		// 	KeySym ignore;
-		// 	Status return_status;
-		// 	Xutf8LookupString(xic, &xev.xkey, (char*)buffer, 1, &ignore,
-		// &return_status);
-		//
-		// 	std::cout << (int)buffer[0] << '\n';
-		// }
-
-		char key;
-		if (event.currentKeyPressed(&key))
+		if (event.isPointerButtonPressed(Button2Mask))
 		{
-			std::cout << (int)key << '\n';
-			std::cout << key << '\n';
+			std::cout << "dwad" << '\n';
 		}
 	}
 

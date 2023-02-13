@@ -29,6 +29,8 @@ namespace agl
 			void pollKeyboard();
 			void pollPointer();
 
+			void poll(std::function<void(XEvent xev)> eventLoop);
+
 			bool	 isKeyPressed(int keysym);
 			Vec<int, 2> getPointerWindowPosition();
 			Vec<int, 2> getPointerRootPosition();

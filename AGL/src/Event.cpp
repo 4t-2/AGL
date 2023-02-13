@@ -44,6 +44,19 @@ void agl::Event::pollPointer()
 	return;
 }
 
+void agl::Event::poll(std::function<void(XEvent xev)> eventLoop)
+{
+	this->pollKeyboard();
+	this->pollPointer();
+
+	while(XPending(display))
+	{
+		XNextEvent(display, &xev);
+
+		eventLoop(xev);
+	}
+}
+
 bool agl::Event::isKeyPressed(int keysym)
 {
 	int keycode = XKeysymToKeycode(this->display, keysym);
