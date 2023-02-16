@@ -2,6 +2,7 @@
 
 #include "Mat4f.hpp"
 #include "external.hpp"
+#include "ShaderBuilder.hpp"
 
 namespace agl
 {

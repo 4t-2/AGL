@@ -76,6 +76,16 @@ int main()
 	agl::Event event;
 	event.setWindow(window);
 
+	agl::ShaderBuilder sb;
+
+	sb.addIn("type1", "name1");
+	sb.addOut("type2", "name2");
+	sb.addOut("type3", "name3");
+	sb.addUniform("type4", "name4");
+	sb.addUniform("type5", "name5");
+
+	std::cout << sb.getSrc() << '\n';
+
 	agl::Shader shader;
 	shader.loadFromFile("vert.glsl", "frag.glsl");
 	shader.use();
@@ -138,19 +148,7 @@ int main()
 
 	while (!event.windowClose())
 	{
-		event.poll([](XEvent xev) {
-			if (xev.type == ButtonPress)
-			{
-				if (xev.xbutton.button == 4)
-				{
-					std::cout << "up" << '\n';
-				}
-				if (xev.xbutton.button == 5)
-				{
-					std::cout << "down" << '\n';
-				}
-			}
-		});
+		event.poll([](XEvent xev) {});
 
 		window.clear();
 
@@ -168,11 +166,6 @@ int main()
 		window.setViewport(0, 0, size.x, size.y);
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
 		window.updateMvp(camera);
-
-		if (event.isPointerButtonPressed(Button2Mask))
-		{
-			std::cout << "dwad" << '\n';
-		}
 	}
 
 	window.close();
