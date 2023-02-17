@@ -84,6 +84,8 @@ int main()
 	sb.addUniform("type4", "name4");
 	sb.addUniform("type5", "name5");
 
+	sb.setMain({{"first\n"}, {"second\n"}, {"third\n"}});
+
 	std::cout << sb.getSrc() << '\n';
 
 	agl::Shader shader;
