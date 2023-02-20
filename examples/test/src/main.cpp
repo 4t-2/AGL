@@ -76,20 +76,44 @@ int main()
 	agl::Event event;
 	event.setWindow(window);
 
-	agl::ShaderBuilder sb;
+	agl::ShaderBuilder vert;
+	vert.addLayout(0, agl::vec3, "position");
+	vert.addLayout(1, agl::vec2, "vertexUV");
 
-	sb.addIn("type1", "name1");
-	sb.addOut("type2", "name2");
-	sb.addOut("type3", "name3");
-	sb.addUniform("type4", "name4");
-	sb.addUniform("type5", "name5");
+	vert.addUniform(agl::mat4, "transform");
+	vert.addUniform(agl::mat4, "mvp");
+	vert.addUniform(agl::vec3, "shapeColor");
+	vert.addUniform(agl::mat4, "textureTransform");
 
-	sb.setMain({{"first\n"}, {"second\n"}, {"third\n"}});
+	vert.addOut(agl::vec2, "UVcoord");
+	vert.addOut(agl::vec4, "fragColor");
 
-	std::cout << sb.getSrc() << '\n';
+	vert.setMain({
+		agl::Assign{"UVcoord", "vec2((textureTransform * vec4(vertexUV, 1, 1)).xy)"}, //
+		agl::Assign{"fragColor", "vec4(shapeColor, 1)"},							  //
+		agl::Assign{"gl_Position", "mvp * transform * vec4(position, 1)"},			  //
+	});
+
+	agl::ShaderBuilder frag;
+	frag.addIn(agl::vec2, "UVcoord");
+	frag.addIn(agl::vec4, "fragColor");
+
+	frag.addOut(agl::vec4, "color");
+
+	frag.addUniform(agl::sampler2D, "myTextureSampler");
+
+	frag.setMain({
+		agl::Assign{"color", "fragColor * texture(myTextureSampler, UVcoord)"}, //
+	});
+
+	std::cout << vert.getSrc() << '\n';
+	std::cout << frag.getSrc() << '\n';
+
+	std::string vertSrc = vert.getSrc();
+	std::string fragSrc = frag.getSrc();
 
 	agl::Shader shader;
-	shader.loadFromFile("vert.glsl", "frag.glsl");
+	shader.compileSrc(vertSrc, fragSrc);
 	shader.use();
 	window.getShaderUniforms(shader);
 
