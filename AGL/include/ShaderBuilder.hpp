@@ -16,6 +16,11 @@ namespace agl
 	class Value : public ShaderElement
 	{
 		public:
+			Value(Value const &&value)
+			{
+				code = value.code;
+			}
+
 			template <typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type * = nullptr>
 			Value(T &&value)
 			{
@@ -29,43 +34,45 @@ namespace agl
 
 			Value operator+(Value &&value)
 			{
-				return code + "+" + value.code;
+				return Value(code + "+" + value.code);
 			}
 
 			Value operator-(Value &&value)
 			{
-				return code + "-" + value.code;
+				return Value(code + "-" + value.code);
 			}
 
 			Value operator*(Value &&value)
 			{
-				return code + "*" + value.code;
+				return Value(code + "*" + value.code);
 			}
 
 			Value operator/(Value &&value)
 			{
-				return code + "/" + value.code;
+				return Value(code + "/" + value.code);
 			}
 
 			Value operator=(Value &&value)
 			{
-				return code + "=" + value.code;
+				return Value(code + "=" + value.code);
 			}
 
 			Value operator==(Value &&value)
 			{
-				return code + "==" + value.code;
+				return Value(code + "==" + value.code);
 			}
 	};
+
+	typedef Value val;
 
 	class ControlStructure : public ShaderElement
 	{
 		public:
-			ControlStructure(std::string name, Value &&value, std::vector<ShaderElement> element)
+			ControlStructure(std::string name, ShaderElement controlStatement, std::vector<ShaderElement> element)
 			{
-				code += name + "(" + value.code + ")\n{\n";
+				code += name + "(" + controlStatement.code + ")\n{\n";
 
-				for(ShaderElement element : element)
+				for (ShaderElement element : element)
 				{
 					code += element.code + ";\n";
 				}
@@ -73,6 +80,46 @@ namespace agl
 				code += "}";
 			}
 	};
+
+	class ShaderIf : public ControlStructure
+	{
+		public:
+			ShaderIf(Value expression, std::vector<ShaderElement> element) : ControlStructure("if", expression, element)
+			{
+			}
+	};
+
+	typedef ShaderIf _if;
+
+	class ShaderWhile : public ControlStructure
+	{
+		public:
+			ShaderWhile(Value expression, std::vector<ShaderElement> element) : ControlStructure("while", expression, element)
+			{
+			}
+	};
+
+	typedef ShaderWhile _while;
+
+	class LoopControlStatement : public ShaderElement
+	{
+		public:
+			LoopControlStatement(Value e1, Value e2, Value e3)
+			{
+				code += e1.code + ";" + e2.code + ";" + e3.code;
+			}
+	};
+
+	class ShaderFor : public ControlStructure
+	{
+		public:
+			ShaderFor(ShaderElement controlStatement, std::vector<ShaderElement> element)
+				: ControlStructure("for", controlStatement, element)
+			{
+			}
+	};
+
+	typedef ShaderFor _for;
 
 	static const std::string vec2 = "vec2";
 	static const std::string vec3 = "vec3";

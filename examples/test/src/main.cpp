@@ -95,15 +95,16 @@ int main()
 
 	std::cout << v3.code << '\n';
 
-	vert.setMain({
-		agl::Value("UVcoord")	= agl::Value("vec2((textureTransform") * agl::Value("vec4(vertexUV, 1, 1)).xy)"), //
-		agl::Value("fragColor") = agl::Value("vec4(shapeColor, 1)"),											  //
-		agl::ControlStructure("if", agl::Value(1) == agl::Value(1),
-							  {
+	int i = 0;
 
-								  agl::Value("gl_Position") =
-									  agl::Value("mvp") * agl::Value("transform") * agl::Value("vec4(position, 1)"), //
-							  }),																					 //
+	vert.setMain({
+		agl::val("UVcoord")	  = agl::val("vec2((textureTransform") * agl::val("vec4(vertexUV, 1, 1)).xy)"), //
+		agl::val("fragColor") = agl::val("vec4(shapeColor, 1)"),											//
+		agl::_if(
+			agl::val(1) == agl::val(1),
+			{
+				agl::val("gl_Position") = agl::val("mvp") * agl::val("transform") * agl::val("vec4(position, 1)"), //
+			}),																									   //
 	});
 
 	agl::ShaderBuilder frag;
@@ -115,7 +116,7 @@ int main()
 	frag.addUniform(agl::sampler2D, "myTextureSampler");
 
 	frag.setMain({
-		agl::Value("color") = agl::Value("fragColor") * agl::Value("texture(myTextureSampler, UVcoord)"), //
+		agl::val("color") = agl::val("fragColor") * agl::val("texture(myTextureSampler, UVcoord)"), //
 	});
 
 	std::cout << vert.getSrc() << '\n';
