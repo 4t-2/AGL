@@ -134,10 +134,10 @@ namespace agl
 			}
 
 			// \ Normalize Vec
-			Vec normalize()
+			Vec normalized()
 			{
 				T len = this->length();
-				return {x /= len, y /= len, z /= len};
+				return {x / len, y / len, z / len};
 			}
 
 			// \ Get the dot product of Vec and vec
