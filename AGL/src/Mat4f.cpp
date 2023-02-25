@@ -138,8 +138,8 @@ void agl::Mat4f::rotate(agl::Vec<float, 3> rotation) // HACK lazy and can defina
 
 void agl::Mat4f::lookAt(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3> head)
 {
-	agl::Vec<float, 3> f = ((target - pos).normalize());
-	agl::Vec<float, 3> s = (agl::cross(f, head).normalize());
+	agl::Vec<float, 3> f = ((target - pos).normalized());
+	agl::Vec<float, 3> s = (agl::cross(f, head).normalized());
 	agl::Vec<float, 3> u = (agl::cross(s, f));
 
 	data[0][0] = s.x;
