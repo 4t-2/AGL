@@ -145,6 +145,9 @@ namespace agl
 			void addUniform(std::string type, std::string name);
 
 			void setMain(std::vector<ShaderElement> element);
+	
+			void setDefaultVert();
+			void setDefaultFrag();
 
 			std::string getSrc();
 	};
