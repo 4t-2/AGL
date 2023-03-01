@@ -4,6 +4,8 @@
 #include <ostream>
 #include <sstream>
 
+#define PI 3.14159
+
 namespace agl
 {
 	template <typename T = float, int max = 4> class Vec
@@ -152,6 +154,25 @@ namespace agl
 				}
 
 				return dot;
+			}
+
+			float angle()
+			{
+				float angle = -atan(x / y);
+
+				if(x > 0 && y < 0)
+				{
+					return angle;
+				}
+
+				angle += PI;
+
+				if(x < 0 && y < 0)
+				{
+					angle += PI;
+				}
+
+				return angle;
 			}
 
 			friend std::ostream &operator<<(std::ostream &os, const Vec &vec)

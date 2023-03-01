@@ -168,6 +168,11 @@ int main()
 		window.setViewport(0, 0, size.x, size.y);
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
 		window.updateMvp(camera);
+
+		agl::Vec<float, 2> position = event.getPointerWindowPosition();
+		// position = position - agl::Vec<float, 2>{500, 500};
+
+		std::cout << position.angle() << std::endl;
 	}
 
 	window.close();
