@@ -14,10 +14,6 @@ namespace agl
 			// \ Construct Vec with data starting all at 0
 			Vec()
 			{
-				for (unsigned int i = 0; i < size; i++)
-				{
-					data[i] = 0;
-				}
 			}
 
 			// \ Construct Vec to be equal to vec
@@ -27,21 +23,6 @@ namespace agl
 				for (unsigned int i = 0; i < max; i++)
 				{
 					data[i] = vec.data[i];
-				}
-			}
-
-			template <typename U, int amount> Vec(Vec<U, amount> const &vec)
-			{
-				unsigned int i;
-
-				for (i = 0; (i < max) && (i < amount); i++)
-				{
-					data[i] = vec.data[i];
-				}
-
-				for (; i < max; i++)
-				{
-					data[i] = 0;
 				}
 			}
 
@@ -93,6 +74,38 @@ namespace agl
 				}
 			}
 
+			void operator+=(Vec vec)
+			{
+				for (unsigned int i = 0; i < max; i++)
+				{
+					data[i] += vec.data[i];
+				}
+			}
+
+			void operator-=(Vec vec)
+			{
+				for (unsigned int i = 0; i < max; i++)
+				{
+					data[i] -= vec.data[i];
+				}
+			}
+
+			void operator*=(T scale)
+			{
+				for (unsigned int i = 0; i < max; i++)
+				{
+					data[i] *= scale;
+				}
+			}
+
+			void operator/=(T scale)
+			{
+				for (unsigned int i = 0; i < max; i++)
+				{
+					data[i] /= scale;
+				}
+			}
+
 			Vec operator-(Vec vec)
 			{
 				Vec newVec;
@@ -117,13 +130,25 @@ namespace agl
 				return newVec;
 			}
 
-			Vec operator*(float scale)
+			Vec operator*(T scale)
 			{
 				Vec newVec;
 
 				for (int i = 0; i < max; i++)
 				{
 					newVec.data[i] = data[i] * scale;
+				}
+
+				return newVec;
+			}
+
+			Vec operator/(T scale)
+			{
+				Vec newVec;
+
+				for (int i = 0; i < max; i++)
+				{
+					newVec.data[i] = data[i] / scale;
 				}
 
 				return newVec;
@@ -160,14 +185,14 @@ namespace agl
 			{
 				float angle = -atan(x / y);
 
-				if(x > 0 && y < 0)
+				if (x > 0 && y < 0)
 				{
 					return angle;
 				}
 
 				angle += PI;
 
-				if(x < 0 && y < 0)
+				if (x < 0 && y < 0)
 				{
 					angle += PI;
 				}
@@ -191,7 +216,7 @@ namespace agl
 
 			const unsigned int size = max;
 
-			T data[max];
+			T data[max] = {};
 
 			T &x = data[0];
 			T &y = data[1];

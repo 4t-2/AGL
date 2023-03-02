@@ -17,13 +17,13 @@ class TestClass : public agl::Drawable
 
 TestClass::TestClass(agl::Texture &texture)
 {
-	rect1.setPosition({0, 0, 0});
-	rect1.setSize({100, 100, 0});
+	rect1.setPosition({0, 0});
+	rect1.setSize({100, 100});
 	rect1.setColor(agl::Color::White);
 	rect1.setTexture(&texture);
 
-	rect2.setPosition({200, 0, 0});
-	rect2.setSize({100, 100, 0});
+	rect2.setPosition({200, 0});
+	rect2.setSize({100, 100});
 	rect2.setColor(agl::Color::Blue);
 	rect2.setTexture(&texture);
 }
@@ -169,10 +169,9 @@ int main()
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
 		window.updateMvp(camera);
 
-		agl::Vec<float, 2> position = event.getPointerWindowPosition();
-		// position = position - agl::Vec<float, 2>{500, 500};
+		static agl::Vec<float, 2> test = {0, 0};
 
-		std::cout << position.angle() << std::endl;
+		std::cout << test << std::endl;
 	}
 
 	window.close();
