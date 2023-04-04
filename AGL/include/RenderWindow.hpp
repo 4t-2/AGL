@@ -20,6 +20,12 @@
 
 namespace agl
 {
+	enum TextAlign
+	{
+		Left,
+		Right
+	};
+
 	class RenderWindow
 	{
 		private:
@@ -154,6 +160,9 @@ namespace agl
 			void draw(_Drawable<RenderWindow&> &drawable);
 
 			void drawText(Text &text);
+			void drawText(Text &text, float width);
+			void drawText(Text &text, float width, TextAlign align);
+			void drawText(Text &text, TextAlign align);
 
 			// \ Swap the display buffer and sleep
 			void display();

@@ -13,7 +13,7 @@ namespace agl
 	Vec<float, 3> cross(Vec<float, 3> a, Vec<float, 3> b);
 
 	// \ Return a normalized vector that points in that angle on a circle
-	// \ angle - angle for vector to point at
+	// \ angle - radian vector points at
 	Vec<float, 2> pointOnCircle(float angle);
 
 	// \ Converts degrees to radians

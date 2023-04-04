@@ -22,6 +22,7 @@ namespace agl
 			int				   height = 0;
 			agl::Vec<float, 3> position;
 			float			   scale = 0;
+			float			   width = 0; // unscaled
 
 		public:
 			void setFont(Font *font);
@@ -39,5 +40,6 @@ namespace agl
 			int				   getHeight();
 			agl::Vec<float, 3> getPosition();
 			float			   getScale();
+			float			   getWidth();
 	};
 } // namespace agl

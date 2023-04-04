@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <cmath>
 
 #include <iostream>
 
@@ -273,11 +274,16 @@ void agl::RenderWindow::draw(agl::_Drawable<RenderWindow&> &drawable)
 	drawable.drawFunction(*this);
 }
 
-void agl::RenderWindow::drawText(Text &text)
+void agl::RenderWindow::drawText(Text &text, float width, TextAlign align)
 {
 	agl::Rectangle *shape = text.getCharBox();
 
-	Vec<int, 2> pen = {0, 0};
+	Vec<float, 2> pen;
+
+	if(align == Right)
+	{
+		pen = {width - (text.getWidth() * text.getScale()), 0};
+	}
 
 	Texture::bind(*shape->getTexture());
 
@@ -285,7 +291,7 @@ void agl::RenderWindow::drawText(Text &text)
 	{
 		Glyph *glyph = text.getGlyph(i);
 
-		if (glyph->value == '\n')
+		if (glyph->value == '\n' || pen.x + glyph->advance * text.getScale() > width)
 		{
 			pen.x = 0;
 			pen.y += text.getHeight() * text.getScale();
@@ -324,8 +330,21 @@ void agl::RenderWindow::drawText(Text &text)
 
 		pen.x += glyph->advance * text.getScale();
 	}
+}
 
-	return;
+void agl::RenderWindow::drawText(agl::Text &text, float width)
+{
+	this->drawText(text, width, Left);
+}
+
+void agl::RenderWindow::drawText(agl::Text &text, TextAlign align)
+{
+	this->drawText(text, INFINITY, align);
+}
+
+void agl::RenderWindow::drawText(agl::Text &text)
+{
+	this->drawText(text, INFINITY, Left);
 }
 
 XWindowAttributes agl::RenderWindow::getWindowAttributes()

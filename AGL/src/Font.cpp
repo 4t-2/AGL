@@ -1,6 +1,7 @@
 #include "../include/Font.hpp"
 #include "freetype/freetype.h"
 #include <cstdio>
+#include <iostream>
 
 #define MIN 32
 #define MAX 127
@@ -90,8 +91,12 @@ void agl::Font::setup(std::string path, int height)
 		glyph[i].position.x = (float)offset.x / sideLength;
 		glyph[i].position.y = (float)offset.y / sideLength;
 
+		std::cout << 		glyph[i].position.x << '\n';
+
 		offset.x += bitmap.width;
 	}
+
+	std::cout << sideLength << '\n';
 
 	FT_Done_FreeType(ft);
 

@@ -42,6 +42,8 @@ namespace agl
 			// \ vector - value to set uniform to
 			static void setUniformVector3fv(GLuint location, Vec<float, 3> vector);
 
+			static void setUniformVector2fv(GLuint location, Vec<float, 2> vector);
+
 			// \ Delete shader
 			void deleteProgram();
 

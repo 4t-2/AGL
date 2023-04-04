@@ -21,6 +21,7 @@ int main()
 
 	agl::Font font;
 	font.setup("/usr/share/fonts/TTF/Arial.TTF", 48);
+	font.getTexture()->useLinearFiltering();
 
 	agl::Texture blank;
 	blank.setBlank();
@@ -28,16 +29,16 @@ int main()
 	agl::Text text;
 	text.setFont(&font);
 
-	std::string str = "Hello World\nThis is a new line!";
+	std::string str = "Hello";
 
 	agl::Rectangle rectangle;
-	rectangle.setColor(agl::Color::Red);
+	rectangle.setColor(agl::Color::White);
 	rectangle.setPosition({100, 100, -1});
 	rectangle.setSize({100, 100});
 	rectangle.setTexture(&blank);
 
 	text.setText(str);
-	text.setScale(2);
+	text.setScale(.5);
 	text.setPosition({100, 100, 0});
 	text.setColor(agl::Color::Blue);
 
@@ -50,7 +51,7 @@ int main()
 		window.clear();
 
 		window.drawShape(rectangle);
-		window.drawText(text);
+		window.drawText(text, 100, agl::Right);
 
 		window.display();
 	}

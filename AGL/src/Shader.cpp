@@ -18,7 +18,7 @@ int agl::Shader::loadFromFile(const std::string &vertex_file_path, const std::st
 	}
 
 	std::string line;
-	
+
 	while (std::getline(vertStream, line))
 	{
 		vertSrc += line + '\n';
@@ -28,7 +28,7 @@ int agl::Shader::loadFromFile(const std::string &vertex_file_path, const std::st
 	{
 		fragSrc += line + '\n';
 	}
-	
+
 	return this->compileSrc(vertSrc, fragSrc);
 }
 
@@ -142,6 +142,13 @@ int agl::Shader::getUniformLocation(const char *name)
 void agl::Shader::setUniformMatrix4fv(GLuint location, Mat4f matrix)
 {
 	glUniformMatrix4fv(location, 1, GL_FALSE, &matrix.data[0][0]);
+
+	return;
+}
+
+void setUniformVector2fv(GLuint location, agl::Vec<float, 2> vector)
+{
+	glUniform2f(location, vector.x, vector.y);
 
 	return;
 }

@@ -14,8 +14,13 @@ void agl::Text::setText(std::string str)
 	length = str.length();
 	glyph = new Glyph*[length];
 
+	width = 0;
+
 	for(int i = 0; i < length; i++)
 	{
+		Glyph *g = font->getGlyph(str[i]);
+
+		width += g->advance;
 		glyph[i] = font->getGlyph(str[i]);
 	}
 }
@@ -38,6 +43,7 @@ void agl::Text::setColor(agl::Color color)
 void agl::Text::clearText()
 {
 	delete[] glyph;
+	glyph = nullptr;
 }
 
 agl::Glyph *agl::Text::getGlyph(int i)
@@ -73,4 +79,9 @@ agl::Vec<float, 3> agl::Text::getPosition()
 float agl::Text::getScale()
 {
 	return scale;
+}
+
+float agl::Text::getWidth()
+{
+	return width;
 }
