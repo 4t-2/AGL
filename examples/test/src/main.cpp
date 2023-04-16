@@ -71,8 +71,6 @@ int main()
 		window.mapWindow();
 	});
 
-	XSelectInput(window.getDisplay(), window.getWindow(), ButtonPressMask | ButtonReleaseMask);
-
 	agl::Event event;
 	event.setWindow(window);
 
@@ -143,21 +141,30 @@ int main()
 
 	std::string testStr;
 
-	XIM xim = XOpenIM(window.getDisplay(), nullptr, nullptr, nullptr);
-	XIC xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing, NULL);
+	std::string str = "e";
 
-	XSetICFocus(xic);
+	agl::Font font;
+	font.setup("/usr/share/fonts/TTF/Arial.TTF", 24);
+
+	agl::Text text;
+	text.setFont(&font);
+	text.setScale(1);
+	text.setColor(agl::Color::White);
+	text.setPosition({100, 100});
 
 	while (!event.windowClose())
 	{
-		event.poll([](XEvent xev) {});
+		text.clearText();
+		char key = 0;
+
+		event.poll();
 
 		window.clear();
 
 		static char off = 0;
 		off++;
 
-		window.draw(test);
+		window.drawText(text);
 
 		window.display();
 
@@ -169,9 +176,9 @@ int main()
 		camera.setOrthographicProjection(0, size.x, size.y, 0, 0.1, 100);
 		window.updateMvp(camera);
 
-		static agl::Vec<float, 2> test = {0, 0};
+		str += event.keybuffer;
 
-		std::cout << test << std::endl;
+		text.setText(str);
 	}
 
 	window.close();

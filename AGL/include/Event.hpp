@@ -20,7 +20,18 @@ namespace agl
 			int			 winx, winy;
 			unsigned int maskReturn;
 
+			bool shouldWindowClose = false;
+
+			XIM xim;
+			XIC xic;
+
+			int _pointerButton = 0;
+			std::string _keybuffer = "";
+
 		public:
+			const int &pointerButton = _pointerButton;
+			const std::string &keybuffer = _keybuffer;
+
 			void setWindow(RenderWindow window);
 
 			bool windowClose();
@@ -28,15 +39,18 @@ namespace agl
 			void pollWindow();
 			void pollKeyboard();
 			void pollPointer();
+			void pollPressedKeys();
 
 			void poll(std::function<void(XEvent xev)> eventLoop);
+			void poll();
 
 			bool	 isKeyPressed(int keysym);
 			Vec<int, 2> getPointerWindowPosition();
 			Vec<int, 2> getPointerRootPosition();
 			bool	 isPointerButtonPressed(int buttonMask);
 
-			bool currentKeyPressed(char *key);
+			// \ character returned is in utf-8 format
+			int currentKeyPressed(char key[2]);
 
 			XEvent getXev()
 			{

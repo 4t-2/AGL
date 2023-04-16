@@ -1,6 +1,8 @@
 #include "../include/Event.hpp"
 #include "../include/RenderWindow.hpp"
 
+#include <bitset>
+
 void agl::Event::setWindow(agl::RenderWindow window)
 {
 	this->display = window.getDisplay();
@@ -9,12 +11,19 @@ void agl::Event::setWindow(agl::RenderWindow window)
 	this->wmDeleteMessage = XInternAtom(display, "WM_DELETE_WINDOW", False);
 	XSetWMProtocols(this->display, this->window, &this->wmDeleteMessage, 1);
 
+	xim = XOpenIM(window.getDisplay(), nullptr, nullptr, nullptr);
+	xic = XCreateIC(xim, XNInputStyle, XIMPreeditNothing | XIMStatusNothing, NULL);
+
+	XSetICFocus(xic);
+
+	XSelectInput(window.getDisplay(), window.getWindow(), ButtonPressMask | KeyPressMask);
+
 	return;
 }
 
 bool agl::Event::windowClose()
 {
-	return (xev.xclient.data.l[0] == wmDeleteMessage);
+	return shouldWindowClose;
 }
 
 void agl::Event::pollWindow()
@@ -49,12 +58,36 @@ void agl::Event::poll(std::function<void(XEvent xev)> eventLoop)
 	this->pollKeyboard();
 	this->pollPointer();
 
-	while(XPending(display))
+	while (XPending(display))
 	{
 		XNextEvent(display, &xev);
 
 		eventLoop(xev);
 	}
+
+	xev = XEvent();
+}
+
+void agl::Event::poll()
+{
+	_keybuffer	   = "";
+	_pointerButton = 0;
+
+	this->poll([&](XEvent xev) {
+		switch (xev.type)
+		{
+			case ClientMessage:
+				shouldWindowClose = (xev.xclient.data.l[0] == wmDeleteMessage);
+			case ButtonPress:
+				_pointerButton = xev.xbutton.button;
+			case KeyPress:
+				char key[2];
+				if (int size = this->currentKeyPressed(key))
+				{
+					_keybuffer += std::string().append(key, size);
+				}
+		}
+	});
 }
 
 bool agl::Event::isKeyPressed(int keysym)
@@ -88,28 +121,36 @@ bool agl::Event::isPointerButtonPressed(int buttonMask)
 	return false;
 }
 
-bool agl::Event::currentKeyPressed(char *key)
+int agl::Event::currentKeyPressed(char buffer[2])
 {
-	if (xev.type == KeyPress)
-	{
-		KeySym keysym;
-		char test[1];
+	KeySym keysym;
+	int	   bytes_buffer = 2;
+	Status status;
+	int	   len = Xutf8LookupString(xic, &xev.xkey, buffer, bytes_buffer, &keysym, &status);
 
-		XLookupString((XKeyEvent *)&xev, test, 1, &keysym, nullptr);
+	// switch (status)
+	// {
+	//
+	// 	case XBufferOverflow:
+	// 		// buffer too small to store character
+	// 		return false;
+	//
+	// 	case XLookupChars:
+	// 		// returned character but not keysym
+	// 		return true;
+	//
+	// 	case XLookupBoth:
+	// 		// returned both
+	// 		// std::cout << std::string().append(buffer, 2) << '\n';
+	// 		return true;
+	//
+	// 	case XLookupKeySym:
+	// 		// returned a keysym without a character
+	// 		return false;
+	//
+	// 	default:
+	// 		return false;
+	// }
 
-		*key = test[0];
-
-		// need XOpenIM() and XCreateIC()
-		// char buffer[32];
-		// KeySym ignore;
-		// Status return_status;
-		// Xutf8LookupString(xic, &xev.xkey, buffer, 32, &ignore, &return_status);
-		// printf("%s\n", buffer);
-		// std::cout << (unsigned int)((unsigned char)buffer[0]) << '\n';
-		// std::cout << "keyrecieved" << '\n';
-
-		return true;
-	}
-
-	return false;
+	return len;
 }
