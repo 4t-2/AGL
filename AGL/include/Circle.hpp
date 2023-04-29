@@ -1,7 +1,7 @@
 #include "Color.hpp"
 #include "GLPrimative.hpp"
 #include "Shape.hpp"
-#include <GL/gl.h>
+#include "external.hpp"
 
 namespace agl
 {

@@ -2,8 +2,6 @@
 
 #include "RenderWindow.hpp"
 #include "Vec.hpp"
-#include <X11/X.h>
-#include <X11/Xlib.h>
 
 namespace agl
 {

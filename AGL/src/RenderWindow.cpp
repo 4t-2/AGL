@@ -1,12 +1,3 @@
-#include <GL/glew.h>
-
-#include <X11/X.h>
-#include <X11/Xlib.h>
-
-#include <GL/gl.h>
-#include <GL/glx.h>
-
-#include <X11/Xutil.h>
 #include <bits/types/struct_timespec.h>
 #include <cstdlib>
 #include <ctime>

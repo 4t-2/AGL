@@ -1,5 +1,4 @@
 #include "../include/Rectangle.hpp"
-#include <GL/gl.h>
 #include <cstdlib>
 
 agl::Rectangle::Rectangle()

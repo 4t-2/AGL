@@ -1,5 +1,4 @@
 #include "../include/GLPrimative.hpp"
-#include <GL/glew.h>
 #include <stdio.h>
 #include <stdlib.h>
 

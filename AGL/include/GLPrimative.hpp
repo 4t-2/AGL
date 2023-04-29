@@ -1,5 +1,7 @@
 #pragma once
 
+#include "external.hpp"
+
 namespace agl
 {
 	class GLPrimative
