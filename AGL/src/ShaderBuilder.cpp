@@ -1,23 +1,33 @@
 #include "../include/ShaderBuilder.hpp"
 
-void agl::ShaderBuilder::addLayout(int location, std::string type, std::string name)
+const agl::Value agl::Value::gl_Position = agl::Value("gl_Position");
+
+agl::Value agl::ShaderBuilder::addLayout(int location, std::string type, std::string name)
 {
 	this->layout += "layout(location=" + std::to_string(location) + ") in " + type + " " + name + ";\n";
+
+	return agl::Value(name);
 }
 
-void agl::ShaderBuilder::addIn(std::string type, std::string name)
+agl::Value agl::ShaderBuilder::addIn(std::string type, std::string name)
 {
 	in += "in " + type + " " + name + ";\n";
+
+	return agl::Value(name);
 }
 
-void agl::ShaderBuilder::addOut(std::string type, std::string name)
+agl::Value agl::ShaderBuilder::addOut(std::string type, std::string name)
 {
 	out += "out " + type + " " + name + ";\n";
+
+	return agl::Value(name);
 }
 
-void agl::ShaderBuilder::addUniform(std::string type, std::string name)
+agl::Value agl::ShaderBuilder::addUniform(std::string type, std::string name)
 {
 	uniform += "uniform " + type + " " + name + ";\n";
+
+	return agl::Value(name);
 }
 
 void agl::ShaderBuilder::setMain(std::vector<ShaderElement> element)
@@ -32,35 +42,35 @@ void agl::ShaderBuilder::setMain(std::vector<ShaderElement> element)
 
 void agl::ShaderBuilder::setDefaultVert()
 {
-	this->addLayout(0, agl::vec3, "position");
-	this->addLayout(1, agl::vec2, "vertexUV");
+	val position = this->addLayout(0, agl::vec3, "position");
+	val vertexUV = this->addLayout(1, agl::vec2, "vertexUV");
 
-	this->addUniform(agl::mat4, "transform");
-	this->addUniform(agl::mat4, "mvp");
-	this->addUniform(agl::vec3, "shapeColor");
-	this->addUniform(agl::mat4, "textureTransform");
+	val transform		 = this->addUniform(agl::mat4, "transform");
+	val mvp				 = this->addUniform(agl::mat4, "mvp");
+	val shapeColor		 = this->addUniform(agl::vec3, "shapeColor");
+	val textureTransform = this->addUniform(agl::mat4, "textureTransform");
 
-	this->addOut(agl::vec2, "UVcoord");
-	this->addOut(agl::vec4, "fragColor");
+	val UVcoord	  = this->addOut(agl::vec2, "UVcoord");
+	val fragColor = this->addOut(agl::vec4, "fragColor");
 
 	this->setMain({
-		agl::val("UVcoord")		= agl::val("vec2((textureTransform") * agl::val("vec4(vertexUV, 1, 1)).xy)"), //
-		agl::val("fragColor")	= agl::val("vec4(shapeColor, 1)"),											  //
-		agl::val("gl_Position") = agl::val("mvp") * agl::val("transform") * agl::val("vec4(position, 1)"),	  //
+		UVcoord				  = val("vec2((textureTransform") * val("vec4(vertexUV, 1, 1)).xy)"), //
+		fragColor			  = val("vec4(shapeColor, 1)"),										  //
+		val(val::gl_Position) = mvp * transform * val("vec4(position, 1)"),						  //
 	});
 }
 
 void agl::ShaderBuilder::setDefaultFrag()
 {
-	this->addIn(agl::vec2, "UVcoord");
-	this->addIn(agl::vec4, "fragColor");
+	val UVcoord	  = this->addIn(agl::vec2, "UVcoord");
+	val fragColor = this->addIn(agl::vec4, "fragColor");
 
-	this->addOut(agl::vec4, "color");
+	val color = this->addOut(agl::vec4, "color");
 
-	this->addUniform(agl::sampler2D, "myTextureSampler");
+	val myTextureSampler = this->addUniform(agl::sampler2D, "myTextureSampler");
 
 	this->setMain({
-		agl::val("color") = agl::val("fragColor") * agl::val("texture(myTextureSampler, UVcoord)"), //
+		color = fragColor * agl::val("texture(myTextureSampler, UVcoord)"), //
 	});
 }
 

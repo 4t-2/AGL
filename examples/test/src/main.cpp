@@ -151,7 +151,6 @@ int main()
 
 	while (!event.windowClose())
 	{
-		text.clearText();
 		char key = 0;
 
 		event.poll();
@@ -175,6 +174,7 @@ int main()
 
 		str += event.keybuffer;
 
+		text.clearText();
 		text.setText(str);
 	}
 

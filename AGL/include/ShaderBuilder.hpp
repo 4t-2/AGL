@@ -16,51 +16,53 @@ namespace agl
 	class Value : public ShaderElement
 	{
 		public:
-			Value(Value const &&value)
+			Value(const Value &value)
 			{
 				code = value.code;
 			}
 
 			template <typename T, typename std::enable_if<std::is_arithmetic<T>::value>::type * = nullptr>
-			Value(T &&value)
+			Value(const T &value)
 			{
 				code = std::to_string(value);
 			}
 
-			Value(std::string &&value)
+			Value(const std::string &value)
 			{
 				code = value;
 			}
 
-			Value operator+(Value &&value)
+			Value operator+(const Value &value)
 			{
 				return Value(code + "+" + value.code);
 			}
 
-			Value operator-(Value &&value)
+			Value operator-(const Value &value)
 			{
 				return Value(code + "-" + value.code);
 			}
 
-			Value operator*(Value &&value)
+			Value operator*(const Value &value)
 			{
 				return Value(code + "*" + value.code);
 			}
 
-			Value operator/(Value &&value)
+			Value operator/(const Value &value)
 			{
 				return Value(code + "/" + value.code);
 			}
 
-			Value operator=(Value &&value)
+			Value operator=(const Value &value)
 			{
 				return Value(code + "=" + value.code);
 			}
 
-			Value operator==(Value &&value)
+			Value operator==(const Value &value)
 			{
 				return Value(code + "==" + value.code);
 			}
+
+			static const Value gl_Position;
 	};
 
 	typedef Value val;
@@ -94,7 +96,8 @@ namespace agl
 	class ShaderWhile : public ControlStructure
 	{
 		public:
-			ShaderWhile(Value expression, std::vector<ShaderElement> element) : ControlStructure("while", expression, element)
+			ShaderWhile(Value expression, std::vector<ShaderElement> element)
+				: ControlStructure("while", expression, element)
 			{
 			}
 	};
@@ -139,13 +142,13 @@ namespace agl
 			std::string main;
 
 		public:
-			void addLayout(int location, std::string type, std::string name);
-			void addIn(std::string type, std::string name);
-			void addOut(std::string type, std::string name);
-			void addUniform(std::string type, std::string name);
+			Value addLayout(int location, std::string type, std::string name);
+			Value addIn(std::string type, std::string name);
+			Value addOut(std::string type, std::string name);
+			Value addUniform(std::string type, std::string name);
 
 			void setMain(std::vector<ShaderElement> element);
-	
+
 			void setDefaultVert();
 			void setDefaultFrag();
 

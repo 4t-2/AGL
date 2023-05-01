@@ -11,6 +11,8 @@ void agl::Text::setFont(Font *font)
 
 void agl::Text::setText(std::string str)
 {
+	delete[] glyph;
+	
 	length = str.length();
 	glyph = new Glyph*[length];
 
@@ -44,6 +46,7 @@ void agl::Text::clearText()
 {
 	delete[] glyph;
 	glyph = nullptr;
+	length = 0;
 }
 
 agl::Glyph *agl::Text::getGlyph(int i)
