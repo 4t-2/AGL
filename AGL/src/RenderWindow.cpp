@@ -244,9 +244,9 @@ void agl::RenderWindow::drawShape(agl::Shape &shape)
 
 	textureTransform = textureTranslation * textureScaling;
 
-	Shader::setUniformMatrix4fv(transformID, transform);
-	Shader::setUniformVector3fv(shapeColorID, shape.getColor().normalized());
-	Shader::setUniformMatrix4fv(textureTransformID, textureTransform);
+	Shader::setUniform(transformID, transform);
+	Shader::setUniform(shapeColorID, shape.getColor().normalized());
+	Shader::setUniform(textureTransformID, textureTransform);
 
 	Texture::bind(*shape.getTexture());
 
@@ -313,9 +313,9 @@ void agl::RenderWindow::drawText(Text &text, float width, TextAlign align)
 
 		textureTransform = textureTranslation * textureScaling;
 
-		Shader::setUniformMatrix4fv(transformID, transform);
-		Shader::setUniformVector3fv(shapeColorID, shape->getColor().normalized());
-		Shader::setUniformMatrix4fv(textureTransformID, textureTransform);
+		Shader::setUniform(transformID, transform);
+		Shader::setUniform(shapeColorID, shape->getColor().normalized());
+		Shader::setUniform(textureTransformID, textureTransform);
 
 		this->drawPrimative(shape->getShapeData());
 
@@ -383,7 +383,7 @@ int agl::RenderWindow::getTextureTransformID()
 
 void agl::RenderWindow::updateMvp(Camera camera)
 {
-	agl::Shader::setUniformMatrix4fv(mvpID, camera.getMVP());
+	agl::Shader::setUniform(mvpID, camera.getMVP());
 
 	return;
 }

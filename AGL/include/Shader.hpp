@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Mat4f.hpp"
-#include "external.hpp"
 #include "ShaderBuilder.hpp"
+#include "external.hpp"
+#include <type_traits>
 
 namespace agl
 {
@@ -32,17 +33,7 @@ namespace agl
 			// \ Returns the location of the uniform
 			int getUniformLocation(const char *name);
 
-			// \ Sets the value of a matrix uniform
-			// \ location - location of uniform
-			// \ matrix - value to set uniform to
-			static void setUniformMatrix4fv(GLuint location, Mat4f matrix);
-
-			// \ Sets the value of a vector uniform
-			// \ location - location of uniform
-			// \ vector - value to set uniform to
-			static void setUniformVector3fv(GLuint location, Vec<float, 3> vector);
-
-			static void setUniformVector2fv(GLuint location, Vec<float, 2> vector);
+			template <typename T> static void setUniform(GLuint location, T t);
 
 			// \ Delete shader
 			void deleteProgram();
