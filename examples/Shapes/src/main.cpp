@@ -10,6 +10,7 @@ int main()
 	window.setup({500, 500}, "Shapes");	   // setup X and OpenGL parts
 	window.setClearColor({127, 127, 127}); // set the clear color
 	window.setFPS(30);					   // set the FPS
+	window.setSwapInterval(0);			   // Disable vsync
 
 	agl::Event	   event;
 	agl::Camera	   camera;
@@ -72,8 +73,7 @@ int main()
 
 		// poll for window events
 
-		event.pollWindow();
-		event.pollKeyboard();
+		event.poll();
 
 		// clear the window
 

@@ -48,6 +48,9 @@ namespace agl
 			int shapeColorID;
 			int textureTransformID;
 
+			PFNGLXSWAPINTERVALSGIPROC setSwapIntervalPointer;
+			std::function<void()> sleepFrame;
+
 		public:
 			// \ Create an AGL Window with defaults that are usable in most projects
 			// \ size - the size of the window
@@ -110,6 +113,12 @@ namespace agl
 			// \ Set the FPS
 			// \ fps = fps
 			void setFPS(int fps);
+
+			// \ 0 = disable vsync
+			// \ 1 = swap buffer every v blank
+			// \ 2 = swap buffer every 2 v blanks
+			// \ 3 = etc
+			void setSwapInterval(int i);
 
 			// \ Set the uniform location of the MVP
 			// \ ID - MVP uniform location

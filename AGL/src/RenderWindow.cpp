@@ -1,10 +1,10 @@
 #include <bits/types/struct_timespec.h>
+#include <cmath>
 #include <cstdlib>
 #include <ctime>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#include <cmath>
 
 #include <iostream>
 
@@ -118,6 +118,8 @@ void agl::RenderWindow::initGL()
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
+	setSwapIntervalPointer = (PFNGLXSWAPINTERVALSGIPROC)glXGetProcAddress((const GLubyte *)"glXSwapIntervalSGI");
+
 	return;
 }
 void agl::RenderWindow::GLEnable(GLenum capability)
@@ -146,9 +148,28 @@ void agl::RenderWindow::setFPS(int fps)
 	if (!fps)
 	{
 		fpsMilli = 0;
+
+		sleepFrame = []() {};
+
 		return;
 	}
 	fpsMilli = 1000 / fps;
+
+	sleepFrame = [&]() {
+		timespec ts;
+
+		ts.tv_sec  = fpsMilli / 1000;
+		ts.tv_nsec = (fpsMilli % 1000) * 1000000;
+
+		nanosleep(&ts, &ts);
+	};
+
+	return;
+}
+
+void agl::RenderWindow::setSwapInterval(int i)
+{
+	setSwapIntervalPointer(i);
 
 	return;
 }
@@ -178,12 +199,7 @@ void agl::RenderWindow::display()
 {
 	glXSwapBuffers(this->dpy, this->win);
 
-	struct timespec ts;
-
-	ts.tv_sec  = fpsMilli / 1000;
-	ts.tv_nsec = (fpsMilli % 1000) * 1000000;
-
-	nanosleep(&ts, &ts);
+	sleepFrame();
 
 	return;
 }
@@ -260,7 +276,7 @@ void agl::RenderWindow::drawShape(agl::Shape &shape, std::function<void(RenderWi
 	draw(*this, shape);
 }
 
-void agl::RenderWindow::draw(agl::_Drawable<RenderWindow&> &drawable)
+void agl::RenderWindow::draw(agl::_Drawable<RenderWindow &> &drawable)
 {
 	drawable.drawFunction(*this);
 }
@@ -271,7 +287,7 @@ void agl::RenderWindow::drawText(Text &text, float width, TextAlign align)
 
 	Vec<float, 2> pen;
 
-	if(align == Right)
+	if (align == Right)
 	{
 		pen = {width - (text.getWidth() * text.getScale()), 0};
 	}
