@@ -167,10 +167,10 @@ namespace agl
 
 			void draw(_Drawable<RenderWindow&> &drawable);
 
-			void drawText(Text &text);
-			void drawText(Text &text, float width);
-			void drawText(Text &text, float width, TextAlign align);
-			void drawText(Text &text, TextAlign align);
+			agl::Vec<float, 2> drawText(Text &text);
+			agl::Vec<float, 2> drawText(Text &text, float width);
+			agl::Vec<float, 2> drawText(Text &text, float width, TextAlign align);
+			agl::Vec<float, 2> drawText(Text &text, TextAlign align);
 
 			// \ Swap the display buffer and sleep
 			void display();
