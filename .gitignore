@@ -2,3 +2,6 @@
 compile_commands.json
 .cache
 build
+.vscode/c_cpp_properties.json
+.vscode/settings.json
+examples/test/bin/main.exe
