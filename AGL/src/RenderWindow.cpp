@@ -281,7 +281,7 @@ void agl::RenderWindow::draw(agl::_Drawable<RenderWindow &> &drawable)
 	drawable.drawFunction(*this);
 }
 
-void agl::RenderWindow::drawText(Text &text, float width, TextAlign align)
+agl::Vec<float, 2> agl::RenderWindow::drawText(Text &text, float width, TextAlign align)
 {
 	agl::Rectangle *shape = text.getCharBox();
 
@@ -337,21 +337,23 @@ void agl::RenderWindow::drawText(Text &text, float width, TextAlign align)
 
 		pen.x += glyph->advance * text.getScale();
 	}
+
+	return pen;
 }
 
-void agl::RenderWindow::drawText(agl::Text &text, float width)
+agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text, float width)
 {
-	this->drawText(text, width, Left);
+	return this->drawText(text, width, Left);
 }
 
-void agl::RenderWindow::drawText(agl::Text &text, TextAlign align)
+agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text, TextAlign align)
 {
-	this->drawText(text, INFINITY, align);
+	return this->drawText(text, INFINITY, align);
 }
 
-void agl::RenderWindow::drawText(agl::Text &text)
+agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text)
 {
-	this->drawText(text, INFINITY, Left);
+	return this->drawText(text, INFINITY, Left);
 }
 
 XWindowAttributes agl::RenderWindow::getWindowAttributes()
