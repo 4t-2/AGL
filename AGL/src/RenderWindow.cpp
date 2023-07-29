@@ -12,24 +12,18 @@
 
 void agl::RenderWindow::setup(Vec<float, 2> size, const char title[])
 {
-	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
+	agl::createWindow(baseWindow, size, title);
 
-	this->openDisplay();
-	this->createRootWindow();
-	this->createColormap(attribute, AllocNone);
-	this->setEventMask(ExposureMask | KeyPressMask | KeyReleaseMask);
-	this->createWindow(0, 0, size.x, size.y, CWColormap | CWEventMask);
-	this->setTitle(title);
+	agl::initGL(baseWindow);
 
-	XWindowAttributes gwa = this->getWindowAttributes();
-
-	this->initGL();
-	this->setViewport(0, 0, gwa.width, gwa.height);
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
+	this->setViewport(0, 0, size.x, size.y);
 	this->GLEnable(GL_DEPTH_TEST);
 	this->GLEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	this->mapWindow();
+	agl::mapWindow(baseWindow);
 
 	return;
 }
@@ -39,89 +33,6 @@ void agl::RenderWindow::setup(std::function<void(agl::RenderWindow &)> f)
 	f(*this);
 }
 
-int agl::RenderWindow::openDisplay()
-{
-	dpy = XOpenDisplay(NULL);
-
-	if (dpy == NULL)
-	{
-		return 1;
-	}
-
-	return 0;
-}
-
-void agl::RenderWindow::createRootWindow()
-{
-	root = DefaultRootWindow(dpy);
-
-	return;
-}
-
-int agl::RenderWindow::createColormap(GLint attribute[5], int alloc)
-{
-	vi = glXChooseVisual(dpy, 0, attribute);
-
-	if (vi == NULL)
-	{
-		return 1;
-	}
-
-	cmap = XCreateColormap(dpy, root, vi->visual, alloc);
-
-	return 0;
-}
-
-void agl::RenderWindow::setEventMask(long eventMask)
-{
-	this->eventMask = eventMask;
-
-	return;
-}
-
-void agl::RenderWindow::createWindow(int x, int y, unsigned int width, unsigned int height, unsigned long valueMask)
-{
-	XSetWindowAttributes swa;
-	swa.colormap   = cmap;
-	swa.event_mask = eventMask;
-
-	win = XCreateWindow(dpy, root, x, y, width, height, 0, vi->depth, InputOutput, vi->visual, valueMask,
-						&swa); // window is created and the function returns an id
-
-	return;
-}
-void agl::RenderWindow::setTitle(std::string title)
-{
-	XStoreName(dpy, win, title.c_str());
-
-	return;
-}
-void agl::RenderWindow::setTitle(char title[])
-{
-	XStoreName(dpy, win, title);
-
-	return;
-}
-void agl::RenderWindow::mapWindow()
-{
-	XMapWindow(dpy, win);
-
-	return;
-}
-void agl::RenderWindow::initGL()
-{
-	glc = glXCreateContext(dpy, vi, NULL, GL_TRUE);
-	glXMakeCurrent(dpy, win, glc); // bind it to the window
-
-	glewInit();
-
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-
-	setSwapIntervalPointer = (PFNGLXSWAPINTERVALSGIPROC)glXGetProcAddress((const GLubyte *)"glXSwapIntervalSGI");
-
-	return;
-}
 void agl::RenderWindow::GLEnable(GLenum capability)
 {
 	glEnable(capability);
@@ -169,7 +80,7 @@ void agl::RenderWindow::setFPS(int fps)
 
 void agl::RenderWindow::setSwapInterval(int i)
 {
-	setSwapIntervalPointer(i);
+	agl::setSwapInterval(baseWindow, i);
 
 	return;
 }
@@ -197,7 +108,7 @@ void agl::RenderWindow::setShapeColorID(int ID)
 
 void agl::RenderWindow::display()
 {
-	glXSwapBuffers(this->dpy, this->win);
+	agl::swapBuffers(baseWindow);
 
 	sleepFrame();
 
@@ -207,13 +118,8 @@ void agl::RenderWindow::display()
 void agl::RenderWindow::close()
 {
 	glDeleteVertexArrays(1, &VertexArrayID); // delete vertex arrays
-	glXMakeCurrent(dpy, None, NULL);		 // release gl binding to window
-	glXDestroyContext(dpy, glc);			 // destroy context
 
-	XFree(vi);				  // delete the visual info data
-	XDestroyWindow(dpy, win); // kill window
-	XFreeColormap(dpy, cmap); // free colormap
-	XCloseDisplay(dpy);		  // close display
+	closeWindow(baseWindow);
 
 	return;
 }
@@ -356,19 +262,10 @@ agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text)
 	return this->drawText(text, INFINITY, Left);
 }
 
-XWindowAttributes agl::RenderWindow::getWindowAttributes()
-{
-	XWindowAttributes gwa;
-	XGetWindowAttributes(dpy, win, &gwa);
-
-	return gwa;
-}
 
 void agl::RenderWindow::setCursorShape(unsigned int shape)
 {
-	Cursor c;
-	c = XCreateFontCursor(dpy, shape);
-	XDefineCursor(dpy, win, c);
+	agl::setCursorShape(baseWindow, shape);
 }
 
 void agl::RenderWindow::setTextureTransformID(int ID)

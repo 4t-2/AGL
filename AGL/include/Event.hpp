@@ -8,20 +8,15 @@ namespace agl
 	class Event
 	{
 		private:
-			Display *display;
-			Window	 window;
-			Atom wmDeleteMessage;
+			BaseWindow *window;
+			BaseEvent baseEvent;
 
-			XEvent		 xev;
 			char		 keymap[32];
 			int			 rootx, rooty;
 			int			 winx, winy;
 			unsigned int maskReturn;
 
 			bool shouldWindowClose = false;
-
-			XIM xim;
-			XIC xic;
 
 			int _pointerButton = 0;
 			std::string _keybuffer = "";
@@ -34,12 +29,6 @@ namespace agl
 
 			bool windowClose();
 
-			void pollWindow();
-			void pollKeyboard();
-			void pollPointer();
-			void pollPressedKeys();
-
-			void poll(std::function<void(XEvent xev)> eventLoop);
 			void poll();
 
 			bool	 isKeyPressed(int keysym);
@@ -49,10 +38,5 @@ namespace agl
 
 			// \ character returned is in utf-8 format
 			int currentKeyPressed(char key[2]);
-
-			XEvent getXev()
-			{
-				return xev;
-			}
 	};
 } // namespace agl

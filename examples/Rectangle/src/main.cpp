@@ -53,8 +53,7 @@ int main()
 	{
 		// poll for window events
 
-		event.pollWindow();
-		event.pollKeyboard();
+		event.poll();
 
 		// clear the window
 

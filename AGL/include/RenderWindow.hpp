@@ -28,16 +28,6 @@ namespace agl
 	class RenderWindow
 	{
 		private:
-			Display		*dpy;
-			Window		 root;
-			XVisualInfo *vi;
-			Colormap	 cmap;
-			long		 eventMask;
-			Window		 win;
-			GLXContext	 glc;
-
-			Atom wmDeleteMessage;
-
 			int		fpsMilli;
 			clock_t lastFrame;
 
@@ -48,10 +38,11 @@ namespace agl
 			int shapeColorID;
 			int textureTransformID;
 
-			PFNGLXSWAPINTERVALSGIPROC setSwapIntervalPointer;
 			std::function<void()> sleepFrame;
 
 		public:
+			BaseWindow baseWindow;
+			
 			// \ Create an AGL Window with defaults that are usable in most projects
 			// \ size - the size of the window
 			// \ title - the window title
@@ -176,18 +167,6 @@ namespace agl
 			void display();
 
 			void setCursorShape(unsigned int shape);
-
-			// \ Get window attributes
-			XWindowAttributes getWindowAttributes();
-
-			Display *getDisplay()
-			{
-				return dpy;
-			};
-			Window getWindow()
-			{
-				return win;
-			}
 	};
 	
 	typedef _Drawable<RenderWindow&> Drawable;
