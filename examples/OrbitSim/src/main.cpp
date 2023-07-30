@@ -48,8 +48,7 @@ int main()
 
 	while (!event.windowClose())
 	{
-		event.pollWindow();
-		event.pollPointer();
+		event.poll();
 
 		for (int i = 0; i < PLANETS; i++)
 		{
@@ -77,6 +76,8 @@ int main()
 		drawPlanet(window, planet[2]);
 
 		window.display();
+
+		planet[0].setPosition(event.getPointerWindowPosition());
 	}
 
 	texture.deleteTexture();

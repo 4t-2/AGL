@@ -29,9 +29,9 @@ void agl::Event::poll()
 	winy = win.y;
 }
 
-bool agl::Event::isKeyPressed(int keysym)
+bool agl::Event::isKeyPressed(Key key)
 {
-	return agl::isKeyPressed(baseEvent, keymap, keysym);
+	return agl::isKeyPressed(baseEvent, keymap, key);
 }
 
 agl::Vec<int, 2> agl::Event::getPointerWindowPosition()

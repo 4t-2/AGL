@@ -44,9 +44,7 @@ int main()
 
 	while (!event.windowClose())
 	{
-		event.pollWindow();
-		event.pollKeyboard();
-		event.pollPointer();
+		event.poll();
 
 		window.clear();
 

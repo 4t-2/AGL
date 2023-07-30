@@ -31,7 +31,7 @@ namespace agl
 
 			void poll();
 
-			bool	 isKeyPressed(int keysym);
+			bool	 isKeyPressed(Key key);
 			Vec<int, 2> getPointerWindowPosition();
 			Vec<int, 2> getPointerRootPosition();
 			bool	 isPointerButtonPressed(int buttonMask);

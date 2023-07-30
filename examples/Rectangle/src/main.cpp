@@ -67,19 +67,19 @@ int main()
 
 		window.display();
 
-		if(event.isKeyPressed(XK_Up))
+		if(event.isKeyPressed(agl::Key::Up))
 		{
 			offset.y+=5;
 		}
-		if(event.isKeyPressed(XK_Down))
+		if(event.isKeyPressed(agl::Key::Down))
 		{
 			offset.y-=5;
 		}
-		if(event.isKeyPressed(XK_Left))
+		if(event.isKeyPressed(agl::Key::Left))
 		{
 			offset.x-=5;
 		}
-		if(event.isKeyPressed(XK_Right))
+		if(event.isKeyPressed(agl::Key::Right))
 		{
 			offset.x+=5;
 		}

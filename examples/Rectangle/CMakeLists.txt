@@ -11,5 +11,13 @@ set(CMAKE_BUILD_TYPE Debug)
 
 add_executable(main.out ${SRC} ${AGL})
 
-target_link_libraries(main.out X11 GL GLEW SOIL freetype)
-include_directories("/usr/include/freetype2")
+if(LINUX)
+	target_link_libraries(main.out X11 GL GLEW SOIL freetype)
+    include_directories("/usr/include/freetype2")    
+endif(LINUX)
+
+if(WIN32)
+    target_link_libraries(main.out opengl32)
+    include_directories("C:\\glew\\include")
+    include_directories("C:\\freetype\\include")
+endif(WIN32)

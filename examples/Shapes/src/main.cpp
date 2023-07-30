@@ -89,32 +89,32 @@ int main()
 
 		window.display();
 
-		if (event.isKeyPressed(XK_Left))
+		if (event.isKeyPressed(agl::Key::Left))
 		{
 			pos.x -= speed;
 		}
-		if (event.isKeyPressed(XK_Right))
+		if (event.isKeyPressed(agl::Key::Right))
 		{
 			pos.x += speed;
 		}
-		if (event.isKeyPressed(XK_Control_L))
+		if (event.isKeyPressed(agl::Key::LeftControl))
 		{
 			pos.y -= speed;
 		}
-		if (event.isKeyPressed(XK_space))
+		if (event.isKeyPressed(agl::Key::Space))
 		{
 			pos.y += speed;
 		}
-		if (event.isKeyPressed(XK_Up))
+		if (event.isKeyPressed(agl::Key::Up))
 		{
 			pos.z -= speed;
 		}
-		if (event.isKeyPressed(XK_Down))
+		if (event.isKeyPressed(agl::Key::Down))
 		{
 			pos.z += speed;
 		}
 
-		if (event.isKeyPressed(XK_Return))
+		if (event.isKeyPressed(agl::Key::Return))
 		{
 			texture.useLinearFiltering();
 		}

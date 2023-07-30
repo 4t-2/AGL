@@ -5,14 +5,15 @@ AGL is a C++ graphics library that helps make displaying graphics easy and simpl
 This reason for making this is that I wanted a graphics library that had 3D support but I didnt want to use something like GLFW as it is very bare bones in that you need to manually make the OpenGL calls to do anything, so I decided to make a library that lets you code in a syntax similar to SFML but also let you create both 2D and 3D environemts.
 
 ## Dependencies
-- Xorg
+- Xorg (only on linux)
+- GLFW (only on windows)
 - OpenGL
 - GLEW
 - SOIL
 - FreeType2
 
-## Learn
-If you want to learn how to use AGL then go to [my site](https://synteng.github.io/) for documentation and tutorials on how to use AGL
+## Note
+I recommend not using AGL as I am planning to rewrite this library, most likely when this happens it will be under a new repository that I will link to on this readme when it is made.
 
 ## License
 The AGL source code is distributed under the MIT License.
