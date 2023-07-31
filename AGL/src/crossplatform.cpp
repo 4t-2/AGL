@@ -203,7 +203,7 @@ bool agl::isKeyPressed(agl::BaseEvent &event, char keymap[32], agl::Key key)
 	return glfwGetKey(event.window, key.code);
 }
 
-bool agl::isButtonPressed(agl::BaseEvent &event, Button button)
+bool agl::isButtonPressed(agl::BaseEvent &event, int maskReturn, Button button)
 {
 	return glfwGetMouseButton(event.window, button.code);
 }
@@ -447,8 +447,13 @@ bool agl::isKeyPressed(agl::BaseEvent &event, char keymap[32], Key key)
 	return false;
 }
 
-bool agl::isButtonPressed(agl::BaseEvent &event, Button button)
+bool agl::isButtonPressed(agl::BaseEvent &event, int maskReturn, Button button)
 {
+	if (maskReturn & button.code)
+	{
+		return true;
+	}
+
 	return false;
 }
 

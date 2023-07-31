@@ -84,6 +84,11 @@ int main()
 			offset.x+=5;
 		}
 
+		if(event.isPointerButtonPressed(agl::Button::Middle))
+		{
+			offset.x+=5;
+		}
+
 		rotation++;
 
 		rectangle.setOffset(offset);
