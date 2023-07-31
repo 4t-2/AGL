@@ -34,7 +34,7 @@ namespace agl
 			bool	 isKeyPressed(Key key);
 			Vec<int, 2> getPointerWindowPosition();
 			Vec<int, 2> getPointerRootPosition();
-			bool	 isPointerButtonPressed(int buttonMask);
+			bool	 isPointerButtonPressed(Button button);
 
 			// \ character returned is in utf-8 format
 			int currentKeyPressed(char key[2]);

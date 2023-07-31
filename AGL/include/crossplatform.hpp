@@ -197,5 +197,5 @@ namespace agl
 	void pollEvents(BaseEvent &event, char keymap[32], agl::Vec<int, 2> &root, agl::Vec<int, 2> &win,
 					unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, int &pointerButton);
 	bool isKeyPressed(BaseEvent &event, char keymap[32], Key key);
-	bool isButtonPressed(BaseEvent &event, Button button);
+	bool isButtonPressed(BaseEvent &event, int maskReturn, Button button);
 } // namespace agl

@@ -44,14 +44,9 @@ agl::Vec<int, 2> agl::Event::getPointerRootPosition()
 	return {rootx, rooty};
 }
 
-bool agl::Event::isPointerButtonPressed(int buttonMask)
+bool agl::Event::isPointerButtonPressed(agl::Button button)
 {
-	if (maskReturn & buttonMask)
-	{
-		return true;
-	}
-
-	return false;
+	return agl::isButtonPressed(baseEvent, maskReturn, button);
 }
 
 int agl::Event::currentKeyPressed(char buffer[2])
