@@ -208,6 +208,17 @@ bool agl::isButtonPressed(agl::BaseEvent &event, int maskReturn, Button button)
 	return glfwGetMouseButton(event.window, button.code);
 }
 
+agl::WindowState agl::getWindowState(agl::BaseWindow &window)
+{
+	agl::Vec<int, 2> pos;
+	agl::Vec<int, 2> size;
+
+	glfwGetWindowPos(window.window, &pos.x, &pos.y);
+	glfwGetWindowSize(window.window, &size.x, &size.y);
+
+	return {size, pos};
+}
+
 #endif
 
 #ifdef __linux__
@@ -455,6 +466,14 @@ bool agl::isButtonPressed(agl::BaseEvent &event, int maskReturn, Button button)
 	}
 
 	return false;
+}
+
+agl::WindowState agl::getWindowState(agl::BaseWindow &window)
+{
+	XWindowAttributes att;
+	XGetWindowAttributes(window.dpy, window.win, &att);
+
+	return {{att.width, att.height}, {att.x, att.y}};
 }
 
 #endif

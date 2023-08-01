@@ -301,3 +301,8 @@ void agl::RenderWindow::updateMvp(Camera camera)
 
 	return;
 }
+
+agl::WindowState agl::RenderWindow::getState()
+{
+	return agl::getWindowState(baseWindow);
+}

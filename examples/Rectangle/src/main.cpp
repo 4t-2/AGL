@@ -94,7 +94,8 @@ int main()
 		rectangle.setOffset(offset);
 		rectangle.setRotation(agl::Vec<float, 3>{0, 0, (float)rotation});
 
-		std::cout << offset << '\n';
+		std::cout << window.getState().size << '\n';
+		std::cout << window.getState().pos << '\n';
 	}
 
 	// cleanup

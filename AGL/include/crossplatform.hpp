@@ -181,6 +181,13 @@ namespace agl
 			static const Button Right;
 	};
 
+	class WindowState
+	{
+		public:
+			agl::Vec<int, 2> size;
+			agl::Vec<int, 2> pos;
+	};
+
 	void createWindow(BaseWindow &window, agl::Vec<int, 2> size, std::string title);
 	void initGL(BaseWindow &window);
 
@@ -198,4 +205,6 @@ namespace agl
 					unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, int &pointerButton);
 	bool isKeyPressed(BaseEvent &event, char keymap[32], Key key);
 	bool isButtonPressed(BaseEvent &event, int maskReturn, Button button);
+
+	WindowState getWindowState(BaseWindow &window);
 } // namespace agl

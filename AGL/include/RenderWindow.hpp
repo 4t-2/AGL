@@ -167,6 +167,8 @@ namespace agl
 			void display();
 
 			void setCursorShape(unsigned int shape);
+
+			WindowState getState();
 	};
 	
 	typedef _Drawable<RenderWindow&> Drawable;
