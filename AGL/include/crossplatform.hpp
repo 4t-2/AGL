@@ -2,7 +2,7 @@
 
 #include "Vec.hpp"
 
-#ifdef __linux__a
+#ifdef __linux__
 
 #include <GL/glx.h>
 #include <X11/Xlib.h>
@@ -41,7 +41,7 @@ namespace agl
 
 #endif
 
-// #ifdef _WIN32
+#ifdef _WIN32
 
 #include <GLFW/glfw3.h>
 
@@ -60,7 +60,7 @@ namespace agl
 	};
 } // namespace agl
 
-// #endif
+#endif
 
 namespace agl
 {

@@ -1,6 +1,6 @@
 #include "../include/external.hpp"
 
-// #ifdef _WIN32
+#ifdef _WIN32
 
 const agl::Key agl::Key::Space		  = {GLFW_KEY_SPACE};
 const agl::Key agl::Key::Apostrophe	  = {GLFW_KEY_APOSTROPHE};
@@ -238,9 +238,9 @@ agl::WindowState agl::getWindowState(agl::BaseWindow &window)
 	return {size, pos};
 }
 
-// #endif
+#endif
 
-#ifdef __linux__a
+#ifdef __linux__
 
 const agl::Key agl::Key::Space		  = {XK_space};
 const agl::Key agl::Key::Apostrophe	  = {XK_apostrophe};
