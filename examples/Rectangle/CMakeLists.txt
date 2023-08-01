@@ -12,7 +12,7 @@ set(CMAKE_BUILD_TYPE Debug)
 add_executable(main ${SRC} ${AGL})
 
 if(LINUX)
-	target_link_libraries(main X11 GL GLEW SOIL freetype)
+	target_link_libraries(main glfw GL GLEW SOIL freetype)
     include_directories("/usr/include/freetype2")    
 endif(LINUX)
 

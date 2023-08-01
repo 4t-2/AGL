@@ -1,6 +1,6 @@
 #include "../include/external.hpp"
 
-#ifdef _WIN32
+// #ifdef _WIN32
 
 const agl::Key agl::Key::Space		  = {GLFW_KEY_SPACE};
 const agl::Key agl::Key::Apostrophe	  = {GLFW_KEY_APOSTROPHE};
@@ -151,6 +151,7 @@ void agl::closeWindow(agl::BaseWindow &window)
 
 std::string buf			= "";
 bool		windowClose = false;
+float scrolloffset = 0;
 
 void closeCallback(GLFWwindow *window)
 {
@@ -162,6 +163,11 @@ void charCallback(GLFWwindow *window, unsigned int codepoint)
 	buf += (char)codepoint;
 }
 
+void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	scrolloffset = yoffset;
+}
+
 void agl::setupEvent(agl::BaseEvent &event, agl::BaseWindow &window)
 {
 	event.window = window.window;
@@ -171,6 +177,7 @@ void agl::setupEvent(agl::BaseEvent &event, agl::BaseWindow &window)
 
 	glfwSetCharCallback(window.window, charCallback);
 	glfwSetWindowCloseCallback(window.window, closeCallback);
+	glfwSetScrollCallback(window.window, scrollCallback);
 }
 
 int agl::currentKeyPressed(agl::BaseEvent &event, char buffer[2])
@@ -179,7 +186,7 @@ int agl::currentKeyPressed(agl::BaseEvent &event, char buffer[2])
 }
 
 void agl::pollEvents(BaseEvent &event, char keymap[32], agl::Vec<int, 2> &root, agl::Vec<int, 2> &win,
-					 unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, int &pointerButton)
+					 unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, Direction &scroll)
 {
 	glfwPollEvents();
 
@@ -191,11 +198,23 @@ void agl::pollEvents(BaseEvent &event, char keymap[32], agl::Vec<int, 2> &root, 
 
 	glfwGetWindowPos(event.window, &winPos.x, &winPos.y);
 
+	if(scrolloffset > 0)
+	{
+		scroll = Up;
+	} else if(scrolloffset < 0)
+	{
+		scroll = Down;
+	}	
+
 	root = cursorPos;
 	win	 = cursorPos - win;
 
 	shouldWindowClose = windowClose;
 	keybuffer		  = buf;
+
+	windowClose = false;
+	buf = "";
+	scrolloffset = 0;
 }
 
 bool agl::isKeyPressed(agl::BaseEvent &event, char keymap[32], agl::Key key)
@@ -219,9 +238,9 @@ agl::WindowState agl::getWindowState(agl::BaseWindow &window)
 	return {size, pos};
 }
 
-#endif
+// #endif
 
-#ifdef __linux__
+#ifdef __linux__a
 
 const agl::Key agl::Key::Space		  = {XK_space};
 const agl::Key agl::Key::Apostrophe	  = {XK_apostrophe};
@@ -418,7 +437,7 @@ int agl::currentKeyPressed(agl::BaseEvent &event, char buffer[2])
 }
 
 void agl::pollEvents(agl::BaseEvent &event, char keymap[32], agl::Vec<int, 2> &root, agl::Vec<int, 2> &win,
-					 unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, int &pointerButton)
+					 unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, Direction &scroll)
 {
 	Window p;
 
@@ -434,7 +453,14 @@ void agl::pollEvents(agl::BaseEvent &event, char keymap[32], agl::Vec<int, 2> &r
 			case ClientMessage:
 				shouldWindowClose = (event.xev.xclient.data.l[0] == event.wmDeleteMessage);
 			case ButtonPress:
-				pointerButton = event.xev.xbutton.button;
+				if (event.xev.xbutton.button == 4)
+				{
+					scroll = Up;
+				}
+				else if (event.xev.xbutton.button == 5)
+				{
+					scroll = Down;
+				}
 			case KeyPress:
 				char key[2];
 				if (int size = agl::currentKeyPressed(event, key))

@@ -89,6 +89,16 @@ int main()
 			offset.x+=5;
 		}
 
+		if(event.scroll == agl::Up)
+		{
+			offset.y+=5;
+			std::cout << "up" << '\n';
+		}
+		if(event.scroll == agl::Down)
+		{
+			offset.y-=5;
+		}
+
 		rotation++;
 
 		rectangle.setOffset(offset);

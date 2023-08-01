@@ -18,11 +18,11 @@ namespace agl
 
 			bool shouldWindowClose = false;
 
-			int _pointerButton = 0;
+			Direction _scroll = Direction::Null;
 			std::string _keybuffer = "";
 
 		public:
-			const int &pointerButton = _pointerButton;
+			const Direction &scroll = _scroll;
 			const std::string &keybuffer = _keybuffer;
 
 			void setWindow(RenderWindow window);

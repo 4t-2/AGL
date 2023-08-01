@@ -19,12 +19,6 @@
 
 namespace agl
 {
-	enum TextAlign
-	{
-		Left,
-		Right
-	};
-
 	class RenderWindow
 	{
 		private:
@@ -160,8 +154,8 @@ namespace agl
 
 			agl::Vec<float, 2> drawText(Text &text);
 			agl::Vec<float, 2> drawText(Text &text, float width);
-			agl::Vec<float, 2> drawText(Text &text, float width, TextAlign align);
-			agl::Vec<float, 2> drawText(Text &text, TextAlign align);
+			agl::Vec<float, 2> drawText(Text &text, float width, Direction align);
+			agl::Vec<float, 2> drawText(Text &text, Direction align);
 
 			// \ Swap the display buffer and sleep
 			void display();

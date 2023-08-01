@@ -19,8 +19,9 @@ void agl::Event::poll()
 {
 	agl::Vec<int, 2> root;
 	agl::Vec<int, 2> win;
+	_scroll = Direction::Null;
 
-	agl::pollEvents(baseEvent, keymap, root, win, maskReturn, shouldWindowClose, _keybuffer, _pointerButton);
+	agl::pollEvents(baseEvent, keymap, root, win, maskReturn, shouldWindowClose, _keybuffer, _scroll);
 
 	rootx = root.x;
 	rooty = root.y;

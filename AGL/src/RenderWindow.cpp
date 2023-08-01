@@ -186,7 +186,7 @@ void agl::RenderWindow::draw(agl::_Drawable<RenderWindow &> &drawable)
 	drawable.drawFunction(*this);
 }
 
-agl::Vec<float, 2> agl::RenderWindow::drawText(Text &text, float width, TextAlign align)
+agl::Vec<float, 2> agl::RenderWindow::drawText(Text &text, float width, Direction align)
 {
 	agl::Rectangle *shape = text.getCharBox();
 
@@ -251,7 +251,7 @@ agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text, float width)
 	return this->drawText(text, width, Left);
 }
 
-agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text, TextAlign align)
+agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text, Direction align)
 {
 	return this->drawText(text, INFINITY, align);
 }

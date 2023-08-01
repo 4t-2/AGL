@@ -2,7 +2,7 @@
 
 #include "Vec.hpp"
 
-#ifdef __linux__
+#ifdef __linux__a
 
 #include <GL/glx.h>
 #include <X11/Xlib.h>
@@ -41,7 +41,7 @@ namespace agl
 
 #endif
 
-#ifdef _WIN32
+// #ifdef _WIN32
 
 #include <GLFW/glfw3.h>
 
@@ -60,7 +60,7 @@ namespace agl
 	};
 } // namespace agl
 
-#endif
+// #endif
 
 namespace agl
 {
@@ -181,6 +181,15 @@ namespace agl
 			static const Button Right;
 	};
 
+	enum Direction
+	{
+		Up,
+		Down,
+		Left,
+		Right,
+		Null
+	};
+
 	class WindowState
 	{
 		public:
@@ -202,7 +211,7 @@ namespace agl
 	void setupEvent(BaseEvent &event, BaseWindow &window);
 	int	 currentKeyPressed(BaseEvent &event, char buffer[2]);
 	void pollEvents(BaseEvent &event, char keymap[32], agl::Vec<int, 2> &root, agl::Vec<int, 2> &win,
-					unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, int &pointerButton);
+					unsigned int &maskReturn, bool &shouldWindowClose, std::string &keybuffer, Direction &scroll);
 	bool isKeyPressed(BaseEvent &event, char keymap[32], Key key);
 	bool isButtonPressed(BaseEvent &event, int maskReturn, Button button);
 
