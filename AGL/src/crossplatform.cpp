@@ -107,6 +107,13 @@ const agl::Button agl::Button::Left	  = {GLFW_MOUSE_BUTTON_1};
 const agl::Button agl::Button::Middle = {GLFW_MOUSE_BUTTON_3};
 const agl::Button agl::Button::Right  = {GLFW_MOUSE_BUTTON_2};
 
+const agl::CursorType agl::CursorType::Arrow	 = {GLFW_ARROW_CURSOR};
+const agl::CursorType agl::CursorType::Beam		 = {GLFW_IBEAM_CURSOR};
+const agl::CursorType agl::CursorType::Crosshair = {GLFW_CROSSHAIR_CURSOR};
+const agl::CursorType agl::CursorType::Hand		 = {GLFW_HAND_CURSOR};
+const agl::CursorType agl::CursorType::HorResize = {GLFW_HRESIZE_CURSOR};
+const agl::CursorType agl::CursorType::VerResize = {GLFW_VRESIZE_CURSOR};
+
 void agl::createWindow(agl::BaseWindow &window, agl::Vec<int, 2> size, std::string title)
 {
 	glfwInit();
@@ -134,8 +141,13 @@ void agl::setSwapInterval(agl::BaseWindow &window, int i)
 	glfwSwapInterval(i);
 }
 
-void agl::setCursorShape(agl::BaseWindow &window, unsigned int shape)
+void agl::setCursorShape(agl::BaseWindow &window, CursorType shape)
 {
+	static GLFWcursor *c;
+	glfwDestroyCursor(c);
+	c = glfwCreateStandardCursor(shape.code);
+
+	glfwSetCursor(window.window, c);
 }
 
 void agl::swapBuffers(agl::BaseWindow &window)
@@ -149,9 +161,9 @@ void agl::closeWindow(agl::BaseWindow &window)
 	glfwTerminate();
 }
 
-std::string buf			= "";
-bool		windowClose = false;
-float scrolloffset = 0;
+std::string buf			 = "";
+bool		windowClose	 = false;
+float		scrolloffset = 0;
 
 void closeCallback(GLFWwindow *window)
 {
@@ -163,7 +175,7 @@ void charCallback(GLFWwindow *window, unsigned int codepoint)
 	buf += (char)codepoint;
 }
 
-void scrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+void scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
 {
 	scrolloffset = yoffset;
 }
@@ -198,13 +210,14 @@ void agl::pollEvents(BaseEvent &event, char keymap[32], agl::Vec<int, 2> &root, 
 
 	glfwGetWindowPos(event.window, &winPos.x, &winPos.y);
 
-	if(scrolloffset > 0)
+	if (scrolloffset > 0)
 	{
 		scroll = Up;
-	} else if(scrolloffset < 0)
+	}
+	else if (scrolloffset < 0)
 	{
 		scroll = Down;
-	}	
+	}
 
 	root = cursorPos;
 	win	 = cursorPos - win;
@@ -212,8 +225,8 @@ void agl::pollEvents(BaseEvent &event, char keymap[32], agl::Vec<int, 2> &root, 
 	shouldWindowClose = windowClose;
 	keybuffer		  = buf;
 
-	windowClose = false;
-	buf = "";
+	windowClose	 = false;
+	buf			 = "";
 	scrolloffset = 0;
 }
 
@@ -347,6 +360,13 @@ const agl::Button agl::Button::Left	  = {Button1Mask};
 const agl::Button agl::Button::Middle = {Button2Mask};
 const agl::Button agl::Button::Right  = {Button3Mask};
 
+const agl::CursorType agl::CursorType::Arrow	 = {XC_left_ptr};
+const agl::CursorType agl::CursorType::Beam		 = {XC_xterm};
+const agl::CursorType agl::CursorType::Crosshair = {XC_crosshair};
+const agl::CursorType agl::CursorType::Hand		 = {XC_hand2};
+const agl::CursorType agl::CursorType::HorResize = {XC_sb_h_double_arrow};
+const agl::CursorType agl::CursorType::VerResize = {XC_sb_v_double_arrow};
+
 void agl::createWindow(BaseWindow &window, agl::Vec<int, 2> size, std::string title)
 {
 	GLint attribute[5] = {GLX_RGBA, GLX_DEPTH_SIZE, 24, GLX_DOUBLEBUFFER, None};
@@ -387,11 +407,12 @@ void agl::setSwapInterval(agl::BaseWindow &window, int i)
 	window.setSwapIntervalPointer(i);
 }
 
-void agl::setCursorShape(agl::BaseWindow &window, unsigned int shape)
+void agl::setCursorShape(agl::BaseWindow &window, CursorType shape)
 {
 	Cursor c;
-	c = XCreateFontCursor(window.dpy, shape);
+	c = XCreateFontCursor(window.dpy, shape.code);
 	XDefineCursor(window.dpy, window.win, c);
+	XFreeCursor(window.dpy, c);
 }
 
 void agl::swapBuffers(agl::BaseWindow &window)
@@ -443,6 +464,8 @@ void agl::pollEvents(agl::BaseEvent &event, char keymap[32], agl::Vec<int, 2> &r
 
 	XQueryKeymap(event.display, keymap);
 	XQueryPointer(event.display, event.window, &p, &p, &root.x, &root.y, &win.x, &win.y, &maskReturn);
+
+	keybuffer = "";
 
 	while (XPending(event.display))
 	{

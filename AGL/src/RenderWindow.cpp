@@ -262,7 +262,7 @@ agl::Vec<float, 2> agl::RenderWindow::drawText(agl::Text &text)
 }
 
 
-void agl::RenderWindow::setCursorShape(unsigned int shape)
+void agl::RenderWindow::setCursorShape(agl::CursorType shape)
 {
 	agl::setCursorShape(baseWindow, shape);
 }

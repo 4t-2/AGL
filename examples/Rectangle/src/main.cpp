@@ -3,7 +3,7 @@
 int main()
 {
 	agl::RenderWindow window;
-	window.setup({500, 500}, "winfloat"); // setup X and OpenGL parts
+	window.setup({500, 500}, "winfloat");  // setup X and OpenGL parts
 	window.setClearColor({127, 127, 127}); // set the clear color
 	window.setFPS(30);					   // set the FPS
 
@@ -44,8 +44,8 @@ int main()
 	rectangle.setRotation(agl::Vec<float, 3>{0, 0, 45});
 	rectangle.setOffset({0, 0, 0});
 
-	agl::Vec<float, 3> offset = {0, 0, 0};
-	int rotation = 0;
+	agl::Vec<float, 3> offset	= {0, 0, 0};
+	int				   rotation = 1;
 
 	// render loop (end if the window should close)
 
@@ -67,36 +67,36 @@ int main()
 
 		window.display();
 
-		if(event.isKeyPressed(agl::Key::Up))
+		if (event.isKeyPressed(agl::Key::Up))
 		{
-			offset.y+=5;
+			offset.y += 5;
 		}
-		if(event.isKeyPressed(agl::Key::Down))
+		if (event.isKeyPressed(agl::Key::Down))
 		{
-			offset.y-=5;
+			offset.y -= 5;
 		}
-		if(event.isKeyPressed(agl::Key::Left))
+		if (event.isKeyPressed(agl::Key::Left))
 		{
-			offset.x-=5;
+			offset.x -= 5;
 		}
-		if(event.isKeyPressed(agl::Key::Right))
+		if (event.isKeyPressed(agl::Key::Right))
 		{
-			offset.x+=5;
-		}
-
-		if(event.isPointerButtonPressed(agl::Button::Middle))
-		{
-			offset.x+=5;
+			offset.x += 5;
 		}
 
-		if(event.scroll == agl::Up)
+		if (event.isPointerButtonPressed(agl::Button::Middle))
 		{
-			offset.y+=5;
+			offset.x += 5;
+		}
+
+		if (event.scroll == agl::Up)
+		{
+			offset.y += 5;
 			std::cout << "up" << '\n';
 		}
-		if(event.scroll == agl::Down)
+		if (event.scroll == agl::Down)
 		{
-			offset.y-=5;
+			offset.y -= 5;
 		}
 
 		rotation++;
@@ -106,6 +106,42 @@ int main()
 
 		std::cout << window.getState().size << '\n';
 		std::cout << window.getState().pos << '\n';
+
+		static int theme = 0;
+
+		if (rotation % 120 == 0)
+		{
+			theme++;
+
+			if(theme > 5)
+			{
+				theme = 0;
+			}
+
+			std::cout << theme << '\n';
+
+			switch (theme)
+			{
+				case 0:
+					window.setCursorShape(agl::CursorType::Arrow);
+					break;
+				case 1:
+					window.setCursorShape(agl::CursorType::Beam);
+					break;
+				case 2:
+					window.setCursorShape(agl::CursorType::Crosshair);
+					break;
+				case 3:
+					window.setCursorShape(agl::CursorType::Hand);
+					break;
+				case 4:
+					window.setCursorShape(agl::CursorType::HorResize);
+					break;
+				case 5:
+					window.setCursorShape(agl::CursorType::VerResize);
+					break;
+			}
+		}
 	}
 
 	// cleanup

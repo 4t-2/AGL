@@ -181,6 +181,19 @@ namespace agl
 			static const Button Right;
 	};
 
+	class CursorType
+	{
+		public:
+			int code;
+			
+			static const CursorType Arrow;
+			static const CursorType Beam;
+			static const CursorType Crosshair;
+			static const CursorType Hand;
+			static const CursorType HorResize;
+			static const CursorType VerResize;
+	};
+
 	enum Direction
 	{
 		Up,
@@ -202,7 +215,7 @@ namespace agl
 
 	void mapWindow(BaseWindow &window);
 	void setSwapInterval(BaseWindow &window, int i);
-	void setCursorShape(BaseWindow &window, unsigned int shape);
+	void setCursorShape(BaseWindow &window, CursorType shape);
 
 	void swapBuffers(BaseWindow &window);
 
