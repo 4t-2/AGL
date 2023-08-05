@@ -1,6 +1,6 @@
 #include "../include/external.hpp"
 
-#ifdef _WIN32
+// #ifdef _WIN32
 
 const agl::Key agl::Key::Space		  = {GLFW_KEY_SPACE};
 const agl::Key agl::Key::Apostrophe	  = {GLFW_KEY_APOSTROPHE};
@@ -180,6 +180,21 @@ void scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
 	scrolloffset = yoffset;
 }
 
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if(action == GLFW_PRESS && action == GLFW_REPEAT)
+	{
+		if(key == GLFW_KEY_BACKSPACE)
+		{
+			buf += (char)8;
+		}
+		if(key == GLFW_KEY_ENTER)
+		{
+			buf += '\r';
+		}
+	}
+}
+
 void agl::setupEvent(agl::BaseEvent &event, agl::BaseWindow &window)
 {
 	event.window = window.window;
@@ -190,6 +205,7 @@ void agl::setupEvent(agl::BaseEvent &event, agl::BaseWindow &window)
 	glfwSetCharCallback(window.window, charCallback);
 	glfwSetWindowCloseCallback(window.window, closeCallback);
 	glfwSetScrollCallback(window.window, scrollCallback);
+	glfwSetKeyCallback(window.window, keyCallback);
 }
 
 int agl::currentKeyPressed(agl::BaseEvent &event, char buffer[2])
@@ -251,9 +267,9 @@ agl::WindowState agl::getWindowState(agl::BaseWindow &window)
 	return {size, pos};
 }
 
-#endif
+// #endif
 
-#ifdef __linux__
+#ifdef __linux__a
 
 const agl::Key agl::Key::Space		  = {XK_space};
 const agl::Key agl::Key::Apostrophe	  = {XK_apostrophe};

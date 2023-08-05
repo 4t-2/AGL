@@ -7,3 +7,4 @@ test.sh
 .vscode/settings.json
 *.exe
 *.dll
+examples/Rectangle/bin/main

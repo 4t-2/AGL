@@ -92,7 +92,7 @@ int main()
 		if (event.scroll == agl::Up)
 		{
 			offset.y += 5;
-			std::cout << "up" << '\n';
+			// std::cout << "up" << '\n';
 		}
 		if (event.scroll == agl::Down)
 		{
@@ -104,8 +104,8 @@ int main()
 		rectangle.setOffset(offset);
 		rectangle.setRotation(agl::Vec<float, 3>{0, 0, (float)rotation});
 
-		std::cout << window.getState().size << '\n';
-		std::cout << window.getState().pos << '\n';
+		// std::cout << window.getState().size << '\n';
+		// std::cout << window.getState().pos << '\n';
 
 		static int theme = 0;
 
@@ -118,7 +118,7 @@ int main()
 				theme = 0;
 			}
 
-			std::cout << theme << '\n';
+			// std::cout << theme << '\n';
 
 			switch (theme)
 			{
@@ -141,6 +141,11 @@ int main()
 					window.setCursorShape(agl::CursorType::VerResize);
 					break;
 			}
+		}
+
+		for(const int i: event.keybuffer)
+		{
+			std::cout << i << '\n';
 		}
 	}
 
