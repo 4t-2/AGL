@@ -8,7 +8,7 @@
 
 namespace agl
 {
-	template <typename T = float, int max = 4> class Vec
+	template <typename T, int max> class Vec
 	{
 		public:
 			// \ Construct Vec with data starting all at 0

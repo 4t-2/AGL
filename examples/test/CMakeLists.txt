@@ -13,7 +13,7 @@ set(CMAKE_BUILD_TYPE Debug)
 
 message(STATUS ${CMAKE_CXX_STANDARD})
 
-add_executable(main.out ${SRC} ../../AGL/src/crossFunctions.cpp)
+add_executable(main.out ${SRC} ${AGL})
 
 if(LINUX)
     target_link_libraries(main.out X11 GL GLEW SOIL freetype)

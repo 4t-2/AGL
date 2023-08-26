@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include <iostream>
 #include <string>
 #include <type_traits>
@@ -132,6 +133,24 @@ namespace agl
 
 	static const std::string sampler2D = "sampler2D";
 
+	template <typename... T> agl::Value shaderFunc(std::string name, T... x)
+	{
+		std::array<agl::Value, sizeof...(x)> arr = {x...};
+
+		std::string result = name + "(";
+
+		for (int i = 0; i < arr.size() - 1; i++)
+		{
+			result += arr[i].code + ",";
+		}
+
+		result += arr[arr.size() - 1].code + ")";
+
+		return result;
+	}
+
+	agl::Value swizzle(agl::Value val, std::string arg);
+
 	class ShaderBuilder
 	{
 		private:
@@ -140,6 +159,11 @@ namespace agl
 			std::string out;
 			std::string uniform;
 			std::string main;
+
+			int layoutTotal	 = 0;
+			int inTotal		 = 0;
+			int outTotal	 = 0;
+			int uniformTotal = 0;
 
 		public:
 			Value addLayout(int location, std::string type, std::string name);
@@ -154,4 +178,9 @@ namespace agl
 
 			std::string getSrc();
 	};
+
+#define ADD_LAYOUT(index, type, name, pointer) agl::Value name = pointer->addLayout(index, type, #name)
+#define ADD_IN(type, name, pointer)			   agl::Value name = pointer->addIn(type, #name)
+#define ADD_OUT(type, name, pointer)		   agl::Value name = pointer->addOut(type, #name)
+#define ADD_UNIFORM(type, name, pointer)	   agl::Value name = pointer->addUniform(type, #name)
 } // namespace agl

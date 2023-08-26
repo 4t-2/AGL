@@ -42,35 +42,35 @@ void agl::ShaderBuilder::setMain(std::vector<ShaderElement> element)
 
 void agl::ShaderBuilder::setDefaultVert()
 {
-	val position = this->addLayout(0, agl::vec3, "position");
-	val vertexUV = this->addLayout(1, agl::vec2, "vertexUV");
+	ADD_LAYOUT(0, agl::vec3, position, this);
+	ADD_LAYOUT(1, agl::vec2, vertexUV, this);
 
-	val transform		 = this->addUniform(agl::mat4, "transform");
-	val mvp				 = this->addUniform(agl::mat4, "mvp");
-	val shapeColor		 = this->addUniform(agl::vec3, "shapeColor");
-	val textureTransform = this->addUniform(agl::mat4, "textureTransform");
+	ADD_UNIFORM(agl::mat4, transform, this);
+	ADD_UNIFORM(agl::mat4, mvp, this);
+	ADD_UNIFORM(agl::vec3, shapeColor, this);
+	ADD_UNIFORM(agl::mat4, textureTransform, this);
 
-	val UVcoord	  = this->addOut(agl::vec2, "UVcoord");
-	val fragColor = this->addOut(agl::vec4, "fragColor");
+	ADD_OUT(agl::vec2, UVcoord, this);
+	ADD_OUT(agl::vec4, fragColor, this);
 
 	this->setMain({
-		UVcoord				  = val("vec2((textureTransform") * val("vec4(vertexUV, 1, 1)).xy)"), //
-		fragColor			  = val("vec4(shapeColor, 1)"),										  //
-		val(val::gl_Position) = mvp * transform * val("vec4(position, 1)"),						  //
+		UVcoord	  = shaderFunc("vec2", "(" + (textureTransform * shaderFunc("vec4", vertexUV, 1, 1)).code + ").xy"), //
+		fragColor = shaderFunc("vec4", shapeColor, 1),																 //
+		val(val::gl_Position) = mvp * transform * shaderFunc("vec4", position, 1)									 //
 	});
 }
 
 void agl::ShaderBuilder::setDefaultFrag()
 {
-	val UVcoord	  = this->addIn(agl::vec2, "UVcoord");
-	val fragColor = this->addIn(agl::vec4, "fragColor");
+	ADD_IN(agl::vec2, UVcoord, this);
+	ADD_IN(agl::vec4, fragColor, this);
 
-	val color = this->addOut(agl::vec4, "color");
+	ADD_OUT(agl::vec4, color, this);
 
-	val myTextureSampler = this->addUniform(agl::sampler2D, "myTextureSampler");
+	ADD_UNIFORM(agl::sampler2D, myTextureSampler, this);
 
 	this->setMain({
-		color = fragColor * agl::val("texture(myTextureSampler, UVcoord)"), //
+		color = fragColor * shaderFunc("texture", myTextureSampler, UVcoord), //
 	});
 }
 
