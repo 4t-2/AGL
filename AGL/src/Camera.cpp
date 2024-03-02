@@ -21,5 +21,6 @@ void agl::Camera::setView(Vec<float, 3> pos, Vec<float, 3> target, Vec<float, 3>
 
 agl::Mat4f agl::Camera::getMVP()
 {
+  (void) mvpID;
 	return projection * view;
 }

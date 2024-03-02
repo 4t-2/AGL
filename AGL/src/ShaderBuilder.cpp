@@ -52,6 +52,11 @@ void agl::ShaderBuilder::setDefaultVert()
 
 	ADD_OUT(agl::vec2, UVcoord, this);
 	ADD_OUT(agl::vec4, fragColor, this);
+  
+      (void) layoutTotal;
+      (void) inTotal;
+      (void) outTotal;
+      (void) uniformTotal;
 
 	this->setMain({
 		UVcoord	  = shaderFunc("vec2", "(" + (textureTransform * shaderFunc("vec4", vertexUV, 1, 1)).code + ").xy"), //

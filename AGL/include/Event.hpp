@@ -8,7 +8,7 @@ namespace agl
 	class Event
 	{
 		private:
-			BaseWindow *window;
+			//BaseWindow *window;
 			BaseEvent baseEvent;
 
 			char		 keymap[32];

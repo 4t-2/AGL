@@ -1,6 +1,7 @@
 #include "../include/Texture.hpp"
-#include <SOIL/SOIL.h>
 #include <cstdio>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 agl::Texture::Texture()
 {
@@ -30,13 +31,17 @@ void agl::Texture::loadFromFile(const char *filePath)
 	Texture::bind(*this);
 
 	// load image data
-	unsigned char *data = SOIL_load_image(filePath, &size.x, &size.y, 0, SOIL_LOAD_RGBA);
-
+	//unsigned char *data = SOIL_load_image(filePath, &size.x, &size.y, 0, SOIL_LOAD_RGBA);
+  unsigned char *data = stbi_load(filePath, &size.x, &size.y, 0, 4);
+  if(!data)
+  {
+		printf("ERROR::FONT: Could not load image file: %s", filePath);
+  }
 	// set texture data
 	Texture::setImage(GL_RGBA, GL_RGBA, size, data);
 
 	// free data
-	SOIL_free_image_data(data);
+	stbi_image_free(data);
 
 	// set nearest filtering
 	Texture::setParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);

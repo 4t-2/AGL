@@ -3,7 +3,8 @@
 #include <ctime>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/time.h>
+#include <thread>
+//#include <sys/time.h>
 
 #include <iostream>
 
@@ -71,7 +72,7 @@ void agl::RenderWindow::setFPS(int fps)
 		ts.tv_sec  = fpsMilli / 1000;
 		ts.tv_nsec = (fpsMilli % 1000) * 1000000;
 
-		nanosleep(&ts, &ts);
+    std::this_thread::sleep_for(std::chrono::milliseconds(fpsMilli));
 	};
 
 	return;
