@@ -50,7 +50,7 @@ void agl::Font::setup(const std::string &path, int height)
 		//FT_Load_Char(face, i, FT_LOAD_RENDER);
     int advance;
     int leftBearing;
-    stbtt_GetGlyphHMetrics(&fontInfo, i, &advance, &leftBearing);
+    stbtt_GetCodepointHMetrics(&fontInfo, i, &advance, &leftBearing);
     int x0; 
     int y0;
     int x1;
@@ -133,10 +133,16 @@ unsigned int *texData = new unsigned int[sideLength * sideLength];
 		
     glyph[i].bearing.x =0;//stbchar.x0;
     glyph[i].bearing.y =-stbchar.y0;//-ascent;
+    
+    
+    int advance;
+    int leftBearing;
+    stbtt_GetCodepointHMetrics(&fontInfo, i, &advance, &leftBearing);
+    
     Glyph* g= &glyph[i];
     printf("add glyph: value =%c\n", (char)i);
-    printf("         : bearing=%d, %d\n", g->bearing.x, g->bearing.y);
-    printf("         : advance =%d\n", g->advance);
+    printf("         : bearing=%d, %d, \t advance =%d, from ttf = %d\n", g->bearing.x, g->bearing.y, g->advance, advance);
+    //printf("         : advance =%d\n", g->advance);
 
     //Glyph* g= &glyph[i];
     // printf("add glyph: value =%c\n", (char)i);
