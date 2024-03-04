@@ -1,7 +1,7 @@
 #include "../include/Texture.hpp"
 #include <cstdio>
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include AGL_STB_IMAGE_INC
 
 agl::Texture::Texture()
 {

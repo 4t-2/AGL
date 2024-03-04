@@ -3,7 +3,7 @@
 #include "Texture.hpp"
 //#include <ft2build.h>
 //#include FT_FREETYPE_H
-#include "stb_truetype.h"
+#include AGL_STB_TRUETYPE_INC
 
 namespace agl
 {

@@ -4,7 +4,7 @@
 #include <iostream>
 
 #define STB_TRUETYPE_IMPLEMENTATION  // force following include to generate implementation
-#include "stb_truetype.h"
+#include AGL_STB_TRUETYPE_INC
 
 #define MIN 32
 #define MAX 127
@@ -12,9 +12,9 @@
 void agl::Font::setup(const std::string &path, int height)
 {
   static unsigned char filedata[100 * 1024];
-  FILE* fontfile=0;
+  FILE* fontfile=fopen(path.c_str(), "rb");
   
-  if(fopen_s(&fontfile, path.c_str(), "rb"))
+  if(fontfile == 0)
   {
 		printf("ERROR::FONT: Could not load font file: %s", path.c_str());
     
@@ -139,9 +139,9 @@ unsigned int *texData = new unsigned int[sideLength * sideLength];
     int leftBearing;
     stbtt_GetCodepointHMetrics(&fontInfo, i, &advance, &leftBearing);
     
-    Glyph* g= &glyph[i];
-    printf("add glyph: value =%c\n", (char)i);
-    printf("         : bearing=%d, %d, \t advance =%d, from ttf = %d\n", g->bearing.x, g->bearing.y, g->advance, advance);
+    // Glyph* g= &glyph[i];
+    // printf("add glyph: value =%c\n", (char)i);
+    // printf("         : bearing=%d, %d, \t advance =%d, from ttf = %d\n", g->bearing.x, g->bearing.y, g->advance, advance);
     //printf("         : advance =%d\n", g->advance);
 
     //Glyph* g= &glyph[i];

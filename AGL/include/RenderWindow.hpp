@@ -32,7 +32,7 @@ namespace agl
 			int shapeColorID;
 			int textureTransformID;
 
-			std::function<void()> sleepFrame;
+			std::function<void()> sleepFrame = []{};
 
 		public:
 			BaseWindow baseWindow;
