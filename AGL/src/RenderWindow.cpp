@@ -303,6 +303,13 @@ void agl::RenderWindow::updateMvp(Camera camera)
 	return;
 }
 
+void agl::RenderWindow::updateMvp(agl::Mat<float, 4> mvp)
+{
+	agl::Shader::setUniform(mvpID, mvp);
+
+	return;
+}
+
 agl::WindowState agl::RenderWindow::getState()
 {
 	return agl::getWindowState(baseWindow);

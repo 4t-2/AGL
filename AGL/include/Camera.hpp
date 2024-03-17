@@ -1,7 +1,7 @@
 #pragma once
 
+#include "Mat.hpp"
 #include "Shader.hpp"
-#include "Mat4f.hpp"
 
 namespace agl
 {

@@ -4,7 +4,7 @@
 #include "Color.hpp"
 #include "Cuboid.hpp"
 #include "GLPrimative.hpp"
-#include "Mat4f.hpp"
+#include "Mat.hpp"
 #include "Rectangle.hpp"
 #include "Shader.hpp"
 #include "Shape.hpp"
@@ -133,6 +133,8 @@ namespace agl
 			// \ Update the mvp shader uniform according to the chosen camera
 			// \ camera - camera to update mvp
 			void updateMvp(Camera camera);
+
+			void updateMvp(Mat<float, 4> mvp);
 
 			// \ Close the window
 			void close();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mat4f.hpp"
+#include "Mat.hpp"
 #include "ShaderBuilder.hpp"
 #include "external.hpp"
 #include <type_traits>
