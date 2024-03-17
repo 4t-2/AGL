@@ -28,7 +28,7 @@ namespace agl
 			}
 
 		public:
-			T data[size][size];
+			T data[size][size] = {};
 
 			Mat operator*(Mat matrix)
 			{
