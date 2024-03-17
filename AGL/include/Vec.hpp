@@ -11,11 +11,6 @@ namespace agl
 	template <typename T, int max> class Vec
 	{
 		public:
-			// \ Construct Vec with data starting all at 0
-			Vec()
-			{
-			}
-
 			// \ Construct Vec to be equal to vec
 			// \ &vec - vec for data to be equal to
 			Vec(Vec const &vec)
@@ -41,52 +36,15 @@ namespace agl
 				}
 			}
 
-			// \ Construct Vec to xyzw values
-			// \ x - X value
-			// \ y - Y value
-			// \ z - Z value
-			// \ w - W value
-			Vec(T x, T y, T z, T w)
+			template <typename... Ts> Vec(Ts... ts)
 			{
-				this->x = x;
-				this->y = y;
-				this->z = z;
-				this->w = w;
-			}
-
-			// \ Construct Vec to xyz values
-			// \ x - X value
-			// \ y - Y value
-			// \ z - Z value
-			Vec(T x, T y, T z)
-			{
-				this->x = x;
-				this->y = y;
-				this->z = z;
-			}
-
-			// \ Construct Vec to xy values
-			// \ x - X value
-			// \ y - Y value
-			Vec(T x, T y)
-			{
-				this->x = x;
-				this->y = y;
-			}
-
-			// \ Construct Vec to x value
-			// \ x - X value
-			Vec(T x)
-			{
-				this->x = x;
+				T *p = data;
+				((*(p++) = ts), ...);
 			}
 
 			void operator=(Vec vec)
 			{
-				for (unsigned int i = 0; i < max; i++)
-				{
-					data[i] = vec.data[i];
-				}
+				std::copy(std::begin(vec.data), std::end(vec.data), data);
 			}
 
 			void operator+=(Vec vec)
@@ -169,6 +127,19 @@ namespace agl
 				return newVec;
 			}
 
+			bool operator==(Vec vec)
+			{
+				for (int i = 0; i < max; i++)
+				{
+					if (data[i] != vec.data[i])
+					{
+						return false;
+					}
+				}
+
+				return true;
+			}
+
 			// \ Get length of Vec
 			T length()
 			{
@@ -242,4 +213,7 @@ namespace agl
 					};
 			};
 	};
+
+	template <typename T, typename... Ts>
+	Vec(T, Ts...) -> Vec<std::enable_if_t<(std::is_same_v<T, Ts> && ...), T>, sizeof...(Ts) + 1>;
 } // namespace agl
