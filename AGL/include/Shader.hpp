@@ -41,5 +41,8 @@ namespace agl
 			// \ Get the ID of the shader program
 			// \ Returns the ID of the program
 			GLuint getProgramID();
+
+			int v2loadFromFile(const std::string &vertex_file_path, const std::string &fragment_file_path,
+							   const std::string &geometry_file_path);
 	};
 } // namespace agl

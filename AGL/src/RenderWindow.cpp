@@ -140,7 +140,7 @@ void agl::RenderWindow::drawPrimative(agl::GLPrimative primative)
 		glVertexAttribPointer(i, primative.getVertexSize(i), GL_FLOAT, GL_FALSE, 0, (void *)0);
 	}
 
-	glDrawArrays(primative.getMode(), 0, primative.getVertexAmount());
+	glDrawArrays(GL_POINTS, 0, primative.getVertexAmount());
 
 	for (int i = 0; i < primative.getBufferAmount(); i++)
 	{
